@@ -34,8 +34,8 @@ public class PaperBagPrincess extends ApplicationAdapter {
 		viewport.apply();
 		camera.position.set(GAME_WORLD_WIDTH/2,GAME_WORLD_HEIGHT/2,0);
 
-		character = new Thing(GAME_WORLD_WIDTH/2-80,GAME_WORLD_HEIGHT/2-80,img,2);//probably temp, just getting used to libgdx
 		//img.setSize(40,80);
+		character = new Player(GAME_WORLD_WIDTH/2-80,GAME_WORLD_HEIGHT/2-80,img,2);//probably temp, just getting used to libgdx
 	}
 
 	@Override
@@ -43,6 +43,17 @@ public class PaperBagPrincess extends ApplicationAdapter {
 		viewport.update(width,height);
 	}
 
+	public boolean checkForCollision(char axis, int coordinate){
+		//check for map boundaries
+		//1280 because length of map-size of character
+		if(coordinate < 1280 && coordinate > 0){
+			//then check if theres an object(Thing) in the way and if its collidable?
+			return true;
+		}
+
+		return false;
+	}
+	
 	@Override
 	public void render () {
 		ScreenUtils.clear(1, 0, 0, 1);//red background
@@ -53,16 +64,24 @@ public class PaperBagPrincess extends ApplicationAdapter {
 		batch.draw(img, character.x, character.y);
 		//for attack and shit u wanna do isKeyJustPressed rather than isKeyPressed
 		if(Gdx.input.isKeyPressed(Keys.W)){
-			character.y = character.y + character.speed;
+			if(checkForCollision('y',character.y + character.speed)){
+				character.y = character.y + character.speed;
+			}
 		}
 		if(Gdx.input.isKeyPressed(Keys.S)){
-			character.y = character.y - character.speed;
+			if(checkForCollision('y',character.y - character.speed)){
+				character.y = character.y - character.speed;
+			}
 		}
 		if(Gdx.input.isKeyPressed(Keys.A)){
-			character.x = character.x - character.speed;
+			if(checkForCollision('x',character.x - character.speed)){
+				character.x = character.x - character.speed;
+			}
 		}
 		if(Gdx.input.isKeyPressed(Keys.D)){
-			character.x = character.x + character.speed;
+			if(checkForCollision('x',character.x + character.speed)){
+				character.x = character.x + character.speed;
+			}
 		}
 
 		/**

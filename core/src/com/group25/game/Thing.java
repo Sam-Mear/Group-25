@@ -7,6 +7,7 @@ public class Thing {
     int y = 0;
     Sprite sprite;
     int speed;
+    boolean collidable = true;
 
     public Thing(int positionX, int positionY, Sprite img, int thingSpeed){
         x = positionX;
