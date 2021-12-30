@@ -7,16 +7,19 @@ public class GameEntity {
     private int y = 0;
     private int width;
     private int height;
+    private int health;
 
     private Sprite sprite;
     private int speed;
     private boolean collidable = true;
 
-    public GameEntity(int positionX, int positionY, Sprite img, int entitySpeed){
+    public GameEntity(int positionX, int positionY, int width, int height, Sprite img, int entitySpeed){
         x = positionX;
         y = positionY;
         sprite = img;
         speed = entitySpeed;
+        this.width = width;
+        this.height = height;
     }
     
 	public int getX() {
@@ -75,4 +78,11 @@ public class GameEntity {
 		this.collidable = collidable;
 	}
     
+    public void setHealth(int health){
+        this.health = health;
+    }
+
+    public int getHealth(){
+        return health;
+    }
 }

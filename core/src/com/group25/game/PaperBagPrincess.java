@@ -36,7 +36,7 @@ public class PaperBagPrincess extends ApplicationAdapter {
 		camera.position.set(GAME_WORLD_WIDTH/2,GAME_WORLD_HEIGHT/2,0);
 
 		//img.setSize(40,80);
-		character = new Player(GAME_WORLD_WIDTH/2-80,GAME_WORLD_HEIGHT/2-80,img,2);//probably temp, just getting used to libgdx
+		character = new Player(GAME_WORLD_WIDTH/2-80,GAME_WORLD_HEIGHT/2-80,80,80,img,2);//probably temp, just getting used to libgdx
 	}
 
 	@Override
@@ -88,15 +88,15 @@ public class PaperBagPrincess extends ApplicationAdapter {
 		/**
 		 * have camera always follow the player.
 		 */
-		if(camera.position.x-80 > character.getX()){
-			camera.translate(-((camera.position.x-80 - character.getX())/25),0);
-		}else if(camera.position.x-80 < character.getX()){
-			camera.translate(-((camera.position.x-80 - character.getX())/25),0);
+		if(camera.position.x-character.getWidth() > character.getX()){
+			camera.translate(-((camera.position.x-character.getWidth() - character.getX())/25),0);
+		}else if(camera.position.x-character.getWidth() < character.getX()){
+			camera.translate(-((camera.position.x-character.getWidth() - character.getX())/25),0);
 		}
-		if(camera.position.y-80 > character.getY()){
-			camera.translate(0,-((camera.position.y-80 - character.getY())/25));
-		}else if(camera.position.y-80 < character.getY()){
-			camera.translate(0,-((camera.position.y-80 - character.getY())/25));
+		if(camera.position.y-character.getHeight() > character.getY()){
+			camera.translate(0,-((camera.position.y-character.getHeight() - character.getY())/25));
+		}else if(camera.position.y-character.getHeight() < character.getY()){
+			camera.translate(0,-((camera.position.y-character.getHeight() - character.getY())/25));
 		}
 
 		batch.end();
