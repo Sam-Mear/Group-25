@@ -17,7 +17,7 @@ public class PaperBagPrincess extends ApplicationAdapter {
 	private Sprite img;
 	private Sprite backgroundPicture;
 	private OrthographicCamera camera;
-	private Thing character;
+	private GameEntity character;
 	private FitViewport viewport;
 
 	final int GAME_WORLD_WIDTH = 1536;
