@@ -25,6 +25,7 @@ public class PaperBagPrincess extends ApplicationAdapter {
 	
 	@Override
 	public void create () {
+		System.out.println("Hello");
 		batch = new SpriteBatch();
 		img = new Sprite(new Texture("badlogic.jpg"));
 		backgroundPicture = new Sprite(new Texture("tempBackground.jpg"));
