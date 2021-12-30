@@ -62,41 +62,41 @@ public class PaperBagPrincess extends ApplicationAdapter {
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		backgroundPicture.draw(batch);
-		batch.draw(img, character.x, character.y);
+		batch.draw(img, character.getX(), character.getY());
 		//for attack and shit u wanna do isKeyJustPressed rather than isKeyPressed
 		if(Gdx.input.isKeyPressed(Keys.W)){
-			if(checkForCollision('y',character.y + character.speed)){
-				character.y = character.y + character.speed;
+			if(checkForCollision('y',character.getY() + character.getSpeed())){
+				character.setY(character.getY() + character.getSpeed());
 			}
 		}
 		if(Gdx.input.isKeyPressed(Keys.S)){
-			if(checkForCollision('y',character.y - character.speed)){
-				character.y = character.y - character.speed;
+			if(checkForCollision('y',character.getY() - character.getSpeed())){
+				character.setY(character.getY() - character.getSpeed());
 			}
 		}
 		if(Gdx.input.isKeyPressed(Keys.A)){
-			if(checkForCollision('x',character.x - character.speed)){
-				character.x = character.x - character.speed;
+			if(checkForCollision('x',character.getX() - character.getSpeed())){
+				character.setX(character.getX() - character.getSpeed());
 			}
 		}
 		if(Gdx.input.isKeyPressed(Keys.D)){
-			if(checkForCollision('x',character.x + character.speed)){
-				character.x = character.x + character.speed;
+			if(checkForCollision('x',character.getX() + character.getSpeed())){
+				character.setX(character.getX() + character.getSpeed());
 			}
 		}
 
 		/**
 		 * have camera always follow the player.
 		 */
-		if(camera.position.x-80 > character.x){
-			camera.translate(-((camera.position.x-80 - character.x)/25),0);
-		}else if(camera.position.x-80 < character.x){
-			camera.translate(-((camera.position.x-80 - character.x)/25),0);
+		if(camera.position.x-80 > character.getX()){
+			camera.translate(-((camera.position.x-80 - character.getX())/25),0);
+		}else if(camera.position.x-80 < character.getX()){
+			camera.translate(-((camera.position.x-80 - character.getX())/25),0);
 		}
-		if(camera.position.y-80 > character.y){
-			camera.translate(0,-((camera.position.y-80 - character.y)/25));
-		}else if(camera.position.y-80 < character.y){
-			camera.translate(0,-((camera.position.y-80 - character.y)/25));
+		if(camera.position.y-80 > character.getY()){
+			camera.translate(0,-((camera.position.y-80 - character.getY())/25));
+		}else if(camera.position.y-80 < character.getY()){
+			camera.translate(0,-((camera.position.y-80 - character.getY())/25));
 		}
 
 		batch.end();
