@@ -36,7 +36,7 @@ public class PaperBagPrincess extends ApplicationAdapter {
 		camera.position.set(GAME_WORLD_WIDTH/2,GAME_WORLD_HEIGHT/2,0);
 
 		//img.setSize(40,80);
-		character = new Player(GAME_WORLD_WIDTH/2-80,GAME_WORLD_HEIGHT/2-80,80,80,img,2);//probably temp, just getting used to libgdx
+		character = new Player((int)GAME_WORLD_WIDTH/2-80,(int)GAME_WORLD_HEIGHT/2-80,80,80,80,img,2);//probably temp, just getting used to libgdx
 	}
 
 	@Override

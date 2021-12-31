@@ -3,15 +3,14 @@ package com.group25.game;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class GameEntity {
-    private int x = 0;
-    private int y = 0;
-    private int width;
-    private int height;
-    private int health;
+    protected int x = 0;
+    protected int y = 0;
+    protected int width;
+    protected int height;
 
-    private Sprite sprite;
-    private int speed;
-    private boolean collidable = true;
+    protected Sprite sprite;
+    protected int speed;
+    protected boolean collidable = true;
 
     public GameEntity(int positionX, int positionY, int width, int height, Sprite img, int entitySpeed){
         x = positionX;
@@ -77,12 +76,4 @@ public class GameEntity {
 	public void setCollidable(boolean collidable) {
 		this.collidable = collidable;
 	}
-    
-    public void setHealth(int health){
-        this.health = health;
-    }
-
-    public int getHealth(){
-        return health;
-    }
 }
