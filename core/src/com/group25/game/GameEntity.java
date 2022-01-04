@@ -76,4 +76,10 @@ public class GameEntity {
 	public void setCollidable(boolean collidable) {
 		this.collidable = collidable;
 	}
+
+	//Update the graphics of the game entity
+	public void render();
+
+	//Update any sort of variables i.e. health, position, speed
+	public void update();
 }
