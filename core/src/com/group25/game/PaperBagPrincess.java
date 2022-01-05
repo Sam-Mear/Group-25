@@ -55,7 +55,9 @@ public class PaperBagPrincess extends ApplicationAdapter {
 		viewport.update(width,height);
 	}
 
-	public boolean checkForCollision(char axis, int coordinate){
+
+	//Why not use character.getY+width or something like this instead of gettint the axis? 
+	public boolean checkForCollision(char axis, float coordinate){
 		//check for map boundaries
 		//1280 because length of map-size of character
 		if(coordinate < 1280 && coordinate > 0){

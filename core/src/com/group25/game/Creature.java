@@ -6,7 +6,7 @@ public abstract class Creature extends GameEntity{
 
     private int health;
 
-    public Creature(int positionX, int positionY,int width, int height,int health, Sprite img, int entitySpeed){
+    public Creature(float positionX, float positionY,int width, int height,int health, Sprite img, int entitySpeed){
         super(positionX, positionY, width, height, img, entitySpeed);
     }    
 
