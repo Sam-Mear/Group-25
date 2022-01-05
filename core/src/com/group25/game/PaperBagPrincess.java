@@ -20,6 +20,12 @@ public class PaperBagPrincess extends ApplicationAdapter {
 	private GameEntity character;
 	private FitViewport viewport;
 
+	//Test image
+	private GameEntity slime;
+	private Sprite slimeTest;
+	private int slimeWidth = 500;
+	private int slimeHeight = 368;
+
 	final int GAME_WORLD_WIDTH = 1536;
 	final int GAME_WORLD_HEIGHT = 1536;
 	
@@ -28,13 +34,18 @@ public class PaperBagPrincess extends ApplicationAdapter {
 		System.out.println("pull test");
 		batch = new SpriteBatch();
 		img = new Sprite(new Texture("badlogic.jpg"));
+
+		slimeTest = new Sprite(new Texture("slimeTest.jpg"));
+		slimeTest.setSize(30,30);
 		backgroundPicture = new Sprite(new Texture("tempBackground.jpg"));
+		
 		backgroundPicture.setSize(GAME_WORLD_WIDTH,GAME_WORLD_HEIGHT);
 		camera = new OrthographicCamera();
 		viewport = new FitViewport(960, 720,camera);
 		viewport.apply();
 		camera.position.set(GAME_WORLD_WIDTH/2,GAME_WORLD_HEIGHT/2,0);
 
+		slime = new Slime(200,200,slimeWidth,slimeHeight,100,slimeTest,2);
 		//img.setSize(40,80);
 		character = new Player((int)GAME_WORLD_WIDTH/2-80,(int)GAME_WORLD_HEIGHT/2-80,80,80,80,img,2);//probably temp, just getting used to libgdx
 	}
@@ -44,7 +55,9 @@ public class PaperBagPrincess extends ApplicationAdapter {
 		viewport.update(width,height);
 	}
 
-	public boolean checkForCollision(char axis, int coordinate){
+
+	//Why not use character.getY+width or something like this instead of gettint the axis? 
+	public boolean checkForCollision(char axis, float coordinate){
 		//check for map boundaries
 		//1280 because length of map-size of character
 		if(coordinate < 1280 && coordinate > 0){
@@ -63,6 +76,9 @@ public class PaperBagPrincess extends ApplicationAdapter {
 		batch.begin();
 		backgroundPicture.draw(batch);
 		batch.draw(img, character.getX(), character.getY());
+
+		batch.draw(slimeTest,slime.getX(), slime.getY());
+
 		//for attack and shit u wanna do isKeyJustPressed rather than isKeyPressed
 		if(Gdx.input.isKeyPressed(Keys.W)){
 			if(checkForCollision('y',character.getY() + character.getSpeed())){
@@ -106,6 +122,7 @@ public class PaperBagPrincess extends ApplicationAdapter {
 	public void dispose () {
 		batch.dispose();
 		img.getTexture().dispose();
+		slimeTest.getTexture().dispose();
 		backgroundPicture.getTexture().dispose();
 	}
 }

@@ -3,8 +3,8 @@ package com.group25.game;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class GameEntity {
-    protected int x = 0;
-    protected int y = 0;
+    protected float x = 0;
+    protected float y = 0;
     protected int width;
     protected int height;
 
@@ -12,7 +12,7 @@ public class GameEntity {
     protected int speed;
     protected boolean collidable = true;
 
-    public GameEntity(int positionX, int positionY, int width, int height, Sprite img, int entitySpeed){
+    public GameEntity(float positionX, float positionY, int width, int height, Sprite img, int entitySpeed){
         x = positionX;
         y = positionY;
         sprite = img;
@@ -21,19 +21,19 @@ public class GameEntity {
         this.height = height;
     }
     
-	public int getX() {
+	public float getX() {
 		return x;
 	}
 
-	public void setX(int x) {
+	public void setX(float x) {
 		this.x = x;
 	}
 
-	public int getY() {
+	public float getY() {
 		return y;
 	}
 
-	public void setY(int y) {
+	public void setY(float y) {
 		this.y = y;
 	}
 
