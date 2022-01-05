@@ -19,6 +19,7 @@ public class GameEntity {
         speed = entitySpeed;
         this.width = width;
         this.height = height;
+		System.out.println("Hello");
     }
     
 	public float getX() {
