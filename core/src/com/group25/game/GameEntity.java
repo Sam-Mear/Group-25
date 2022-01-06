@@ -2,7 +2,7 @@ package com.group25.game;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
-public class GameEntity {
+public abstract class GameEntity {
     protected float x = 0;
     protected float y = 0;
     protected int width;
@@ -19,6 +19,7 @@ public class GameEntity {
         speed = entitySpeed;
         this.width = width;
         this.height = height;
+		System.out.println("Test");
     }
     
 	public float getX() {
@@ -78,8 +79,8 @@ public class GameEntity {
 	}
 
 	//Update the graphics of the game entity
-	public void render();
+	public void render(){};
 
 	//Update any sort of variables i.e. health, position, speed
-	public void update();
+	public void update(){};
 }
