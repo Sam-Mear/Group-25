@@ -20,6 +20,8 @@ public class GameEntity {
         this.width = width;
         this.height = height;
 		System.out.println("Hello");
+		System.out.println("Pushing to branch test");
+
     }
     
 	public float getX() {
