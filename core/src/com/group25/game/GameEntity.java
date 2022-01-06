@@ -22,6 +22,8 @@ public class GameEntity {
 		System.out.println("Hello");
 		System.out.println("Pushing to branch test");
 
+		System.out.println("Test only for Filip");
+
     }
     
 	public float getX() {
