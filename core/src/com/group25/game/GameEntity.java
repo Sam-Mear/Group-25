@@ -78,8 +78,13 @@ public class GameEntity {
 	}
 
 	//Update the graphics of the game entity
-	public void render();
+	public void render(){
+
+	}
 
 	//Update any sort of variables i.e. health, position, speed
-	public void update();
+	//this should probably be split into multiple different functions rather than one.
+	public void update(){
+
+	}
 }
