@@ -12,7 +12,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class Level implements Screen{
-    //this is where paperBagPrincess code goes......
     private SpriteBatch batch;
 	private Sprite img;
 	private Sprite backgroundPicture;
@@ -34,7 +33,7 @@ public class Level implements Screen{
 		camera.position.set(GAME_WORLD_WIDTH/2,GAME_WORLD_HEIGHT/2,0);
 
 		//img.setSize(40,80);
-		character = new Player(GAME_WORLD_WIDTH/2-80,GAME_WORLD_HEIGHT/2-80,img,2);//probably temp, just getting used to libgdx
+		character = new Player((int)GAME_WORLD_WIDTH/2-80,(int)GAME_WORLD_HEIGHT/2-80,256,256,100,img,2);//probably temp, just getting used to libgdx
 	}
 
 	@Override
@@ -42,7 +41,7 @@ public class Level implements Screen{
 		viewport.update(width,height);
 	}
 
-	public boolean checkForCollision(char axis, int coordinate){
+	public boolean checkForCollision(char axis, float coordinate){
 		//check for map boundaries
 		//1280 because length of map-size of character
 		if(coordinate < 1280 && coordinate > 0){
@@ -86,15 +85,15 @@ public class Level implements Screen{
 		/**
 		 * have camera always follow the player.
 		 */
-		if(camera.position.x-80 > character.x){
-			camera.translate(-((camera.position.x-80 - character.x)/25),0);
-		}else if(camera.position.x-80 < character.x){
-			camera.translate(-((camera.position.x-80 - character.x)/25),0);
+		if(camera.position.x-(character.getWidth()/2) > character.getX()){
+			camera.translate(-((camera.position.x-(character.getWidth()/2) - character.getX())/25),0);
+		}else if(camera.position.x-(character.getWidth()/2) < character.getX()){
+			camera.translate(-((camera.position.x-(character.getWidth()/2) - character.getX())/25),0);
 		}
-		if(camera.position.y-80 > character.y){
-			camera.translate(0,-((camera.position.y-80 - character.y)/25));
-		}else if(camera.position.y-80 < character.y){
-			camera.translate(0,-((camera.position.y-80 - character.y)/25));
+		if(camera.position.y-(character.getHeight()/2) > character.getY()){
+			camera.translate(0,-((camera.position.y-(character.getHeight()/2) - character.getY())/25));
+		}else if(camera.position.y-(character.getHeight()/2) < character.getY()){
+			camera.translate(0,-((camera.position.y-(character.getHeight()/2) - character.getY())/25));
 		}
 
 		batch.end();
