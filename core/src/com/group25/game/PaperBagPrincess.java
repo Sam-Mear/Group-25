@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -12,31 +13,36 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 import com.badlogic.gdx.math.Rectangle;
 
+import java.util.ArrayList;
+
 public class PaperBagPrincess extends ApplicationAdapter {
 	private SpriteBatch batch;
 	private Sprite img;
 	private Sprite backgroundPicture;
 	private OrthographicCamera camera;
-	private GameEntity character;
+	private Player character;
 	private FitViewport viewport;
 
 	//Test image
 	private GameEntity slime;
 	private Sprite slimeTest;
-	private int slimeWidth = 500;
-	private int slimeHeight = 368;
+	private int slimeWidth = 128;
+	private int slimeHeight = 128;
 
 	final int GAME_WORLD_WIDTH = 1536;
 	final int GAME_WORLD_HEIGHT = 1536;
-	
+
+
+	public PaperBagPrincess(){
+	}
+
 	@Override
 	public void create () {
-		System.out.println("pull test");
 		batch = new SpriteBatch();
 		img = new Sprite(new Texture("badlogic.jpg"));
 
-		slimeTest = new Sprite(new Texture("slimeTest.jpg"));
-		slimeTest.setSize(30,30);
+		slimeTest = new Sprite(new Texture("turtleSlime.png"));
+		slimeTest.setSize(128,128);
 		backgroundPicture = new Sprite(new Texture("tempBackground.jpg"));
 		
 		backgroundPicture.setSize(GAME_WORLD_WIDTH,GAME_WORLD_HEIGHT);
@@ -47,13 +53,15 @@ public class PaperBagPrincess extends ApplicationAdapter {
 
 		slime = new Slime(200,200,slimeWidth,slimeHeight,100,slimeTest,2);
 		//img.setSize(40,80);
-		character = new Player((int)GAME_WORLD_WIDTH/2-80,(int)GAME_WORLD_HEIGHT/2-80,80,80,80,img,2);//probably temp, just getting used to libgdx
+		character = new Player((int)GAME_WORLD_WIDTH/2-80,(int)GAME_WORLD_HEIGHT/2-80,80,80,80,img,2);//probably temp, just getting used to libg
+
 	}
 
 	@Override
 	public void resize(int width, int height){
 		viewport.update(width,height);
 	}
+
 
 
 	//Why not use character.getY+width or something like this instead of gettint the axis? 
@@ -111,12 +119,38 @@ public class PaperBagPrincess extends ApplicationAdapter {
 		}
 		if(camera.position.y-character.getHeight() > character.getY()){
 			camera.translate(0,-((camera.position.y-character.getHeight() - character.getY())/25));
-		}else if(camera.position.y-character.getHeight() < character.getY()){
-			camera.translate(0,-((camera.position.y-character.getHeight() - character.getY())/25));
+		}else if(camera.position.y-character.getHeight() < character.getY()) {
+			camera.translate(0, -((camera.position.y - character.getHeight() - character.getY()) / 25));
 		}
+		entityUpdate();
 
 		batch.end();
 	}
+	//Testing slime movement
+	public void entityUpdate(){
+		if(slime instanceof Enemy) {
+			if (((Enemy)slime).getHitbox().contains(character.getHitbox())) {
+
+				//Right
+				if (slime.getX() > character.getX()) {
+					slime.setX(slime.getX() - slime.getSpeed());
+				}
+				//Left
+				if (slime.getX() < character.getX()) {
+					slime.setX(slime.getX() + slime.getSpeed());
+				}
+				//Above
+				if (slime.getY() > character.getY()) {
+					slime.setY(slime.getY() - slime.getSpeed());
+				}
+				//Below
+				if (slime.getY() < character.getY()) {
+					slime.setY(slime.getY() + slime.getSpeed());
+				}
+			}
+		}
+	}
+
 	
 	@Override
 	public void dispose () {
