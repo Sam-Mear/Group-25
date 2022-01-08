@@ -2,11 +2,11 @@ package com.group25.game;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
-public class Player extends Creature{
+public class Slime extends Creature{
 
-    
-    public Player(float positionX, float positionY,int width, int height,int health, Sprite img, int entitySpeed){
+    public Slime(float positionX, float positionY,int width, int height,int health, Sprite img, int entitySpeed){
         super(positionX, positionY, width, height, health, img, entitySpeed);
         this.setSpeed(8);
     }
+    
 }
