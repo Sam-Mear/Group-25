@@ -2,7 +2,7 @@ package com.group25.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.graphics.Texture;
@@ -10,14 +10,19 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 
-import com.badlogic.gdx.math.Rectangle;
+//import com.badlogic.gdx.math.Rectangle;
 
-public class PaperBagPrincess extends ApplicationAdapter {
-	private SpriteBatch batch;
+public class PaperBagPrincess extends Game {
+	@Override
+	public void create(){
+		setScreen(new MenuScreen());
+	}
+}
+	/*private SpriteBatch batch;
 	private Sprite img;
 	private Sprite backgroundPicture;
 	private OrthographicCamera camera;
-	private GameEntity character;
+	private Player character;
 	private FitViewport viewport;
 
 	//Test image
@@ -31,7 +36,6 @@ public class PaperBagPrincess extends ApplicationAdapter {
 	
 	@Override
 	public void create () {
-		System.out.println("pull test");
 		batch = new SpriteBatch();
 		img = new Sprite(new Texture("badlogic.jpg"));
 
@@ -103,7 +107,7 @@ public class PaperBagPrincess extends ApplicationAdapter {
 
 		/**
 		 * have camera always follow the player.
-		 */
+		 *//*
 		if(camera.position.x-character.getWidth() > character.getX()){
 			camera.translate(-((camera.position.x-character.getWidth() - character.getX())/25),0);
 		}else if(camera.position.x-character.getWidth() < character.getX()){
@@ -126,3 +130,4 @@ public class PaperBagPrincess extends ApplicationAdapter {
 		backgroundPicture.getTexture().dispose();
 	}
 }
+*/
