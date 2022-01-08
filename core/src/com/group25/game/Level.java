@@ -1,5 +1,6 @@
 package com.group25.game;
 
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Game;
@@ -10,15 +11,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 
-//import com.badlogic.gdx.math.Rectangle;
-
-public class PaperBagPrincess extends Game {
-	@Override
-	public void create(){
-		setScreen(new MenuScreen());
-	}
-}
-	/*private SpriteBatch batch;
+public class Level implements Screen{
+    //this is where paperBagPrincess code goes......
+    private SpriteBatch batch;
 	private Sprite img;
 	private Sprite backgroundPicture;
 	private OrthographicCamera camera;
@@ -28,8 +23,7 @@ public class PaperBagPrincess extends Game {
 	final int GAME_WORLD_WIDTH = 1536;
 	final int GAME_WORLD_HEIGHT = 1536;
 	
-	@Override
-	public void create () {
+	public Level() {
 		batch = new SpriteBatch();
 		img = new Sprite(new Texture("badlogic.jpg"));
 		backgroundPicture = new Sprite(new Texture("tempBackground.jpg"));
@@ -60,7 +54,7 @@ public class PaperBagPrincess extends Game {
 	}
 	
 	@Override
-	public void render () {
+	public void render (float delta) {
 		ScreenUtils.clear(1, 0, 0, 1);//red background
 		camera.update();
 		batch.setProjectionMatrix(camera.combined);
@@ -91,7 +85,7 @@ public class PaperBagPrincess extends Game {
 
 		/**
 		 * have camera always follow the player.
-		 *//*
+		 */
 		if(camera.position.x-80 > character.x){
 			camera.translate(-((camera.position.x-80 - character.x)/25),0);
 		}else if(camera.position.x-80 < character.x){
@@ -112,5 +106,28 @@ public class PaperBagPrincess extends Game {
 		img.getTexture().dispose();
 		backgroundPicture.getTexture().dispose();
 	}
+
+    @Override
+    public void show() {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void pause() {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void resume() {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void hide() {
+        // TODO Auto-generated method stub
+        
+    }
 }
-*/
