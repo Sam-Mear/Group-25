@@ -19,6 +19,10 @@ public class Level implements Screen{
 	private Player character;
 	private FitViewport viewport;
 
+	private Sprite slimeImage;
+	private GameEntity slime;
+
+
 	final int GAME_WORLD_WIDTH = 1536;
 	final int GAME_WORLD_HEIGHT = 1536;
 	
@@ -32,8 +36,13 @@ public class Level implements Screen{
 		viewport.apply();
 		camera.position.set(GAME_WORLD_WIDTH/2,GAME_WORLD_HEIGHT/2,0);
 
-		//img.setSize(40,80);
-		character = new Player((int)GAME_WORLD_WIDTH/2-80,(int)GAME_WORLD_HEIGHT/2-80,256,256,100,img,2);//probably temp, just getting used to libgdx
+		character = new Player((int)GAME_WORLD_WIDTH/2-80,(int)GAME_WORLD_HEIGHT/2-80,256,256,100,img,2);//probably temp, just getting used to libgd
+
+
+		slimeImage= new Sprite(new Texture("Green_Slime.png"));
+		slimeImage.setSize(100,100);
+		slime = new Slime(200,200,(int)slimeImage.getWidth(),(int)slimeImage.getHeight(),50,slimeImage,1);
+
 	}
 
 	@Override
@@ -55,11 +64,15 @@ public class Level implements Screen{
 	@Override
 	public void render (float delta) {
 		ScreenUtils.clear(1, 0, 0, 1);//red background
+
 		camera.update();
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		backgroundPicture.draw(batch);
-		batch.draw(img, character.x, character.y);
+		batch.draw(character.getSprite(), character.x, character.y);
+
+		batch.draw(slime.getSprite(),slime.getX(),slime.getY());
+		//batch.draw(, character.x, character.y);
 		//for attack and shit u wanna do isKeyJustPressed rather than isKeyPressed
 		if(Gdx.input.isKeyPressed(Keys.W)){
 			if(checkForCollision('y',character.y + character.speed)){
@@ -96,12 +109,33 @@ public class Level implements Screen{
 			camera.translate(0,-((camera.position.y-(character.getHeight()/2) - character.getY())/25));
 		}
 
+		character.update();
+		slime.update();
+
+		//If person enters slimes territory
+		if(slime instanceof Enemy){
+			if(((Enemy) slime).getAlertArea().contains(character.getHitbox())){
+				//Slime should charge the mf
+				//determine Y
+				if(slime.getY()<character.getY()){
+					//go down
+					slime.setY(slime.getY()+slime.getSpeed());
+				}
+
+				if(slime.getY()>character.getY()){
+					//go down
+					slime.setY(slime.getY()-slime.getSpeed());
+				}
+			}
+		}
+
 		batch.end();
 	}
 	
 	@Override
 	public void dispose () {
 		batch.dispose();
+		slime.getSprite().getTexture().dispose();
 		img.getTexture().dispose();
 		backgroundPicture.getTexture().dispose();
 	}

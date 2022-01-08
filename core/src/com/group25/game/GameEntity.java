@@ -2,6 +2,8 @@ package com.group25.game;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
+import java.awt.*;
+
 public abstract class GameEntity {
     protected float x = 0;
     protected float y = 0;
@@ -12,15 +14,18 @@ public abstract class GameEntity {
     protected int speed;
     protected boolean collidable = true;
 
+	protected Rectangle hitbox;
+
 	private int health;
 
-    public GameEntity(float positionX, float positionY, int width, int height, Sprite img, int entitySpeed) {
+    public GameEntity(float positionX, float positionY, int width, int height, Sprite img, int entitySpeed, Rectangle hitbox) {
 		x = positionX;
 		y = positionY;
 		sprite = img;
 		speed = entitySpeed;
 		this.width = width;
 		this.height = height;
+		this.hitbox = hitbox;
 	}
     
 	public float getX() {
@@ -79,16 +84,6 @@ public abstract class GameEntity {
 		this.collidable = collidable;
 	}
 
-	//Update the graphics of the game entity
-	public void render(){
-
-	}
-
-	//Update any sort of variables i.e. health, position, speed
-	//this should probably be split into multiple different functions rather than one.
-	public void update(){
-	}
-
 	public void takeDamage(int damage){
 		health -= damage;
 	}
@@ -99,5 +94,11 @@ public abstract class GameEntity {
 
 	public int getHealth(){
 		return health;
+	}
+
+	public abstract void update();
+
+	public Rectangle getHitbox() {
+		return hitbox;
 	}
 }
