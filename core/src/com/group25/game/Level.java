@@ -64,6 +64,25 @@ public class Level implements Screen{
 			String line = levelInfo.nextLine();
 			while (levelInfo.hasNextLine()) {
 				line = line.replace("    ","");
+				if(line.equals("DEFAULT PLAYER POSITIONS:")){
+
+				}else if(line.equals("GAME ENTITY:")){
+					ArrayList<String> args = new ArrayList<String>();
+					for(int i=0;i<6;i++){
+						String s = levelInfo.nextLine();
+						args.add(s.substring(s.indexOf(":")+2));
+					}
+					
+					trees.add(new GameEntity(Float.parseFloat(args.get(0)),
+												Float.parseFloat(args.get(1)),
+												Integer.parseInt(args.get(4)), 
+												Integer.parseInt(args.get(5)), 
+												new Sprite(new Texture(args.get(2))), 
+												Integer.parseInt(args.get(3))));
+
+				}else if(line.equals("ENEMY:")){
+
+				}
 				System.out.println(line);
 				line = levelInfo.nextLine();
 			}
@@ -96,6 +115,9 @@ public class Level implements Screen{
 		batch.begin();
 		backgroundPicture.draw(batch);
 		batch.draw(img, character.x, character.y);
+		for(int i=0;i<trees.size();i++){
+			batch.draw(trees.get(i).getSprite(),trees.get(i).getX(),trees.get(i).getY());
+		}
 		//for attack and shit u wanna do isKeyJustPressed rather than isKeyPressed
 		if(Gdx.input.isKeyPressed(Keys.W)){
 			if(checkForCollision('y',character.y + character.speed)){
