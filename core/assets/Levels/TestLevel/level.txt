@@ -1,0 +1,12 @@
+DEFAULT PLAYER POSITIONS:
+    x: 500
+    y: 500
+GAME ENTITIES:
+    OBJECT:
+        x: 59
+        y: 100
+        sprite: Levels/Testlevel/tree.png
+        speed: 0
+        width: 64
+        height:128
+ENEMY:

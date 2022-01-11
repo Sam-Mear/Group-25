@@ -1,15 +1,26 @@
 package com.group25.game;
 
-import com.badlogic.gdx.Screen;
+/**
+ * LibGDX Imports....
+ */
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+
+/**
+ * Other Imports
+ */
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
 
 public class Level implements Screen{
     private SpriteBatch batch;
@@ -18,6 +29,8 @@ public class Level implements Screen{
 	private OrthographicCamera camera;
 	private Player character;
 	private FitViewport viewport;
+
+	ArrayList<GameEntity> trees = new ArrayList<GameEntity>(); // Create an ArrayList object
 
 	final int GAME_WORLD_WIDTH = 1536;
 	final int GAME_WORLD_HEIGHT = 1536;
@@ -32,10 +45,33 @@ public class Level implements Screen{
 		viewport.apply();
 		camera.position.set(GAME_WORLD_WIDTH/2,GAME_WORLD_HEIGHT/2,0);
 
-		//img.setSize(40,80);
+		loadLevel("TestLevel");
+		// TODO : this needs to be fixed haha
+		//"testlevel" would actually be anything that is parsed into the level constructor.
+		//so if "level1" was given to Level.java, then it would attempt to find the txt file containing level details 
+		//for level 1.
+		//For a test, this is fine.
+		
 		character = new Player((int)GAME_WORLD_WIDTH/2-80,(int)GAME_WORLD_HEIGHT/2-80,256,256,100,img,2);//probably temp, just getting used to libgdx
 	}
 
+	public void loadLevel(String levelName){
+		//unload the previous level if needed... TODO : Not done...
+		//would just be an emptying of the arraylists, with the appropriate dispose()?
+		//need to understand dispose() better...
+		try{
+			Scanner levelInfo = new Scanner(new File(Gdx.files.internal("Levels/"+levelName+"/level.txt")+""));
+			String line = levelInfo.nextLine();
+			while (levelInfo.hasNextLine()) {
+				line = line.replace("    ","");
+				System.out.println(line);
+				line = levelInfo.nextLine();
+			}
+		} catch(FileNotFoundException fileNotFoundException){
+			System.out.println("file "+Gdx.files.internal("Levels/"+levelName+"/level.txt")+ " not found!");
+		}
+	}
+	
 	@Override
 	public void resize(int width, int height){
 		viewport.update(width,height);
