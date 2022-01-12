@@ -53,6 +53,7 @@ public class Level implements Screen{
 		//For a test, this is fine.
 		
 		character = new Player((int)GAME_WORLD_WIDTH/2-80,(int)GAME_WORLD_HEIGHT/2-80,64,64,100,img,1);//probably temp, just getting used to libgdx
+
 	}
 
 	public void loadLevel(String levelName){
@@ -115,15 +116,17 @@ public class Level implements Screen{
 	@Override
 	public void render (float delta) {
 		ScreenUtils.clear(1, 0, 0, 1);//red background
+
 		camera.update();
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		backgroundPicture.draw(batch);
+
 		for(int i=0;i<trees.size();i++){
 			batch.draw(trees.get(i).getSprite(),trees.get(i).getX(),trees.get(i).getY());
 		}
 
-		batch.draw(img, character.x, character.y);
+		batch.draw(character.getSprite(), character.x, character.y);
 
 		//for attack and shit u wanna do isKeyJustPressed rather than isKeyPressed
 		if(Gdx.input.isKeyPressed(Keys.W)){
@@ -161,12 +164,33 @@ public class Level implements Screen{
 			camera.translate(0,-((camera.position.y-(character.getHeight()/2) - character.getY())/25));
 		}
 
+		character.update();
+		slime.update();
+
+		//If person enters slimes territory
+		if(slime instanceof Enemy){
+			if(((Enemy) slime).getAlertArea().contains(character.getHitbox())){
+				//Slime should charge the mf
+				//determine Y
+				if(slime.getY()<character.getY()){
+					//go down
+					slime.setY(slime.getY()+slime.getSpeed());
+				}
+
+				if(slime.getY()>character.getY()){
+					//go down
+					slime.setY(slime.getY()-slime.getSpeed());
+				}
+			}
+		}
+
 		batch.end();
 	}
 	
 	@Override
 	public void dispose () {
 		batch.dispose();
+		slime.getSprite().getTexture().dispose();
 		img.getTexture().dispose();
 		backgroundPicture.getTexture().dispose();
 	}

@@ -33,6 +33,7 @@ public class MenuScreen implements Screen{
         playButtonHighlight = new Texture("tempPlayButtonHighlight.png");
         exitButton = new Texture("tempExitButton.png");
         exitButtonHighlight = new Texture("tempExitButtonHighlight.png");
+        //The stuff below is not needed in here and works without it
         camera = new OrthographicCamera();
         viewport = new FitViewport(960 , 720, camera);
         viewport.apply();
