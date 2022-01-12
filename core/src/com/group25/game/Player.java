@@ -8,7 +8,6 @@ public class Player extends Creature{
 
     public Player(float positionX, float positionY,int width, int height,int health, Sprite img, int entitySpeed){
         super(positionX, positionY, width, height, health, img, entitySpeed, new Rectangle((int)positionX,(int)positionY,100,100));
-        this.setSpeed(8);
     }
 
     @Override

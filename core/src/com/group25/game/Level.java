@@ -165,6 +165,7 @@ public class Level implements Screen{
 		}
 
 		character.update();
+		/*
 		slime.update();
 
 		//If person enters slimes territory
@@ -182,7 +183,7 @@ public class Level implements Screen{
 					slime.setY(slime.getY()-slime.getSpeed());
 				}
 			}
-		}
+		}*/
 
 		batch.end();
 	}
@@ -190,7 +191,6 @@ public class Level implements Screen{
 	@Override
 	public void dispose () {
 		batch.dispose();
-		slime.getSprite().getTexture().dispose();
 		img.getTexture().dispose();
 		backgroundPicture.getTexture().dispose();
 	}

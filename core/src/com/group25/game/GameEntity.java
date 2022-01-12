@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import java.awt.*;
 
-public abstract class GameEntity {
+public class GameEntity {
     protected float x = 0;
     protected float y = 0;
     protected int width;
@@ -18,7 +18,28 @@ public abstract class GameEntity {
 
 	private int health;
 
-    public GameEntity(float positionX, float positionY, int width, int height, Sprite img, int entitySpeed, Rectangle hitbox) {
+    public GameEntity(float positionX, float positionY, int width, int height, Sprite img, int entitySpeed){
+		x = positionX;
+		y = positionY;
+		sprite = img;
+		speed = entitySpeed;
+		this.width = width;
+		this.height = height;
+		hitbox = new Rectangle((int)positionX,(int)positionY,width,height);
+	}
+	
+	/**
+	 * This constructor would be used when we want to create a GameEntity
+	 * with a hitbox that is different to the width and height of the object
+	 * @param positionX
+	 * @param positionY
+	 * @param width
+	 * @param height
+	 * @param img
+	 * @param entitySpeed
+	 * @param hitbox
+	 */
+	public GameEntity(float positionX, float positionY, int width, int height, Sprite img, int entitySpeed, Rectangle hitbox) {
 		x = positionX;
 		y = positionY;
 		sprite = img;
@@ -96,7 +117,9 @@ public abstract class GameEntity {
 		return health;
 	}
 
-	public abstract void update();
+	public void update(){
+
+	}
 
 	public Rectangle getHitbox() {
 		return hitbox;
