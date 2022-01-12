@@ -32,16 +32,16 @@ public class Level implements Screen{
 
 	ArrayList<GameEntity> trees = new ArrayList<GameEntity>(); // Create an ArrayList object
 
-	final int GAME_WORLD_WIDTH = 1536;
-	final int GAME_WORLD_HEIGHT = 1536;
+	final int GAME_WORLD_WIDTH = 720;
+	final int GAME_WORLD_HEIGHT = 720;
 	
 	public Level() {
 		batch = new SpriteBatch();
-		img = new Sprite(new Texture("badlogic.jpg"));
+		img = new Sprite(new Texture("character.png"));
 		backgroundPicture = new Sprite(new Texture("tempBackground.jpg"));
 		backgroundPicture.setSize(GAME_WORLD_WIDTH,GAME_WORLD_HEIGHT);
 		camera = new OrthographicCamera();
-		viewport = new FitViewport(960, 720,camera);
+		viewport = new FitViewport(480, 360,camera);
 		viewport.apply();
 		camera.position.set(GAME_WORLD_WIDTH/2,GAME_WORLD_HEIGHT/2,0);
 
@@ -52,7 +52,7 @@ public class Level implements Screen{
 		//for level 1.
 		//For a test, this is fine.
 		
-		character = new Player((int)GAME_WORLD_WIDTH/2-80,(int)GAME_WORLD_HEIGHT/2-80,256,256,100,img,2);//probably temp, just getting used to libgdx
+		character = new Player((int)GAME_WORLD_WIDTH/2-80,(int)GAME_WORLD_HEIGHT/2-80,64,64,100,img,1);//probably temp, just getting used to libgdx
 	}
 
 	public void loadLevel(String levelName){
@@ -60,19 +60,25 @@ public class Level implements Screen{
 		//would just be an emptying of the arraylists, with the appropriate dispose()?
 		//need to understand dispose() better...
 		try{
+			//load file into levelInfo
 			Scanner levelInfo = new Scanner(new File(Gdx.files.internal("Levels/"+levelName+"/level.txt")+""));
+			//Scanner allows us to go line by line in the file with.nextLine()
 			String line = levelInfo.nextLine();
+			//make sure its not end of file
 			while (levelInfo.hasNextLine()) {
-				line = line.replace("    ","");
+				//line = line.replace("    ","");
 				if(line.equals("DEFAULT PLAYER POSITIONS:")){
-
+					// TODO : 
 				}else if(line.equals("GAME ENTITY:")){
+					//list of arguments needed to make the GameEntity
 					ArrayList<String> args = new ArrayList<String>();
 					for(int i=0;i<6;i++){
+						//populate the arguments arraylist.
 						String s = levelInfo.nextLine();
 						args.add(s.substring(s.indexOf(":")+2));
 					}
 					
+					//gotta do some mad type changing
 					trees.add(new GameEntity(Float.parseFloat(args.get(0)),
 												Float.parseFloat(args.get(1)),
 												Integer.parseInt(args.get(4)), 
@@ -81,9 +87,8 @@ public class Level implements Screen{
 												Integer.parseInt(args.get(3))));
 
 				}else if(line.equals("ENEMY:")){
-
+					// TODO : enemy might not be final. 
 				}
-				System.out.println(line);
 				line = levelInfo.nextLine();
 			}
 		} catch(FileNotFoundException fileNotFoundException){
@@ -98,8 +103,8 @@ public class Level implements Screen{
 
 	public boolean checkForCollision(char axis, float coordinate){
 		//check for map boundaries
-		//1280 because length of map-size of character
-		if(coordinate < 1280 && coordinate > 0){
+		//game world is square
+		if(coordinate < GAME_WORLD_WIDTH-character.width && coordinate > 0){
 			//then check if theres an object(Thing) in the way and if its collidable?
 			return true;
 		}
@@ -114,10 +119,12 @@ public class Level implements Screen{
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		backgroundPicture.draw(batch);
-		batch.draw(img, character.x, character.y);
 		for(int i=0;i<trees.size();i++){
 			batch.draw(trees.get(i).getSprite(),trees.get(i).getX(),trees.get(i).getY());
 		}
+
+		batch.draw(img, character.x, character.y);
+
 		//for attack and shit u wanna do isKeyJustPressed rather than isKeyPressed
 		if(Gdx.input.isKeyPressed(Keys.W)){
 			if(checkForCollision('y',character.y + character.speed)){
@@ -170,13 +177,19 @@ public class Level implements Screen{
         
     }
 
-    @Override
+    /**
+	 * Pause is ran the window is minimized and just before dispose() when exiting game
+	 */
+	@Override
     public void pause() {
         // TODO Auto-generated method stub
         
     }
-
-    @Override
+    
+	/**
+	 * Resume is when window is no longer minimised.
+	 */
+	@Override
     public void resume() {
         // TODO Auto-generated method stub
         

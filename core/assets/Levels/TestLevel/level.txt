@@ -16,8 +16,15 @@ GAME ENTITY:
     width: 64
     height:128
 GAME ENTITY:
-    x: 89
-    y: 123
+    x: 135
+    y: 135
+    sprite: Levels/TestLevel/tree.png
+    speed: 0
+    width: 64
+    height:128
+GAME ENTITY:
+    x: 200
+    y: 200
     sprite: Levels/TestLevel/tree.png
     speed: 0
     width: 64
