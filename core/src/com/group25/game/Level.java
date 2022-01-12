@@ -1,15 +1,26 @@
 package com.group25.game;
 
-import com.badlogic.gdx.Screen;
+/**
+ * LibGDX Imports....
+ */
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+
+/**
+ * Other Imports
+ */
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
 
 public class Level implements Screen{
     private SpriteBatch batch;
@@ -19,32 +30,73 @@ public class Level implements Screen{
 	private Player character;
 	private FitViewport viewport;
 
-	private Sprite slimeImage;
-	private GameEntity slime;
+	ArrayList<GameEntity> trees = new ArrayList<GameEntity>(); // Create an ArrayList object
 
-
-	final int GAME_WORLD_WIDTH = 1536;
-	final int GAME_WORLD_HEIGHT = 1536;
+	final int GAME_WORLD_WIDTH = 720;
+	final int GAME_WORLD_HEIGHT = 720;
 	
 	public Level() {
 		batch = new SpriteBatch();
-		img = new Sprite(new Texture("badlogic.jpg"));
+		img = new Sprite(new Texture("character.png"));
 		backgroundPicture = new Sprite(new Texture("tempBackground.jpg"));
 		backgroundPicture.setSize(GAME_WORLD_WIDTH,GAME_WORLD_HEIGHT);
 		camera = new OrthographicCamera();
-		viewport = new FitViewport(960, 720,camera);
+		viewport = new FitViewport(480, 360,camera);
 		viewport.apply();
 		camera.position.set(GAME_WORLD_WIDTH/2,GAME_WORLD_HEIGHT/2,0);
 
-		character = new Player((int)GAME_WORLD_WIDTH/2-80,(int)GAME_WORLD_HEIGHT/2-80,256,256,100,img,2);//probably temp, just getting used to libgd
-
-
-		slimeImage= new Sprite(new Texture("Green_Slime.png"));
-		slimeImage.setSize(100,100);
-		slime = new Slime(200,200,(int)slimeImage.getWidth(),(int)slimeImage.getHeight(),50,slimeImage,1);
+		loadLevel("TestLevel");
+		// TODO : this needs to be fixed haha
+		//"testlevel" would actually be anything that is parsed into the level constructor.
+		//so if "level1" was given to Level.java, then it would attempt to find the txt file containing level details 
+		//for level 1.
+		//For a test, this is fine.
+		
+		character = new Player((int)GAME_WORLD_WIDTH/2-80,(int)GAME_WORLD_HEIGHT/2-80,64,64,100,img,1);//probably temp, just getting used to libgdx
 
 	}
 
+	public void loadLevel(String levelName){
+		//unload the previous level if needed... TODO : Not done...
+		//would just be an emptying of the arraylists, with the appropriate dispose()?
+		//need to understand dispose() better...
+		try{
+			//load file into levelInfo
+			Scanner levelInfo = new Scanner(new File(Gdx.files.internal("Levels/"+levelName+"/level.txt")+""));
+			//Scanner allows us to go line by line in the file with.nextLine()
+			String line = levelInfo.nextLine();
+			//make sure its not end of file
+			while (levelInfo.hasNextLine()) {
+				//line = line.replace("    ","");
+				if(line.equals("DEFAULT PLAYER POSITIONS:")){
+					// TODO : 
+				}else if(line.equals("GAME ENTITY:")){
+					//list of arguments needed to make the GameEntity
+					ArrayList<String> args = new ArrayList<String>();
+					for(int i=0;i<6;i++){
+						//populate the arguments arraylist.
+						String s = levelInfo.nextLine();
+						args.add(s.substring(s.indexOf(":")+2));
+					}
+					
+					//gotta do some mad type changing
+					trees.add(new GameEntity(Float.parseFloat(args.get(0)),
+												Float.parseFloat(args.get(1)),
+												Integer.parseInt(args.get(4)), 
+												Integer.parseInt(args.get(5)), 
+												new Sprite(new Texture(args.get(2))), 
+												Integer.parseInt(args.get(3))));
+
+				}else if(line.equals("ENEMY:")){
+					// TODO : enemy might not be final. 
+				}
+				line = levelInfo.nextLine();
+			}
+		} catch(FileNotFoundException fileNotFoundException){
+			System.out.println("file "+Gdx.files.internal("Levels/"+levelName+"/level.txt")+ " not found!");
+		}
+	}
+	
 	@Override
 	public void resize(int width, int height){
 		viewport.update(width,height);
@@ -52,8 +104,8 @@ public class Level implements Screen{
 
 	public boolean checkForCollision(char axis, float coordinate){
 		//check for map boundaries
-		//1280 because length of map-size of character
-		if(coordinate < 1280 && coordinate > 0){
+		//game world is square
+		if(coordinate < GAME_WORLD_WIDTH-character.width && coordinate > 0){
 			//then check if theres an object(Thing) in the way and if its collidable?
 			return true;
 		}
@@ -69,10 +121,13 @@ public class Level implements Screen{
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		backgroundPicture.draw(batch);
+
+		for(int i=0;i<trees.size();i++){
+			batch.draw(trees.get(i).getSprite(),trees.get(i).getX(),trees.get(i).getY());
+		}
+
 		batch.draw(character.getSprite(), character.x, character.y);
 
-		batch.draw(slime.getSprite(),slime.getX(),slime.getY());
-		//batch.draw(, character.x, character.y);
 		//for attack and shit u wanna do isKeyJustPressed rather than isKeyPressed
 		if(Gdx.input.isKeyPressed(Keys.W)){
 			if(checkForCollision('y',character.y + character.speed)){
@@ -146,13 +201,19 @@ public class Level implements Screen{
         
     }
 
-    @Override
+    /**
+	 * Pause is ran the window is minimized and just before dispose() when exiting game
+	 */
+	@Override
     public void pause() {
         // TODO Auto-generated method stub
         
     }
-
-    @Override
+    
+	/**
+	 * Resume is when window is no longer minimised.
+	 */
+	@Override
     public void resume() {
         // TODO Auto-generated method stub
         
