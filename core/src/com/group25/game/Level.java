@@ -29,8 +29,11 @@ public class Level implements Screen{
 	private OrthographicCamera camera;
 	private Player character;
 	private FitViewport viewport;
+	//TEMP DELETEME
+	private Slime slime;
 
 	ArrayList<GameEntity> trees = new ArrayList<GameEntity>(); // Create an ArrayList object
+	ArrayList<Enemy> enemies = new ArrayList<Enemy>(); // Create an ArrayList object
 
 	final int GAME_WORLD_WIDTH = 720;
 	final int GAME_WORLD_HEIGHT = 720;
@@ -87,8 +90,26 @@ public class Level implements Screen{
 												new Sprite(new Texture(args.get(2))), 
 												Integer.parseInt(args.get(3))));
 
-				}else if(line.equals("ENEMY:")){
+				}else if(line.equals("SLIME:")){
 					// TODO : enemy might not be final. 
+					ArrayList<String> args = new ArrayList<String>();
+					for(int i=0;i<7;i++){
+						//populate the arguments arraylist.
+						String s = levelInfo.nextLine();
+						args.add(s.substring(s.indexOf(":")+2));
+					}
+
+					System.out.println("IMPORTANT !! ! ! ! ! " +Float.parseFloat(args.get(4)));
+					enemies.add(new Slime(Float.parseFloat(args.get(0)),
+											Float.parseFloat(args.get(1)),
+											Integer.parseInt(args.get(5)),
+											Integer.parseInt(args.get(6)),
+											Integer.parseInt(args.get(2)),
+											new Sprite(new Texture(args.get(3))),
+											Float.parseFloat(args.get(4))));
+					//TEMP DELETEME
+					slime = (Slime) enemies.get(0);
+				
 				}
 				line = levelInfo.nextLine();
 			}
@@ -115,6 +136,7 @@ public class Level implements Screen{
 	
 	@Override
 	public void render (float delta) {
+		System.out.println(slime.speed);
 		ScreenUtils.clear(1, 0, 0, 1);//red background
 
 		camera.update();
@@ -124,6 +146,10 @@ public class Level implements Screen{
 
 		for(int i=0;i<trees.size();i++){
 			batch.draw(trees.get(i).getSprite(),trees.get(i).getX(),trees.get(i).getY());
+		}
+
+		for(int i=0;i<enemies.size();i++){
+			batch.draw(enemies.get(i).getSprite(),enemies.get(i).getX(),enemies.get(i).getY());
 		}
 
 		batch.draw(character.getSprite(), character.x, character.y);
@@ -165,7 +191,7 @@ public class Level implements Screen{
 		}
 
 		character.update();
-		/*
+		
 		slime.update();
 
 		//If person enters slimes territory
@@ -183,7 +209,7 @@ public class Level implements Screen{
 					slime.setY(slime.getY()-slime.getSpeed());
 				}
 			}
-		}*/
+		}
 
 		batch.end();
 	}

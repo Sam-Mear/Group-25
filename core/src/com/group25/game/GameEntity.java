@@ -11,14 +11,14 @@ public class GameEntity {
     protected int height;
 
     protected Sprite sprite;
-    protected int speed;
+    protected float speed;
     protected boolean collidable = true;
 
 	protected Rectangle hitbox;
 
 	private int health;
 
-    public GameEntity(float positionX, float positionY, int width, int height, Sprite img, int entitySpeed){
+    public GameEntity(float positionX, float positionY, int width, int height, Sprite img, float entitySpeed){
 		x = positionX;
 		y = positionY;
 		sprite = img;
@@ -39,7 +39,7 @@ public class GameEntity {
 	 * @param entitySpeed
 	 * @param hitbox
 	 */
-	public GameEntity(float positionX, float positionY, int width, int height, Sprite img, int entitySpeed, Rectangle hitbox) {
+	public GameEntity(float positionX, float positionY, int width, int height, Sprite img, float entitySpeed, Rectangle hitbox) {
 		x = positionX;
 		y = positionY;
 		sprite = img;
@@ -89,7 +89,7 @@ public class GameEntity {
 		this.sprite = sprite;
 	}
 
-	public int getSpeed() {
+	public float getSpeed() {
 		return speed;
 	}
 

@@ -7,26 +7,34 @@ GAME ENTITY:
     sprite: Levels/TestLevel/tree.png
     speed: 0
     width: 64
-    height:128
+    height: 128
 GAME ENTITY:
     x: 500
     y: 600
     sprite: Levels/TestLevel/tree.png
     speed: 0
     width: 64
-    height:128
+    height: 128
 GAME ENTITY:
     x: 135
     y: 135
     sprite: Levels/TestLevel/tree.png
     speed: 0
     width: 64
-    height:128
+    height: 128
 GAME ENTITY:
     x: 200
     y: 200
     sprite: Levels/TestLevel/tree.png
     speed: 0
     width: 64
-    height:128
-ENEMY:
+    height: 128
+SLIME:
+    x: 600
+    y: 300
+    health: 25
+    sprite: Green_Slime.png
+    speed: 0.5
+    width: 32
+    height: 32
+jdsgfjshdgfk

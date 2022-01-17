@@ -6,9 +6,9 @@ import java.awt.*;
 
 public class Slime extends Enemy{
 
-    public Slime(float positionX, float positionY,int width, int height,int health, Sprite img, int entitySpeed){
+    public Slime(float positionX, float positionY,int width, int height,int health, Sprite img, float entitySpeed){
         super(positionX, positionY, width, height, health, img, entitySpeed,new Rectangle((int)positionX,(int)positionY,width,height),new Rectangle((int)positionX,(int)positionY,width+200,height+200));
-        this.setSpeed(8);
+        //this.setSpeed(8);
     }
 
     @Override
