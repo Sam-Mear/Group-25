@@ -99,7 +99,6 @@ public class Level implements Screen{
 						args.add(s.substring(s.indexOf(":")+2));
 					}
 
-					System.out.println("IMPORTANT !! ! ! ! ! " +Float.parseFloat(args.get(4)));
 					enemies.add(new Slime(Float.parseFloat(args.get(0)),
 											Float.parseFloat(args.get(1)),
 											Integer.parseInt(args.get(5)),
@@ -136,7 +135,6 @@ public class Level implements Screen{
 	
 	@Override
 	public void render (float delta) {
-		System.out.println(slime.speed);
 		ScreenUtils.clear(1, 0, 0, 1);//red background
 
 		camera.update();
