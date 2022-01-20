@@ -24,4 +24,8 @@ public class Slime extends Enemy{
 
        // this.getAlertArea().setLocation((int)(this.getAlertArea().getX()+xDiff),(int)(this.getAlertArea().getY()+yDiff));
     }
+    //We can move the tracking code into here, instead
+    public void track(Player player){
+
+    }
 }

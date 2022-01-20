@@ -9,11 +9,21 @@ import java.awt.*;
 //This only really applies to drop items i guess?
 public abstract class Item extends GameEntity {
 
+    private boolean pickedUp = false;   //This would mean an item has been rendered
+
     public Item(float positionX, float positionY, int width, int height, Sprite img) {
         super(positionX, positionY, width, height, img);
     }
 
     public Item(float positionX, float positionY, int width, int height, Sprite img, Rectangle hitbox) {
         super(positionX, positionY, width, height, img, hitbox);
+    }
+
+    public void pickUp(){
+        this.pickedUp = true;
+    }
+
+    public boolean isPickedUp(){
+        return pickedUp;
     }
 }

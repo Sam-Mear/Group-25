@@ -8,6 +8,8 @@ public abstract class Creature extends GameEntity{
 
     protected float speed;
     protected int health;
+    protected float attackSpeed;
+    protected float attackDamage;
 
     public Creature(float positionX, float positionY,int width, int height,int health, Sprite img, float entitySpeed, Rectangle hitbox){
         super(positionX, positionY, width, height, img,hitbox);

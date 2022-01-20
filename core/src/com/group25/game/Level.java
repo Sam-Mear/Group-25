@@ -33,6 +33,9 @@ public class Level implements Screen{
 	private Slime slime;
 	private Sprite allertArea;
 
+	private Drop coin;
+	private Sprite coinSprite;
+
 	ArrayList<Enviroment> trees = new ArrayList<Enviroment>(); // Create an ArrayList object
 	ArrayList<Enemy> enemies = new ArrayList<Enemy>(); // Create an ArrayList object
 
@@ -42,6 +45,9 @@ public class Level implements Screen{
 	public Level() {
 		batch = new SpriteBatch();
 		img = new Sprite(new Texture("character.png"));
+
+		coinSprite = new Sprite((new Texture("Coin.png")));
+
 		backgroundPicture = new Sprite(new Texture("tempBackground.jpg"));
 		backgroundPicture.setSize(GAME_WORLD_WIDTH,GAME_WORLD_HEIGHT);
 		camera = new OrthographicCamera();
@@ -65,6 +71,8 @@ public class Level implements Screen{
 	}
 
 	public void loadLevel(String levelName){
+
+		coin = new Drop(100, 100, 20, 20, coinSprite,1,DropType.COIN);
 		//unload the previous level if needed... TODO : Not done...
 		//would just be an emptying of the arraylists, with the appropriate dispose()?
 		//need to understand dispose() better...
@@ -148,6 +156,9 @@ public class Level implements Screen{
 		int aWidth = 200;
 		int aHeight = 200;
 		batch.draw(allertArea,slime.getX()-(aWidth-slime.getWidth())/2,slime.getY()-(aHeight-slime.getHeight())/2);
+		if(!coin.isPickedUp()){
+			batch.draw(coin.sprite,coin.x,coin.y);
+		}
 
 		for(int i=0;i<trees.size();i++){
 			batch.draw(trees.get(i).getSprite(),trees.get(i).getX(),trees.get(i).getY());
@@ -198,7 +209,7 @@ public class Level implements Screen{
 		}
 
 		character.update();
-
+		character.pickUp(coin);
 		slime.update();
 
 		//If person enters slimes territory
