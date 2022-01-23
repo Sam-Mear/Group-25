@@ -13,19 +13,12 @@ public class Slime extends Enemy{
     }
 
     @Override
-    public void update() {
-        this.getHitbox().setLocation((int)this.getX(),(int)this.getY());
-        this.getAlertArea().setLocation((int)(this.getX()-(200-this.getWidth())/2),(int)(this.getY()-(200-this.getHeight())/2));
-        System.out.printf("Slime alertArea left x: %d bottom y: %d\n",(int)(this.getX()-(200-this.getWidth())/2),(int)(this.getY()-(200-this.getHeight())/2));
-        System.out.printf("Slime alertArea right x: %d top y: %d\n",(int)(this.getX()-(200-this.getWidth())/2) + 200,(int)(this.getY()-(200-this.getHeight())/2)+200);
-        System.out.printf("Slime alertArea: width: %d height: %d\n",200,200);
-        //float xDiff = (float)this.getAlertArea().getX() - this.getX();
-        //float yDiff = (float)this.getAlertArea().getY() - this.getY();
-
-       // this.getAlertArea().setLocation((int)(this.getAlertArea().getX()+xDiff),(int)(this.getAlertArea().getY()+yDiff));
-    }
-    //We can move the tracking code into here, instead
-    public void track(Player player){
-
+    public void explore(Player player) {
+        this.getHitbox().setLocation((int) this.getX(), (int) this.getY());
+        this.getAlertArea().setLocation((int) (this.getX() - (200 - this.getWidth()) / 2), (int) (this.getY() - (200 - this.getHeight()) / 2));
+        System.out.printf("Slime alertArea left x: %d bottom y: %d\n", (int) (this.getX() - (200 - this.getWidth()) / 2), (int) (this.getY() - (200 - this.getHeight()) / 2));
+        System.out.printf("Slime alertArea right x: %d top y: %d\n", (int) (this.getX() - (200 - this.getWidth()) / 2) + 200, (int) (this.getY() - (200 - this.getHeight()) / 2) + 200);
+        System.out.printf("Slime alertArea: width: %d height: %d\n", 200, 200);
+        this.chasePlayer(player);
     }
 }

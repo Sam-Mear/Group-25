@@ -35,7 +35,6 @@ public abstract class Creature extends GameEntity{
         this.speed = speed;
     }
 
-    @Override
     public int getHealth() {
         return health;
     }

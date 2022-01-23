@@ -13,10 +13,7 @@ public abstract class GameEntity {
     protected Sprite sprite;
     protected float speed;
     protected boolean collidable = true;
-
 	protected Rectangle hitbox;
-
-	private int health;
 
     public GameEntity(float positionX, float positionY, int width, int height, Sprite img){
 		x = positionX;
@@ -92,22 +89,6 @@ public abstract class GameEntity {
 
 	public void setCollidable(boolean collidable) {
 		this.collidable = collidable;
-	}
-
-	public void takeDamage(int damage){
-		health -= damage;
-	}
-
-	public void setHealth(int health){
-		this.health = health;
-	}
-
-	public int getHealth(){
-		return health;
-	}
-
-	public void update(){
-
 	}
 
 	public Rectangle getHitbox() {

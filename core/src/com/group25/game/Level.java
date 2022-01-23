@@ -209,36 +209,16 @@ public class Level implements Screen{
 		}
 
 		character.update();
-		character.pickUp(coin);
-		slime.update();
 
+		//Would be changed into an array of all the coins
+		//Coins removed would not be checked this is for testing purposes
+		if(!coin.isPickedUp()){
+			character.pickUp(coin);
+		}
+
+		slime.explore(character);
 		//If person enters slimes territory
 		//If the entire person has entered the slime territory
-		if(slime instanceof Enemy){
-			if(((Enemy) slime).getAlertArea().contains(character.getHitbox())){
-				//Slime should charge the mf
-				//determine Y
-				if(slime.getY()<character.getY()){
-					//go down
-					slime.setY(slime.getY()+slime.getSpeed());
-				}
-
-				if(slime.getY()>character.getY()){
-					//go down
-					slime.setY(slime.getY()-slime.getSpeed());
-				}
-
-				if(slime.getX()<character.getX()){
-					//go down
-					slime.setX(slime.getX()+slime.getSpeed());
-				}
-
-				if(slime.getX()>character.getX()){
-					//go down
-					slime.setX(slime.getX()-slime.getSpeed());
-				}
-			}
-		}
 
 		batch.end();
 	}

@@ -16,7 +16,6 @@ public class Player extends Creature{
                 new Rectangle((int)positionX,(int)positionY,width,height));
     }
 
-    @Override
     public void update() {
         this.getHitbox().setLocation((int) this.getX(), (int) this.getY());
        // System.out.printf("Player hitBox x: %d y: %d\n", (int) this.getX(), (int) this.getY());
