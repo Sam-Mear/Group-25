@@ -24,8 +24,10 @@ import java.util.Scanner;
 
 public class Level implements Screen{
     private SpriteBatch batch;
+	private SpriteBatch UIElements;
 	private Sprite img;
 	private Sprite backgroundPicture;
+	private Sprite UiBorder;
 	private OrthographicCamera camera;
 	private Player character;
 	private FitViewport viewport;
@@ -35,16 +37,18 @@ public class Level implements Screen{
 	ArrayList<GameEntity> trees = new ArrayList<GameEntity>(); // Create an ArrayList object
 	ArrayList<Enemy> enemies = new ArrayList<Enemy>(); // Create an ArrayList object
 
-	final int GAME_WORLD_WIDTH = 720;
-	final int GAME_WORLD_HEIGHT = 720;
+	final int GAME_WORLD_WIDTH = 1240;
+	final int GAME_WORLD_HEIGHT = 1240;
 	
 	public Level() {
 		batch = new SpriteBatch();
+		UIElements = new SpriteBatch();
 		img = new Sprite(new Texture("character.png"));
 		backgroundPicture = new Sprite(new Texture("tempBackground.jpg"));
 		backgroundPicture.setSize(GAME_WORLD_WIDTH,GAME_WORLD_HEIGHT);
+		UiBorder = new Sprite(new Texture("GUI/border.png"));
 		camera = new OrthographicCamera();
-		viewport = new FitViewport(480, 360,camera);
+		viewport = new FitViewport(840, 563,camera);
 		viewport.apply();
 		camera.position.set(GAME_WORLD_WIDTH/2,GAME_WORLD_HEIGHT/2,0);
 
@@ -55,7 +59,7 @@ public class Level implements Screen{
 		//for level 1.
 		//For a test, this is fine.
 		
-		character = new Player((int)GAME_WORLD_WIDTH/2-80,(int)GAME_WORLD_HEIGHT/2-80,64,64,100,img,1);//probably temp, just getting used to libgdx
+		character = new Player((int)GAME_WORLD_WIDTH/2-80,(int)GAME_WORLD_HEIGHT/2-80,64,64,100,img,(float)1.5);//probably temp, just getting used to libgdx
 
 	}
 
@@ -210,6 +214,16 @@ public class Level implements Screen{
 		}
 
 		batch.end();
+
+		/**
+		 * Drawing UI
+		 */
+
+		 UIElements.begin();
+
+		 UiBorder.draw(UIElements);
+
+		 UIElements.end();
 	}
 	
 	@Override
