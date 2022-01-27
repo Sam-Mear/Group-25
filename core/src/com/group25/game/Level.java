@@ -33,8 +33,12 @@ public class Level implements Screen{
 	private FitViewport viewport;
 	//TEMP DELETEME
 	private Slime slime;
+	private Sprite allertArea;
 
-	ArrayList<GameEntity> trees = new ArrayList<GameEntity>(); // Create an ArrayList object
+	private Drop coin;
+	private Sprite coinSprite;
+
+	ArrayList<Enviroment> trees = new ArrayList<Enviroment>(); // Create an ArrayList object
 	ArrayList<Enemy> enemies = new ArrayList<Enemy>(); // Create an ArrayList object
 
 	final int GAME_WORLD_WIDTH = 1240;
@@ -42,8 +46,10 @@ public class Level implements Screen{
 	
 	public Level() {
 		batch = new SpriteBatch();
-		UIElements = new SpriteBatch();
-		img = new Sprite(new Texture("character.png"));
+		img = new Sprite(new Texture("animation.png"));
+
+		coinSprite = new Sprite((new Texture("Coin.png")));
+
 		backgroundPicture = new Sprite(new Texture("tempBackground.jpg"));
 		backgroundPicture.setSize(GAME_WORLD_WIDTH,GAME_WORLD_HEIGHT);
 		UiBorder = new Sprite(new Texture("GUI/border.png"));
@@ -58,12 +64,19 @@ public class Level implements Screen{
 		//so if "level1" was given to Level.java, then it would attempt to find the txt file containing level details 
 		//for level 1.
 		//For a test, this is fine.
-		
-		character = new Player((int)GAME_WORLD_WIDTH/2-80,(int)GAME_WORLD_HEIGHT/2-80,64,64,100,img,(float)1.5);//probably temp, just getting used to libgdx
 
+		character = new Player((int)GAME_WORLD_WIDTH/2-80,(int)GAME_WORLD_HEIGHT/2-80,64,64,100,img,5);//probably temp, just getting used to libgdx
+		character.setSpeed(1);
+
+		allertArea = new Sprite(new Texture(("Slime_Test_Area.png")));
+
+		MonsterSpawner s = new MonsterSpawner(0,0,40,40,img,slime);
+		//System.out.println("Speeddddd: "+character.getSpeed());
 	}
 
 	public void loadLevel(String levelName){
+
+		coin = new Drop(100, 100, 20, 20, coinSprite,1,DropType.COIN);
 		//unload the previous level if needed... TODO : Not done...
 		//would just be an emptying of the arraylists, with the appropriate dispose()?
 		//need to understand dispose() better...
@@ -87,12 +100,11 @@ public class Level implements Screen{
 					}
 					
 					//gotta do some mad type changing
-					trees.add(new GameEntity(Float.parseFloat(args.get(0)),
+					trees.add(new Enviroment(Float.parseFloat(args.get(0)),
 												Float.parseFloat(args.get(1)),
 												Integer.parseInt(args.get(4)), 
 												Integer.parseInt(args.get(5)), 
-												new Sprite(new Texture(args.get(2))), 
-												Integer.parseInt(args.get(3))));
+												new Sprite(new Texture(args.get(2)))));
 
 				}else if(line.equals("SLIME:")){
 					// TODO : enemy might not be final. 
@@ -145,6 +157,12 @@ public class Level implements Screen{
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		backgroundPicture.draw(batch);
+		int aWidth = 200;
+		int aHeight = 200;
+		batch.draw(allertArea,slime.getX()-(aWidth-slime.getWidth())/2,slime.getY()-(aHeight-slime.getHeight())/2);
+		if(!coin.isPickedUp()){
+			batch.draw(coin.sprite,coin.x,coin.y);
+		}
 
 		for(int i=0;i<trees.size();i++){
 			batch.draw(trees.get(i).getSprite(),trees.get(i).getX(),trees.get(i).getY());
@@ -154,27 +172,29 @@ public class Level implements Screen{
 			batch.draw(enemies.get(i).getSprite(),enemies.get(i).getX(),enemies.get(i).getY());
 		}
 
-		batch.draw(character.getSprite(), character.x, character.y);
+		batch.draw(character.getTexture(), character.getX(), character.getY());
 
 		//for attack and shit u wanna do isKeyJustPressed rather than isKeyPressed
 		if(Gdx.input.isKeyPressed(Keys.W)){
-			if(checkForCollision('y',character.y + character.speed)){
-				character.y = character.y + character.speed;
+			if(checkForCollision('y',character.getY() + character.getSpeed())){
+				System.out.println("PRESSING UP");
+				System.out.println("Speed: "+character.getSpeed());
+				character.setY(character.getY() + character.getSpeed());
 			}
 		}
 		if(Gdx.input.isKeyPressed(Keys.S)){
-			if(checkForCollision('y',character.y - character.speed)){
-				character.y = character.y - character.speed;
+			if(checkForCollision('y',character.getY() - character.getSpeed())){
+				character.setY(character.getY() - character.getSpeed());
 			}
 		}
 		if(Gdx.input.isKeyPressed(Keys.A)){
-			if(checkForCollision('x',character.x - character.speed)){
-				character.x = character.x - character.speed;
+			if(checkForCollision('x',character.getX() - character.getSpeed())){
+				character.setX(character.getX() - character.getSpeed());
 			}
 		}
 		if(Gdx.input.isKeyPressed(Keys.D)){
-			if(checkForCollision('x',character.x + character.speed)){
-				character.x = character.x + character.speed;
+			if(checkForCollision('x',character.getX() + character.getSpeed())){
+				character.setX(character.getX() + character.getSpeed());
 			}
 		}
 
@@ -193,25 +213,16 @@ public class Level implements Screen{
 		}
 
 		character.update();
-		
-		slime.update();
 
-		//If person enters slimes territory
-		if(slime instanceof Enemy){
-			if(((Enemy) slime).getAlertArea().contains(character.getHitbox())){
-				//Slime should charge the mf
-				//determine Y
-				if(slime.getY()<character.getY()){
-					//go down
-					slime.setY(slime.getY()+slime.getSpeed());
-				}
-
-				if(slime.getY()>character.getY()){
-					//go down
-					slime.setY(slime.getY()-slime.getSpeed());
-				}
-			}
+		//Would be changed into an array of all the coins
+		//Coins removed would not be checked this is for testing purposes
+		if(!coin.isPickedUp()){
+			character.pickUp(coin);
 		}
+
+		slime.explore(character);
+		//If person enters slimes territory
+		//If the entire person has entered the slime territory
 
 		batch.end();
 
