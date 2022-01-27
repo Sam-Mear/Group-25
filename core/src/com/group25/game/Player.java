@@ -1,6 +1,7 @@
 package com.group25.game;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import java.awt.*;
 
@@ -10,16 +11,25 @@ public class Player extends Creature{
     private int currentMana;
     private int manaLimit = 100;
     private int healthLimit = 10;
+    private EnitiyAnimation animation;
+    private TextureRegion currentTexture;
 
     public Player(float positionX, float positionY,int width, int height,int health, Sprite img, int entitySpeed){
         super(positionX, positionY, width, height, health, img, entitySpeed,
                 new Rectangle((int)positionX,(int)positionY,width,height));
+
+        animation = new EnitiyAnimation(new TextureRegion(img),3,20);
+        currentTexture = animation.getCurrentFrame();
+
     }
 
     public void update() {
         this.getHitbox().setLocation((int) this.getX(), (int) this.getY());
        // System.out.printf("Player hitBox x: %d y: %d\n", (int) this.getX(), (int) this.getY());
-        System.out.println("Coin amount: "+coins);
+        //System.out.println("Coin amount: "+coins);
+        animation.update(1);
+       // animation.getCurrentFrame();
+        currentTexture = animation.getCurrentFrame();
     }
 
     /*
@@ -49,6 +59,10 @@ public class Player extends Creature{
             }
         }
     }
+    public TextureRegion getTexture(){
+        return currentTexture;
+    }
+
     /*
     Negative values, when purchasing or spending coins
     Positive value when gaining coins i.e picking them up

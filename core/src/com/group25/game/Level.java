@@ -44,7 +44,7 @@ public class Level implements Screen{
 	
 	public Level() {
 		batch = new SpriteBatch();
-		img = new Sprite(new Texture("character.png"));
+		img = new Sprite(new Texture("animation.png"));
 
 		coinSprite = new Sprite((new Texture("Coin.png")));
 
@@ -61,12 +61,13 @@ public class Level implements Screen{
 		//so if "level1" was given to Level.java, then it would attempt to find the txt file containing level details 
 		//for level 1.
 		//For a test, this is fine.
-		
+
 		character = new Player((int)GAME_WORLD_WIDTH/2-80,(int)GAME_WORLD_HEIGHT/2-80,64,64,100,img,5);//probably temp, just getting used to libgdx
 		character.setSpeed(1);
 
 		allertArea = new Sprite(new Texture(("Slime_Test_Area.png")));
 
+		MonsterSpawner s = new MonsterSpawner(0,0,40,40,img,slime);
 		//System.out.println("Speeddddd: "+character.getSpeed());
 	}
 
@@ -168,7 +169,7 @@ public class Level implements Screen{
 			batch.draw(enemies.get(i).getSprite(),enemies.get(i).getX(),enemies.get(i).getY());
 		}
 
-		batch.draw(character.getSprite(), character.getX(), character.getY());
+		batch.draw(character.getTexture(), character.getX(), character.getY());
 
 		//for attack and shit u wanna do isKeyJustPressed rather than isKeyPressed
 		if(Gdx.input.isKeyPressed(Keys.W)){

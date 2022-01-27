@@ -10,6 +10,7 @@ public abstract class Enemy extends Creature{
     private int coinDrop;
     private int manaDrop;
     private int heartDrop;
+    private boolean alive = true;
 
     public Enemy(float positionX, float positionY, int width, int height, int health, Sprite img, float entitySpeed,Rectangle hitbox, Rectangle alertArea) {
         super(positionX, positionY, width, height, health, img, entitySpeed,hitbox);
@@ -49,6 +50,17 @@ public abstract class Enemy extends Creature{
                 //go down
                 this.setX(this.getX() - this.getSpeed());
             }
+        }
+    }
+
+    public void takeDamage(int damage){
+        if(getHealth()-damage<0){
+            //Then we want to drop all of the things
+            //If this happens then we would like to render all of the coins and shit
+            alive = false;
+        }
+        else{
+            this.editHealth(-damage);
         }
     }
 
