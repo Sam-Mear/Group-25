@@ -40,8 +40,8 @@ public class Level implements Screen{
 	
 	public Level() {
 		batch = new SpriteBatch();
-		img = new Sprite(new Texture("character.png"));
-		backgroundPicture = new Sprite(new Texture("tempBackground.jpg"));
+		img = new Sprite(new Texture("GameEntity/character.png"));
+		backgroundPicture = new Sprite(new Texture("Backgrounds/tempBackground.jpg"));
 		backgroundPicture.setSize(GAME_WORLD_WIDTH,GAME_WORLD_HEIGHT);
 		camera = new OrthographicCamera();
 		viewport = new FitViewport(480, 360,camera);

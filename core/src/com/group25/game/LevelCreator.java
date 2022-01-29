@@ -35,14 +35,13 @@ public class LevelCreator extends JFrame implements Screen{
 	private Sprite img;
 	private Sprite backgroundPicture;
 	private OrthographicCamera camera;
-	private Player character;
 	private FitViewport viewport;
 
 	ArrayList<GameEntity> trees = new ArrayList<GameEntity>(); // Create an ArrayList object
 	ArrayList<Enemy> enemies = new ArrayList<Enemy>(); // Create an ArrayList object
 
-	final int GAME_WORLD_WIDTH = 720;
-	final int GAME_WORLD_HEIGHT = 720;
+	final int GAME_WORLD_WIDTH = 1240;
+	final int GAME_WORLD_HEIGHT = 1240;
 	
 	public LevelCreator() {
 
@@ -50,11 +49,11 @@ public class LevelCreator extends JFrame implements Screen{
         
 
 		batch = new SpriteBatch();
-		img = new Sprite(new Texture("character.png"));
-		backgroundPicture = new Sprite(new Texture("tempBackground.jpg"));
+		img = new Sprite(new Texture("GameEntity/character.png"));
+		backgroundPicture = new Sprite(new Texture("Backgrounds/tempBackground.jpg"));
 		backgroundPicture.setSize(GAME_WORLD_WIDTH,GAME_WORLD_HEIGHT);
 		camera = new OrthographicCamera();
-		viewport = new FitViewport(720, 720,camera);
+		viewport = new FitViewport(1240, 1240,camera);
 		viewport.apply();
 		camera.position.set(GAME_WORLD_WIDTH/2,GAME_WORLD_HEIGHT/2,0);
 
@@ -62,14 +61,39 @@ public class LevelCreator extends JFrame implements Screen{
 		
 	}
 
+	public ArrayList<JRadioButton> listFilesForFolder(final File folder) {
+		ArrayList<JRadioButton> buttons = new ArrayList<JRadioButton>();
+		for (final File fileEntry : folder.listFiles()) {
+			if (fileEntry.isDirectory()) {
+				listFilesForFolder(fileEntry);
+			} else {
+				String temp = fileEntry.getName();
+				buttons.add(new JRadioButton(temp,new ImageIcon(new ImageIcon(Gdx.files.internal("GameEntity/"+temp) + "").getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT))));
+			}
+		}
+		return buttons;
+	}
+
     public void loadLevel(){
         JFrame f = new JFrame("Enter Level Name");
-        JPopupMenu popupMenu = new JPopupMenu("Enter Level Name1");
+        //JPopupMenu popupMenu = new JPopupMenu("Enter Level Name1");
         JTextField enterLevelName = new JTextField(10);
-        f.setSize(200,100);
+		JRadioButton test = new JRadioButton("enemy",new ImageIcon(new ImageIcon(Gdx.files.internal("GameEntity/Green_Slime.png") + "").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT)));
+		JRadioButton test2 = new JRadioButton("enemqqy",new ImageIcon(Gdx.files.internal("GameEntity/Green_Slime.png") + ""));
+
+		final File folder = new File(Gdx.files.internal("GameEntity/") + "");
+		ArrayList<JRadioButton> buttons = listFilesForFolder(folder);
+		for (JRadioButton jRadioButton : buttons) {
+			f.add(jRadioButton);
+		}
+
+        f.setSize(200,500);
+		f.setLayout(new FlowLayout());
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        popupMenu.add(enterLevelName);
-        f.add(popupMenu);
+        //popupMenu.add(enterLevelName);
+        f.add(enterLevelName);
+		f.add(test);
+		f.add(test2);
         f.setVisible(true);
     }
 
