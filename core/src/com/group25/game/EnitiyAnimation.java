@@ -1,10 +1,14 @@
 package com.group25.game;
 
+
+
+import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
-import org.graalvm.compiler.core.common.cfg.Loop;
+//import org.graalvm.compiler.core.common.cfg.Loop;
 
 public class EnitiyAnimation{
 
@@ -26,7 +30,7 @@ public class EnitiyAnimation{
     private int frameTime;
     private int currentFrameTime;
     private int numberOfFrames;
-
+    
     public EnitiyAnimation(TextureRegion animationSegment,int numberOfFrames,int frameTime){
         int frameWidth = animationSegment.getRegionWidth()/numberOfFrames;
         int framdeHeight = animationSegment.getTexture().getHeight();

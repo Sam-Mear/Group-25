@@ -2,6 +2,13 @@ package com.group25.game;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.awt.*;
 
@@ -14,9 +21,14 @@ public class Player extends Creature{
     private EnitiyAnimation animation;
     private TextureRegion currentTexture;
 
-    public Player(float positionX, float positionY,int width, int height,int health, Sprite img, int entitySpeed){
+    private Level level;
+
+
+    public Player(float positionX, float positionY,int width, int height,int health, Sprite img, int entitySpeed, Level level){
         super(positionX, positionY, width, height, health, img, entitySpeed,
                 new Rectangle((int)positionX,(int)positionY,width,height));
+        
+        this.level = level;
 
         animation = new EnitiyAnimation(new TextureRegion(img),3,20);
         currentTexture = animation.getCurrentFrame();
@@ -62,6 +74,33 @@ public class Player extends Creature{
     public TextureRegion getTexture(){
         return currentTexture;
     }
+
+
+    public void keyboardInput(){
+        if(Gdx.input.isKeyPressed(Keys.W)){
+            System.out.println("W");
+			if(level.checkForCollision('y',this.getY() + this.getSpeed())){
+				System.out.println("PRESSING UP");
+				System.out.println("Speed: "+ this.getSpeed());
+				this.setY(this.getY() +this.getSpeed());
+			}
+		}
+		if(Gdx.input.isKeyPressed(Keys.S)){
+			if(level.checkForCollision('y', this.getY() - this.getSpeed())){
+				this.setY(this.getY() - this.getSpeed());
+			}
+		}
+		if(Gdx.input.isKeyPressed(Keys.A)){
+			if(level.checkForCollision('x',this.getX() -this.getSpeed())){
+				this.setX(this.getX() -this.getSpeed());
+			}
+		}
+		if(Gdx.input.isKeyPressed(Keys.D)){
+			if(level.checkForCollision('x',this.getX() + this.getSpeed())){
+				this.setX(this.getX() + this.getSpeed());
+			}
+    }
+}
 
     /*
     Negative values, when purchasing or spending coins
