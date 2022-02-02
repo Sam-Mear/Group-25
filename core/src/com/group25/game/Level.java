@@ -44,7 +44,7 @@ public class Level implements Screen{
 	
 	public Level() {
 		batch = new SpriteBatch();
-		img = new Sprite(new Texture("animation.png"));
+		img = new Sprite(new Texture("Main_character_sprite.png"));
 
 		coinSprite = new Sprite((new Texture("Coin.png")));
 
@@ -174,25 +174,41 @@ public class Level implements Screen{
 		//for attack and shit u wanna do isKeyJustPressed rather than isKeyPressed
 		if(Gdx.input.isKeyPressed(Keys.W)){
 			if(checkForCollision('y',character.getY() + character.getSpeed())){
-				System.out.println("PRESSING UP");
-				System.out.println("Speed: "+character.getSpeed());
+				// System.out.println("PRESSING UP");
+				// System.out.println("Speed: "+character.getSpeed());
 				character.setY(character.getY() + character.getSpeed());
+				character.moveDownAnimation();
 			}
+		}
+		else{
+			character.setMoveDownAnimation(false);
 		}
 		if(Gdx.input.isKeyPressed(Keys.S)){
 			if(checkForCollision('y',character.getY() - character.getSpeed())){
 				character.setY(character.getY() - character.getSpeed());
 			}
+			character.moveUpAnimation();
+		}
+		else{
+			character.setMoveUpAniation(false);
 		}
 		if(Gdx.input.isKeyPressed(Keys.A)){
 			if(checkForCollision('x',character.getX() - character.getSpeed())){
 				character.setX(character.getX() - character.getSpeed());
 			}
+			character.moveLeftAnimation();
+		}
+		else{
+			character.setMoveLeftAnimation(false);
 		}
 		if(Gdx.input.isKeyPressed(Keys.D)){
 			if(checkForCollision('x',character.getX() + character.getSpeed())){
 				character.setX(character.getX() + character.getSpeed());
 			}
+			character.moveRightAnimation();
+		}
+		else{
+			character.setMoveRightAnimation(false);
 		}
 
 		/**

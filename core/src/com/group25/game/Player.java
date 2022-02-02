@@ -14,13 +14,75 @@ public class Player extends Creature{
     private EnitiyAnimation animation;
     private TextureRegion currentTexture;
 
+    private boolean moveUpAnimation;
+    private boolean moveDownAnimation;
+    private boolean moveRightAnimation;
+    private boolean moveLeftAnimation;
+
+    private int startFrame, endFrame = 0;
+
+    private Sprite img;
+
     public Player(float positionX, float positionY,int width, int height,int health, Sprite img, int entitySpeed){
         super(positionX, positionY, width, height, health, img, entitySpeed,
                 new Rectangle((int)positionX,(int)positionY,width,height));
 
-        animation = new EnitiyAnimation(new TextureRegion(img),3,20);
-        currentTexture = animation.getCurrentFrame();
+        this.img = img;
 
+        animatePlayer(img, 10, startFrame, endFrame);
+
+    }
+
+    public void moveUpAnimation(){
+        moveUpAnimation = true;
+        setStartAndEndFrame(0, 2);
+        animatePlayer(img, 10, startFrame, endFrame);
+    }
+    public void moveDownAnimation(){
+        moveDownAnimation = true;
+        setStartAndEndFrame(3, 5);
+        animatePlayer(img, 10, startFrame, endFrame);
+    }
+    public void moveRightAnimation(){
+        moveRightAnimation = true;
+        setStartAndEndFrame(6,7);
+        animatePlayer(img, 10, startFrame, endFrame);
+    }
+    public void moveLeftAnimation(){
+        moveLeftAnimation = true;
+        setStartAndEndFrame(8,9);
+        animatePlayer(img, 10, startFrame, endFrame);
+
+    }
+
+    private void setStartAndEndFrame(int startFrame, int endFrame){
+        this.startFrame = startFrame;
+        this.endFrame = endFrame;
+    }
+
+    public void setMoveDownAnimation(boolean moveDownAnimation){
+        this.moveDownAnimation = moveDownAnimation;
+    }
+
+    public void setMoveUpAniation(boolean moveUpAnimation){
+        this.moveUpAnimation = moveUpAnimation;
+    }
+
+    public void setMoveLeftAnimation(boolean moveLeftAnimation){
+        this.moveLeftAnimation = moveLeftAnimation;
+    }
+
+    public void setMoveRightAnimation(boolean moveRightAnimation){
+        this.moveRightAnimation = moveRightAnimation;
+    }
+
+
+    private void animatePlayer(Sprite direction, int nbOfFrames, int startFrame, int endFrame){
+        TextureRegion selected = new TextureRegion(img);
+
+     
+        animation = new EnitiyAnimation(selected, nbOfFrames, 20, startFrame, endFrame);
+        currentTexture = animation.getCurrentFrame();
     }
 
     public void update() {
