@@ -1,5 +1,6 @@
 package com.group25.game;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.Gdx;
@@ -20,6 +21,22 @@ public class Player extends Creature{
     private int healthLimit = 10;
     private EnitiyAnimation animation;
     private TextureRegion currentTexture;
+    
+    private SpriteBatch mainCharacterSpriteBatch;
+
+    TextureRegion[][] allMovementSprites;
+    TextureRegion[] movementUp;
+    TextureRegion[] movementDown;
+    TextureRegion[] movementleft;
+    TextureRegion[] movementRight;
+
+    Animation<TextureRegion> upWalkAnimation;
+    Animation<TextureRegion> dowonWalkAnimation;
+    Animation<TextureRegion> rightWalkAnimation;
+    Animation<TextureRegion> leftWalkAnimation;
+    
+
+    Texture walkSheet;
 
     private Level level;
 
@@ -29,6 +46,26 @@ public class Player extends Creature{
                 new Rectangle((int)positionX,(int)positionY,width,height));
         
         this.level = level;
+        mainCharacterSpriteBatch = new SpriteBatch();
+
+        walkSheet = new Texture(Gdx.files.internal("C:/Users/Banica/Documents/GitHub/Group-25/core/assets/Main_character_sprite.png"));
+
+        allMovementSprites = TextureRegion.split(walkSheet, 50, 48);
+        
+        for(int i=0; i<=2; i++){
+            movementUp[i] = allMovementSprites[i][0];
+        }
+        for(int i=3; i<=5; i++){
+            movementUp[i] = allMovementSprites[i][0];
+        }
+        for(int i=5; i<=7; i++){
+            movementUp[i] = allMovementSprites[i][0];
+        }
+        for(int i=7; i<=9; i++){
+            movementUp[i] = allMovementSprites[i][0];
+        }
+
+
 
         animation = new EnitiyAnimation(new TextureRegion(img),3,20);
         currentTexture = animation.getCurrentFrame();

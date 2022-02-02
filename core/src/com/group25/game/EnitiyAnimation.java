@@ -63,3 +63,6 @@ public class EnitiyAnimation{
         return frames.get(currentFrame);
     }
 }
+
+
+// batch.draw(character.getTexture(), character.getX(), character.getY());

@@ -170,7 +170,7 @@ public class Level implements Screen{
 			batch.draw(enemies.get(i).getSprite(),enemies.get(i).getX(),enemies.get(i).getY());
 		}
 
-		batch.draw(character.getTexture(), character.getX(), character.getY());
+		
 
 		//for attack and shit u wanna do isKeyJustPressed rather than isKeyPressed
 	
