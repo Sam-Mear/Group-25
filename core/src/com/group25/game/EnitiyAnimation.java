@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
-import org.graalvm.compiler.core.common.cfg.Loop;
 
 public class EnitiyAnimation{
 
@@ -46,8 +45,12 @@ public class EnitiyAnimation{
             frames.add(new TextureRegion(animationSegment,i*frameWidth,0,frameWidth,framdeHeight));
         }
         currentFrame = startFrame;
-
     }
+
+    public void attackAnimation(){
+        
+    }
+
 
 
     public void update(float dt){
@@ -59,7 +62,7 @@ public class EnitiyAnimation{
         }
 
         if(currentFrame >= numberOfFrames || currentFrame > endFrame){
-            if(startFrame-endFrame >  2)
+            if(startFrame-endFrame > 2)
                 currentFrame = startFrame+1;
             else{
                 currentFrame = startFrame;

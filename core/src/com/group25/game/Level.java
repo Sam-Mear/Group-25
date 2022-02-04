@@ -29,6 +29,7 @@ public class Level implements Screen{
 	private OrthographicCamera camera;
 	private Player character;
 	private FitViewport viewport;
+
 	//TEMP DELETEME
 	private Slime slime;
 	private Sprite allertArea;
@@ -62,7 +63,7 @@ public class Level implements Screen{
 		//for level 1.
 		//For a test, this is fine.
 
-		character = new Player((int)GAME_WORLD_WIDTH/2-80,(int)GAME_WORLD_HEIGHT/2-80,64,64,100,img,5);//probably temp, just getting used to libgdx
+		character = new Player(this, (int)GAME_WORLD_WIDTH/2-80,(int)GAME_WORLD_HEIGHT/2-80,64,64,100,img,5);//probably temp, just getting used to libgdx
 		character.setSpeed(1);
 
 		allertArea = new Sprite(new Texture(("Slime_Test_Area.png")));
@@ -171,45 +172,7 @@ public class Level implements Screen{
 
 		batch.draw(character.getTexture(), character.getX(), character.getY());
 
-		//for attack and shit u wanna do isKeyJustPressed rather than isKeyPressed
-		if(Gdx.input.isKeyPressed(Keys.W)){
-			if(checkForCollision('y',character.getY() + character.getSpeed())){
-				// System.out.println("PRESSING UP");
-				// System.out.println("Speed: "+character.getSpeed());
-				character.setY(character.getY() + character.getSpeed());
-				character.moveDownAnimation();
-			}
-		}
-		else{
-			character.setMoveDownAnimation(false);
-		}
-		if(Gdx.input.isKeyPressed(Keys.S)){
-			if(checkForCollision('y',character.getY() - character.getSpeed())){
-				character.setY(character.getY() - character.getSpeed());
-			}
-			character.moveUpAnimation();
-		}
-		else{
-			character.setMoveUpAniation(false);
-		}
-		if(Gdx.input.isKeyPressed(Keys.A)){
-			if(checkForCollision('x',character.getX() - character.getSpeed())){
-				character.setX(character.getX() - character.getSpeed());
-			}
-			character.moveLeftAnimation();
-		}
-		else{
-			character.setMoveLeftAnimation(false);
-		}
-		if(Gdx.input.isKeyPressed(Keys.D)){
-			if(checkForCollision('x',character.getX() + character.getSpeed())){
-				character.setX(character.getX() + character.getSpeed());
-			}
-			character.moveRightAnimation();
-		}
-		else{
-			character.setMoveRightAnimation(false);
-		}
+		character.checkKeysPressed();
 
 		/**
 		 * have camera always follow the player.
@@ -240,6 +203,31 @@ public class Level implements Screen{
 		batch.end();
 	}
 	
+	/**
+	 * FUNCTION THAT CHECKS IN ENEMIES ARE IN THE RANGE OF SOMETHING 
+	 * 	WILL BE USED MAINLY FOR THE ATTACK FUNCTION OF THE PLAYER
+	 */
+	
+	public boolean attack(int x, int y, int z){
+		return true;
+	}
+
+	/**
+	 *  CORRECT FUNCTION
+	 */
+	// public boolean attack(int xAttackRange, int yAttackRange, int damage){
+	// 	for(int i=0; i<enemies.size(); i++){
+	// 		Enemy enemy = enemies.get(i);
+	// 		System.out.print(enemy.getX());
+	// 		if( Math.abs(enemy.getX() - character.getX()) < xAttackRange  
+	// 			&&  Math.abs(enemy.getY() - character.getY()) < yAttackRange){
+	// 				enemy.takeDamage(damage);
+	// 				return true;
+	// 		}
+	// 	}
+	// 	return false;
+	// }
+
 	@Override
 	public void dispose () {
 		batch.dispose();
