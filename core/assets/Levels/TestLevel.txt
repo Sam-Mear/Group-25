@@ -33,7 +33,7 @@ SLIME:
     x: 600
     y: 300
     health: 25
-    sprite: GaeeEntity/Green_Slime.png
+    sprite: GameEntity/Green_Slime.png
     speed: 0.5
     width: 32
     height: 32

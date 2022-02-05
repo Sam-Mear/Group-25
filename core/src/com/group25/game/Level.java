@@ -65,7 +65,7 @@ public class Level implements Screen{
 		//need to understand dispose() better...
 		try{
 			//load file into levelInfo
-			Scanner levelInfo = new Scanner(new File(Gdx.files.internal("Levels/"+levelName+"/level.txt")+""));
+			Scanner levelInfo = new Scanner(new File(Gdx.files.internal("Levels/"+levelName+".txt")+""));
 			//Scanner allows us to go line by line in the file with.nextLine()
 			String line = levelInfo.nextLine();
 			//make sure its not end of file

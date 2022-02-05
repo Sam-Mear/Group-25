@@ -1,0 +1,10 @@
+DEFAULT
+SLIME:
+    x: 
+    y: 
+    width: 32
+    height: 32
+    health: 25
+    sprite: GameEntity/Green_Slime.png
+    speed: 0.5
+

@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
@@ -26,6 +27,7 @@ import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.Scanner;
 
 public class LevelCreator extends JFrame implements Screen{
@@ -37,8 +39,11 @@ public class LevelCreator extends JFrame implements Screen{
 	private OrthographicCamera camera;
 	private FitViewport viewport;
 
+	//button group of the radio buttons
+	private ButtonGroup buttonGroup;
+
 	ArrayList<GameEntity> trees = new ArrayList<GameEntity>(); // Create an ArrayList object
-	ArrayList<Enemy> enemies = new ArrayList<Enemy>(); // Create an ArrayList object
+	ArrayList<ArrayList<String>> textFileOutput = new ArrayList<ArrayList<String>>(); // Create an ArrayList object
 
 	final int GAME_WORLD_WIDTH = 1240;
 	final int GAME_WORLD_HEIGHT = 1240;
@@ -68,23 +73,25 @@ public class LevelCreator extends JFrame implements Screen{
 				listFilesForFolder(fileEntry);
 			} else {
 				String temp = fileEntry.getName();
-				buttons.add(new JRadioButton(temp,new ImageIcon(new ImageIcon(Gdx.files.internal("GameEntity/"+temp) + "").getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT))));
+				if(!temp.contains(".txt")){
+					buttons.add(new JRadioButton(temp,new ImageIcon(new ImageIcon(Gdx.files.internal("GameEntity/"+temp) + "").getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT))));
+				}
 			}
 		}
 		return buttons;
 	}
 
     public void loadLevel(){
+		buttonGroup = new ButtonGroup();
         JFrame f = new JFrame("Enter Level Name");
         //JPopupMenu popupMenu = new JPopupMenu("Enter Level Name1");
         JTextField enterLevelName = new JTextField(10);
-		JRadioButton test = new JRadioButton("enemy",new ImageIcon(new ImageIcon(Gdx.files.internal("GameEntity/Green_Slime.png") + "").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT)));
-		JRadioButton test2 = new JRadioButton("enemqqy",new ImageIcon(Gdx.files.internal("GameEntity/Green_Slime.png") + ""));
 
 		final File folder = new File(Gdx.files.internal("GameEntity/") + "");
 		ArrayList<JRadioButton> buttons = listFilesForFolder(folder);
 		for (JRadioButton jRadioButton : buttons) {
 			f.add(jRadioButton);
+			buttonGroup.add(jRadioButton);
 		}
 
         f.setSize(200,500);
@@ -92,8 +99,6 @@ public class LevelCreator extends JFrame implements Screen{
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //popupMenu.add(enterLevelName);
         f.add(enterLevelName);
-		f.add(test);
-		f.add(test2);
         f.setVisible(true);
     }
 
@@ -137,13 +142,7 @@ public class LevelCreator extends JFrame implements Screen{
 						args.add(s.substring(s.indexOf(":")+2));
 					}
 
-					enemies.add(new Slime(Float.parseFloat(args.get(0)),
-											Float.parseFloat(args.get(1)),
-											Integer.parseInt(args.get(5)),
-											Integer.parseInt(args.get(6)),
-											Integer.parseInt(args.get(2)),
-											new Sprite(new Texture(args.get(3))),
-											Float.parseFloat(args.get(4))));
+					
 				
 				}
 				line = levelInfo.nextLine();
@@ -159,6 +158,92 @@ public class LevelCreator extends JFrame implements Screen{
 	public void resize(int width, int height){
 		viewport.update(width,height);
 	}
+
+	public ArrayList<String> defaultGameEntityValues(String dir, int x, int y, String sprite){
+		try{
+			//load file into defaultEntityInfo
+			Scanner defaultEntityInfo = new Scanner(new File(Gdx.files.internal(dir)+""));
+			//store contents as arraylist, each item being a line to be 
+			//written to the level.txt
+			ArrayList<String> gameEntity = new ArrayList<String>();
+			//Scanner allows us to go line by line in the file with.nextLine()
+			String line = defaultEntityInfo.nextLine();
+			line = defaultEntityInfo.nextLine();
+			gameEntity.add(line);
+			//First line just reads "DEFAULT"
+			//Next line is the header
+
+			//make sure its not end of file
+			while (defaultEntityInfo.hasNextLine()) {
+				
+				line = defaultEntityInfo.nextLine();
+				if(line.contains(" x:")){
+					line = "    x: "+x;
+				}else if(line.contains(" y:")){
+					line = "    y: "+y;
+				}else if (line.contains(" sprite:")){
+					line = "    sprite: "+sprite.split(".txt")[0];
+				}
+
+				gameEntity.add(line);
+			}
+			System.out.println(gameEntity);
+			return gameEntity;
+		} catch(FileNotFoundException fileNotFoundException){
+			System.out.println("file "+Gdx.files.internal(dir)+ " not found!");
+			System.out.println("running default game entity info");
+			//run this function again but with gameEntityDefaults.txt
+			return readDefaultValues("GameEntity/GameEntity.txt", x, y);
+			//remember i need to change the sprite....
+		}
+	}
+	
+	/**
+	 * This function loads in the default values, if there is the
+	 * corrosponding .txt file to load the defaults from.
+	 * This makes it easy to make multiple slimes for example
+	 * 
+	 * @param dir Directory of the text file
+	 * @param x The x coordinate of the entity
+	 * @param y The y coordinate of the entity
+	 * @return Each item in the list is a line to be outputted in level.txt
+	 */
+	public ArrayList<String> readDefaultValues (String dir, int x, int y){
+		try{
+			//load file into defaultEntityInfo
+			Scanner defaultEntityInfo = new Scanner(new File(Gdx.files.internal(dir)+""));
+			//store contents as arraylist, each item being a line to be 
+			//written to the level.txt
+			ArrayList<String> gameEntity = new ArrayList<String>();
+			//Scanner allows us to go line by line in the file with.nextLine()
+			String line = defaultEntityInfo.nextLine();
+			line = defaultEntityInfo.nextLine();
+			gameEntity.add(line);
+			//First line just reads "DEFAULT"
+			//Next line is the header
+
+			//make sure its not end of file
+			while (defaultEntityInfo.hasNextLine()) {
+				
+				line = defaultEntityInfo.nextLine();
+				if(line.contains(" x:")){
+					line = "    x: "+x;
+				}else if(line.contains(" y:")){
+					line = "    y: "+y;
+				}
+
+				gameEntity.add(line);
+			}
+			System.out.println(gameEntity);
+			return gameEntity;
+		} catch(FileNotFoundException fileNotFoundException){
+			System.out.println("file "+Gdx.files.internal(dir)+ " not found!");
+			System.out.println("running default game entity info");
+			//run this function again but with gameEntityDefaults.txt
+			return defaultGameEntityValues("GameEntity/GameEntity.txt", x, y,dir);
+			//remember i need to change the sprite....
+		}
+	}
 	
 	@Override
 	public void render (float delta) {
@@ -173,15 +258,23 @@ public class LevelCreator extends JFrame implements Screen{
             // TODO : see Sam Notes
 			System.out.println("X Coordinate: " + Gdx.input.getX());
             System.out.println("Y Coordinate: " + Gdx.input.getY());
+			Vector3 mousePos = new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
+			camera.unproject(mousePos); // mousePos is now in world coordinates
+			System.out.println(mousePos);
+			System.out.println(buttonGroup.getSelection());
+			Enumeration elements = buttonGroup.getElements();
+			while (elements.hasMoreElements()){
+				AbstractButton button = (AbstractButton)elements.nextElement();
+				if (button.isSelected()) {
+					trees.add(new GameEntity((int)mousePos.x,(int)mousePos.y,10,10,new Sprite(new Texture("GameEntity/"+button.getText())),0));
+					textFileOutput.add(readDefaultValues("GameEntity/"+button.getText()+".txt",(int)mousePos.x,(int)mousePos.y));
+				}
+			}
             //then call the function that puts the object on screen.
 		}
 
 		for(int i=0;i<trees.size();i++){
 			batch.draw(trees.get(i).getSprite(),trees.get(i).getX(),trees.get(i).getY());
-		}
-
-		for(int i=0;i<enemies.size();i++){
-			batch.draw(enemies.get(i).getSprite(),enemies.get(i).getX(),enemies.get(i).getY());
 		}
 
 		//batch.draw(character.getSprite(), character.x, character.y);
