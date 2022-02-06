@@ -3,6 +3,6 @@ GAME ENTITY:
     x: 
     y: 
     width: 64
-    height: 128
+    height: 64
     sprite: 
     speed: 0

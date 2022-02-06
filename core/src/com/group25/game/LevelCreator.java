@@ -1,3 +1,18 @@
+/**
+ * TODO : 
+ *  * actually enter a level name and save as file.
+ *    NOT DONE
+ * 
+ *  * Click on an already placed entity to change its x and y position
+ *    DONE
+ * 
+ *  * Adjust constructor values by clicking on a placed entity
+ *    NOT DONE
+ * 
+ *  * Grid system
+ *    NOT DONE
+ */
+
 package com.group25.game;
 
 /**
@@ -41,6 +56,11 @@ public class LevelCreator extends JFrame implements Screen{
 
 	//button group of the radio buttons
 	private ButtonGroup buttonGroup;
+	//movetool
+	private JCheckBox moveTool;
+	//the below is -1 for not selected.
+	//after moving an etity, it goes back to -1.
+	private int selectedEntity = -1;
 
 	ArrayList<GameEntity> trees = new ArrayList<GameEntity>(); // Create an ArrayList object
 	ArrayList<ArrayList<String>> textFileOutput = new ArrayList<ArrayList<String>>(); // Create an ArrayList object
@@ -94,6 +114,9 @@ public class LevelCreator extends JFrame implements Screen{
 			buttonGroup.add(jRadioButton);
 		}
 
+		moveTool = new JCheckBox("Move Tool");
+		f.add(moveTool);
+
         f.setSize(200,500);
 		f.setLayout(new FlowLayout());
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -102,56 +125,36 @@ public class LevelCreator extends JFrame implements Screen{
         f.setVisible(true);
     }
 
-	public void blah(String levelName){
-		//unload the previous level if needed... TODO : Not done...
-		//would just be an emptying of the arraylists, with the appropriate dispose()?
-		//need to understand dispose() better...
-		try{
-			//load file into levelInfo
-			Scanner levelInfo = new Scanner(new File(Gdx.files.internal("Levels/"+levelName+"/level.txt")+""));
-			//Scanner allows us to go line by line in the file with.nextLine()
-			String line = levelInfo.nextLine();
-			//make sure its not end of file
-			while (levelInfo.hasNextLine()) {
-				//line = line.replace("    ","");
-				if(line.equals("DEFAULT PLAYER POSITIONS:")){
-					// TODO : 
-				}else if(line.equals("GAME ENTITY:")){
-					//list of arguments needed to make the GameEntity
-					ArrayList<String> args = new ArrayList<String>();
-					for(int i=0;i<6;i++){
-						//populate the arguments arraylist.
-						String s = levelInfo.nextLine();
-						args.add(s.substring(s.indexOf(":")+2));
-					}
-					
-					//gotta do some mad type changing
-					trees.add(new GameEntity(Float.parseFloat(args.get(0)),
-												Float.parseFloat(args.get(1)),
-												Integer.parseInt(args.get(4)), 
-												Integer.parseInt(args.get(5)), 
-												new Sprite(new Texture(args.get(2))), 
-												Integer.parseInt(args.get(3))));
-
-				}else if(line.equals("SLIME:")){
-					// TODO : enemy might not be final. 
-					ArrayList<String> args = new ArrayList<String>();
-					for(int i=0;i<7;i++){
-						//populate the arguments arraylist.
-						String s = levelInfo.nextLine();
-						args.add(s.substring(s.indexOf(":")+2));
-					}
-
-					
-				
-				}
-				line = levelInfo.nextLine();
+	public void addEntityToGameWindow(ArrayList<String> entityValues){
+		Float x,y;
+		x = (float) 0;
+		y = (float) 0;
+		Integer width,height;
+		width = 50;
+		height = 50;
+		String sprite;
+		sprite = "GameEntity/tree.png";
+		for(int i=0;i<entityValues.size();i++){
+			if(entityValues.get(i).contains("x:")){
+				x = Float.parseFloat(entityValues.get(i).split(": ")[1]);
+			}else if(entityValues.get(i).contains("y:")){
+				y = Float.parseFloat(entityValues.get(i).split(": ")[1]);
+			}else if(entityValues.get(i).contains("sprite:")){
+				sprite = entityValues.get(i).split(": ")[1];
+			}else if(entityValues.get(i).contains("width:")){
+				width = Integer.parseInt(entityValues.get(i).split(": ")[1]);
+			}else if(entityValues.get(i).contains("height:")){
+				height = Integer.parseInt(entityValues.get(i).split(": ")[1]);
 			}
-		} catch(FileNotFoundException fileNotFoundException){
-			System.out.println("file "+Gdx.files.internal("Levels/"+levelName+"/level.txt")+ " not found!");
-            System.out.println("Attempting to create new file.");
-
 		}
+			
+		//gotta do some mad type changing
+		trees.add(new GameEntity(x,
+								y,
+								width,
+								height, 
+								new Sprite(new Texture(sprite)), 
+								Integer.parseInt("0")));
 	}
 	
 	@Override
@@ -245,6 +248,23 @@ public class LevelCreator extends JFrame implements Screen{
 		}
 	}
 	
+	public void moveEntity(int x, int y){
+		trees.get(selectedEntity).setX(x);
+		trees.get(selectedEntity).setY(y);
+		trees.get(selectedEntity).updateHitbox();
+
+		//now gotta change the txt file output 
+		ArrayList<String> temp = textFileOutput.get(selectedEntity);
+		for(int i=0;i<temp.size();i++){
+			System.out.println(temp.get(i));
+			if(temp.get(i).contains("x:")){
+				temp.set(i,("    x: "+ x));
+			}else if(temp.get(i).contains("y:")){
+				temp.set(i,("    y: "+y));
+			}
+		}
+	}
+	
 	@Override
 	public void render (float delta) {
 		ScreenUtils.clear(1, 0, 0, 1);//red background
@@ -255,22 +275,41 @@ public class LevelCreator extends JFrame implements Screen{
 		backgroundPicture.draw(batch);
 
         if(Gdx.input.justTouched()){
-            // TODO : see Sam Notes
 			System.out.println("X Coordinate: " + Gdx.input.getX());
-            System.out.println("Y Coordinate: " + Gdx.input.getY());
+			System.out.println("Y Coordinate: " + Gdx.input.getY());
 			Vector3 mousePos = new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
 			camera.unproject(mousePos); // mousePos is now in world coordinates
 			System.out.println(mousePos);
-			System.out.println(buttonGroup.getSelection());
-			Enumeration elements = buttonGroup.getElements();
-			while (elements.hasMoreElements()){
-				AbstractButton button = (AbstractButton)elements.nextElement();
-				if (button.isSelected()) {
-					trees.add(new GameEntity((int)mousePos.x,(int)mousePos.y,10,10,new Sprite(new Texture("GameEntity/"+button.getText())),0));
-					textFileOutput.add(readDefaultValues("GameEntity/"+button.getText()+".txt",(int)mousePos.x,(int)mousePos.y));
+			if(moveTool.isSelected()){
+				if(selectedEntity == -1){
+					//no entity is selected, the user must be trying to select
+					for(int i=0; i<trees.size();i++){
+						Rectangle temp = trees.get(i).getHitbox();
+						if(temp.contains((int)mousePos.x,(int)mousePos.y)){
+							selectedEntity = i;
+						}
+						System.out.println(temp);
+						
+					}
+				}else{
+					//an entity is selected, the user must be trying to move their selected
+					moveEntity((int)mousePos.x,(int)mousePos.y);
+					selectedEntity = -1;
 				}
+			}else{
+				// TODO : see Sam Notes
+				Enumeration elements = buttonGroup.getElements();
+				while (elements.hasMoreElements()){
+					AbstractButton button = (AbstractButton)elements.nextElement();
+					if (button.isSelected()) {
+						//trees.add(new GameEntity((int)mousePos.x,(int)mousePos.y,10,10,new Sprite(new Texture("GameEntity/"+button.getText())),0));
+						ArrayList <String> entityValues = readDefaultValues("GameEntity/"+button.getText()+".txt",(int)mousePos.x,(int)mousePos.y);
+						addEntityToGameWindow(entityValues);
+						textFileOutput.add(entityValues);
+					}
+				}
+				//then call the function that puts the object on screen.
 			}
-            //then call the function that puts the object on screen.
 		}
 
 		for(int i=0;i<trees.size();i++){
@@ -301,6 +340,8 @@ public class LevelCreator extends JFrame implements Screen{
 	@Override
     public void pause() {
         // TODO Auto-generated method stub
+		System.out.println(trees);
+		System.out.println(textFileOutput);
         
     }
     
