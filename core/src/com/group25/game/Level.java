@@ -35,8 +35,8 @@ public class Level implements Screen{
 	ArrayList<GameEntity> trees = new ArrayList<GameEntity>(); // Create an ArrayList object
 	ArrayList<Enemy> enemies = new ArrayList<Enemy>(); // Create an ArrayList object
 
-	final int GAME_WORLD_WIDTH = 720;
-	final int GAME_WORLD_HEIGHT = 720;
+	final int GAME_WORLD_WIDTH = 1240;
+	final int GAME_WORLD_HEIGHT = 1240;
 	
 	public Level() {
 		batch = new SpriteBatch();
@@ -44,11 +44,11 @@ public class Level implements Screen{
 		backgroundPicture = new Sprite(new Texture("Backgrounds/tempBackground.jpg"));
 		backgroundPicture.setSize(GAME_WORLD_WIDTH,GAME_WORLD_HEIGHT);
 		camera = new OrthographicCamera();
-		viewport = new FitViewport(480, 360,camera);
+		viewport = new FitViewport(840, 563,camera);
 		viewport.apply();
 		camera.position.set(GAME_WORLD_WIDTH/2,GAME_WORLD_HEIGHT/2,0);
 
-		loadLevel("TestLevel");
+		loadLevel("NewLevel");
 		// TODO : this needs to be fixed haha
 		//"testlevel" would actually be anything that is parsed into the level constructor.
 		//so if "level1" was given to Level.java, then it would attempt to find the txt file containing level details 
@@ -85,10 +85,10 @@ public class Level implements Screen{
 					//gotta do some mad type changing
 					trees.add(new GameEntity(Float.parseFloat(args.get(0)),
 												Float.parseFloat(args.get(1)),
-												Integer.parseInt(args.get(4)), 
-												Integer.parseInt(args.get(5)), 
-												new Sprite(new Texture(args.get(2))), 
-												Integer.parseInt(args.get(3))));
+												Integer.parseInt(args.get(2)), 
+												Integer.parseInt(args.get(3)), 
+												new Sprite(new Texture(args.get(4))), 
+												Integer.parseInt(args.get(5))));
 
 				}else if(line.equals("SLIME:")){
 					// TODO : enemy might not be final. 
@@ -101,11 +101,11 @@ public class Level implements Screen{
 
 					enemies.add(new Slime(Float.parseFloat(args.get(0)),
 											Float.parseFloat(args.get(1)),
-											Integer.parseInt(args.get(5)),
-											Integer.parseInt(args.get(6)),
 											Integer.parseInt(args.get(2)),
-											new Sprite(new Texture(args.get(3))),
-											Float.parseFloat(args.get(4))));
+											Integer.parseInt(args.get(3)),
+											Integer.parseInt(args.get(4)),
+											new Sprite(new Texture(args.get(5))),
+											Float.parseFloat(args.get(6))));
 					//TEMP DELETEME
 					slime = (Slime) enemies.get(0);
 				

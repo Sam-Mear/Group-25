@@ -1,9 +1,15 @@
 /**
  * TODO : 
  *  * actually enter a level name and save as file.
+ *    DONE
+ * 
+ *  * Able to change background
  *    NOT DONE
  * 
  *  * Click on an already placed entity to change its x and y position
+ *    DONE
+ * 
+ *  * Delete entities
  *    DONE
  * 
  *  * Adjust constructor values by clicking on a placed entity
@@ -39,8 +45,12 @@ import javax.swing.*;
 /**
  * Other Imports
  */
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Scanner;
@@ -58,6 +68,7 @@ public class LevelCreator extends JFrame implements Screen{
 	private ButtonGroup buttonGroup;
 	//movetool
 	private JCheckBox moveTool;
+	private JCheckBox deleteTool;
 	//the below is -1 for not selected.
 	//after moving an etity, it goes back to -1.
 	private int selectedEntity = -1;
@@ -86,6 +97,31 @@ public class LevelCreator extends JFrame implements Screen{
 		
 	}
 
+	public void writeNewFile(){
+		//fuck saving it with custom name
+		try{
+			File newFile = new File(Gdx.files.internal("Levels/NewLevel.txt")+"");
+			if(newFile.createNewFile()){
+				System.out.println("New file is created!");
+			}else{
+				System.out.println("File already exists...");
+			}
+
+			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(newFile)));
+			for(int i=0;i<textFileOutput.size();i++){
+				for (int j=0;j<textFileOutput.get(i).size();j++){
+					bw.write(textFileOutput.get(i).get(j));
+					bw.newLine();
+				}
+			}
+			bw.close();
+
+
+		} catch(IOException e){
+			System.out.println("ERROR writing file.");
+		}
+	}
+
 	public ArrayList<JRadioButton> listFilesForFolder(final File folder) {
 		ArrayList<JRadioButton> buttons = new ArrayList<JRadioButton>();
 		for (final File fileEntry : folder.listFiles()) {
@@ -104,8 +140,20 @@ public class LevelCreator extends JFrame implements Screen{
     public void loadLevel(){
 		buttonGroup = new ButtonGroup();
         JFrame f = new JFrame("Enter Level Name");
+		JButton saveLevelButton = new JButton("Save Level");
+		//JButton loadLevelButton = new JButton("Load Level");
+		saveLevelButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e){
+				writeNewFile();
+			}
+
+		});
+		f.add(saveLevelButton);
+		//f.add(loadLevelButton);
         //JPopupMenu popupMenu = new JPopupMenu("Enter Level Name1");
-        JTextField enterLevelName = new JTextField(10);
+        //JTextField enterLevelName = new JTextField(10);
 
 		final File folder = new File(Gdx.files.internal("GameEntity/") + "");
 		ArrayList<JRadioButton> buttons = listFilesForFolder(folder);
@@ -116,12 +164,14 @@ public class LevelCreator extends JFrame implements Screen{
 
 		moveTool = new JCheckBox("Move Tool");
 		f.add(moveTool);
+		deleteTool = new JCheckBox("Delete Tool");
+		f.add(deleteTool);
 
         f.setSize(200,500);
 		f.setLayout(new FlowLayout());
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //popupMenu.add(enterLevelName);
-        f.add(enterLevelName);
+        //f.add(enterLevelName);
         f.setVisible(true);
     }
 
@@ -295,6 +345,16 @@ public class LevelCreator extends JFrame implements Screen{
 					//an entity is selected, the user must be trying to move their selected
 					moveEntity((int)mousePos.x,(int)mousePos.y);
 					selectedEntity = -1;
+				}
+			}else if(deleteTool.isSelected()){
+				for(int i=0; i<trees.size();i++){
+					Rectangle temp = trees.get(i).getHitbox();
+					if(temp.contains((int)mousePos.x,(int)mousePos.y)){
+						trees.remove(i);
+						textFileOutput.remove(i);
+						// NOTE : might need to .dispose() the gameEntity.
+					}
+					System.out.println(temp);
 				}
 			}else{
 				// TODO : see Sam Notes
