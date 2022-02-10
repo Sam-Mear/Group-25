@@ -95,18 +95,6 @@ public abstract class GameEntity {
 		this.collidable = collidable;
 	}
 
-	public void takeDamage(int damage){
-		health -= damage;
-	}
-
-	public void setHealth(int health){
-		this.health = health;
-	}
-
-	public int getHealth(){
-		return health;
-	}
-
 	public void update(){
 
 	}

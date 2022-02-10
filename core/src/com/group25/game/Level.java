@@ -46,12 +46,11 @@ public class Level implements Screen{
 	
 	public Level() {
 		batch = new SpriteBatch();
+		UIElements = new SpriteBatch();
 		img = new Sprite(new Texture("animation.png"));
 
 		coinSprite = new Sprite((new Texture("Coin.png")));
 
-		backgroundPicture = new Sprite(new Texture("tempBackground.jpg"));
-		backgroundPicture.setSize(GAME_WORLD_WIDTH,GAME_WORLD_HEIGHT);
 		UiBorder = new Sprite(new Texture("GUI/border.png"));
 		camera = new OrthographicCamera();
 		viewport = new FitViewport(840, 563,camera);
@@ -105,8 +104,9 @@ public class Level implements Screen{
 												Float.parseFloat(args.get(1)),
 												Integer.parseInt(args.get(2)), 
 												Integer.parseInt(args.get(3)), 
-												new Sprite(new Texture(args.get(4))), 
-												Integer.parseInt(args.get(5))));
+												new Sprite(new Texture(args.get(4)))));
+												//new Sprite(new Texture(args.get(4))), 
+												//Integer.parseInt(args.get(5))));
 
 
 				}else if(line.equals("SLIME:")){
@@ -233,11 +233,11 @@ public class Level implements Screen{
 		 * Drawing UI
 		 */
 
-		 UIElements.begin();
+		UIElements.begin();
 
-		 UiBorder.draw(UIElements);
+		UiBorder.draw(UIElements);
 
-		 UIElements.end();
+		UIElements.end();
 	}
 	
 	@Override

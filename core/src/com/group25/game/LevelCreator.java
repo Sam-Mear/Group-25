@@ -234,12 +234,13 @@ public class LevelCreator extends JFrame implements Screen{
 		}
 			
 		//gotta do some mad type changing
-		trees.add(new GameEntity(x,
+		trees.add(new Enviroment(x,
 								y,
 								width,
-								height, 
-								new Sprite(new Texture(sprite)), 
-								Integer.parseInt("0")));
+								height,
+								new Sprite(new Texture(sprite)))); 
+								//new Sprite(new Texture(sprite)), 
+								//Integer.parseInt("0")));
 	}
 	
 	@Override
