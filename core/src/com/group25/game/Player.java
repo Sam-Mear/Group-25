@@ -18,7 +18,7 @@ public class Player extends Creature{
         super(positionX, positionY, width, height, health, img, entitySpeed,
                 new Rectangle((int)positionX,(int)positionY,width,height));
 
-        animation = new EnitiyAnimation(new TextureRegion(img),3,20);
+        animation = new EnitiyAnimation(new TextureRegion(img),10,20);
         currentTexture = animation.getCurrentFrame();
 
     }

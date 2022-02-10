@@ -37,6 +37,9 @@ public class Level implements Screen{
 	//TEMP DELETEME
 	private Slime slime;
 	private Sprite allertArea;
+	private EnviromentAnimated coinTest;
+	private EnviromentAnimated heartTest;
+	private EnviromentAnimated waterfallTest3;
 
 	private Drop coin;
 	private Sprite coinSprite;
@@ -63,6 +66,9 @@ public class Level implements Screen{
 		UiInventory.setX(20);
 		UiInventory.setY(150);
 
+		coinTest = new EnviromentAnimated(150, 150, 16, 16, new Sprite(new Texture("GameEntity/coin_animated.png")), 5, 5);
+		heartTest = new EnviromentAnimated(500, 1003, 22, 24, new Sprite(new Texture("GameEntity/heart_animated.png")), 10, 3);
+		waterfallTest3 = new EnviromentAnimated(835, 225, 16, 46, new Sprite(new Texture("GameEntity/Waterfall_Animated.png")), 9, 5);
 		
 		camera = new OrthographicCamera();
 		viewport = new FitViewport(840, 563,camera);
@@ -188,6 +194,21 @@ public class Level implements Screen{
 		}
 
 		batch.draw(character.getTexture(), character.getX(), character.getY());
+
+		batch.draw(coinTest.getTexture(), coinTest.getX(),coinTest.getY());
+		batch.draw(waterfallTest3.getTexture(),352,1003);
+		batch.draw(waterfallTest3.getTexture(),352+16,1003);
+		batch.draw(waterfallTest3.getTexture(),waterfallTest3.getX(),waterfallTest3.getY());
+		batch.draw(waterfallTest3.getTexture(),waterfallTest3.getX()+16,waterfallTest3.getY());
+		batch.draw(waterfallTest3.getTexture(),waterfallTest3.getX()+32,waterfallTest3.getY());
+		batch.draw(waterfallTest3.getTexture(),waterfallTest3.getX()+48,waterfallTest3.getY());
+		batch.draw(waterfallTest3.getTexture(),1635,963);
+		batch.draw(waterfallTest3.getTexture(),1635+16,963);
+		batch.draw(waterfallTest3.getTexture(),1635+32,963);
+		batch.draw(heartTest.getTexture(),heartTest.getX(),heartTest.getY());
+		coinTest.update();
+		heartTest.update();
+		waterfallTest3.update();
 
 		//for attack and shit u wanna do isKeyJustPressed rather than isKeyPressed
 		if(Gdx.input.isKeyPressed(Keys.W)){
