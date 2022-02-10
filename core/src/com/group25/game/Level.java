@@ -41,8 +41,8 @@ public class Level implements Screen{
 	ArrayList<Enviroment> trees = new ArrayList<Enviroment>(); // Create an ArrayList object
 	ArrayList<Enemy> enemies = new ArrayList<Enemy>(); // Create an ArrayList object
 
-	final int GAME_WORLD_WIDTH = 1240;
-	final int GAME_WORLD_HEIGHT = 1240;
+	final int GAME_WORLD_WIDTH = 1778;
+	final int GAME_WORLD_HEIGHT = 1334;
 	
 	public Level() {
 		batch = new SpriteBatch();
@@ -82,14 +82,16 @@ public class Level implements Screen{
 		//need to understand dispose() better...
 		try{
 			//load file into levelInfo
-			Scanner levelInfo = new Scanner(new File(Gdx.files.internal("Levels/"+levelName+"/level.txt")+""));
+			Scanner levelInfo = new Scanner(new File(Gdx.files.internal("Levels/"+levelName+".txt")+""));
 			//Scanner allows us to go line by line in the file with.nextLine()
 			String line = levelInfo.nextLine();
 			//make sure its not end of file
 			while (levelInfo.hasNextLine()) {
 				//line = line.replace("    ","");
-				if(line.equals("DEFAULT PLAYER POSITIONS:")){
-					// TODO : 
+				if(line.contains("BACKGROUND:")){
+					System.out.println("aaaaaaaaa");
+					backgroundPicture = new Sprite(new Texture("Backgrounds/"+line.split(": ")[1]));
+					backgroundPicture.setSize(GAME_WORLD_WIDTH,GAME_WORLD_HEIGHT);
 				}else if(line.equals("GAME ENTITY:")){
 					//list of arguments needed to make the GameEntity
 					ArrayList<String> args = new ArrayList<String>();
@@ -98,13 +100,14 @@ public class Level implements Screen{
 						String s = levelInfo.nextLine();
 						args.add(s.substring(s.indexOf(":")+2));
 					}
-					
 					//gotta do some mad type changing
 					trees.add(new Enviroment(Float.parseFloat(args.get(0)),
 												Float.parseFloat(args.get(1)),
-												Integer.parseInt(args.get(4)), 
-												Integer.parseInt(args.get(5)), 
-												new Sprite(new Texture(args.get(2)))));
+												Integer.parseInt(args.get(2)), 
+												Integer.parseInt(args.get(3)), 
+												new Sprite(new Texture(args.get(4))), 
+												Integer.parseInt(args.get(5))));
+
 
 				}else if(line.equals("SLIME:")){
 					// TODO : enemy might not be final. 
@@ -117,11 +120,11 @@ public class Level implements Screen{
 
 					enemies.add(new Slime(Float.parseFloat(args.get(0)),
 											Float.parseFloat(args.get(1)),
-											Integer.parseInt(args.get(5)),
-											Integer.parseInt(args.get(6)),
 											Integer.parseInt(args.get(2)),
-											new Sprite(new Texture(args.get(3))),
-											Float.parseFloat(args.get(4))));
+											Integer.parseInt(args.get(3)),
+											Integer.parseInt(args.get(4)),
+											new Sprite(new Texture(args.get(5))),
+											Float.parseFloat(args.get(6))));
 					//TEMP DELETEME
 					slime = (Slime) enemies.get(0);
 				

@@ -29,10 +29,10 @@ public class MenuScreen implements Screen{
     
     public MenuScreen(){
         batch = new SpriteBatch();
-        playButton = new Texture("tempPlayButton.png");
-        playButtonHighlight = new Texture("tempPlayButtonHighlight.png");
-        exitButton = new Texture("tempExitButton.png");
-        exitButtonHighlight = new Texture("tempExitButtonHighlight.png");
+        playButton = new Texture("GUI/tempPlayButton.png");
+        playButtonHighlight = new Texture("GUI/tempPlayButtonHighlight.png");
+        exitButton = new Texture("GUI/tempExitButton.png");
+        exitButtonHighlight = new Texture("GUI/tempExitButtonHighlight.png");
         //The stuff below is not needed in here and works without it
         camera = new OrthographicCamera();
         viewport = new FitViewport(960 , 720, camera);

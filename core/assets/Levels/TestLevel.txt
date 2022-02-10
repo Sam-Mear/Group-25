@@ -1,0 +1,53 @@
+MAP SIZE:
+    width: 1778
+    height: 1334
+BACKGROUND: paper-bag-map.png
+GAME ENTITY:
+    x: 106
+    y: 1130
+    width: 64
+    height: 128
+    sprite: GameEntity/tree.png
+    speed: 0
+
+GAME ENTITY:
+    x: 1028
+    y: 1094
+    width: 64
+    height: 128
+    sprite: GameEntity/tree.png
+    speed: 0
+
+GAME ENTITY:
+    x: 1051
+    y: 131
+    width: 64
+    height: 128
+    sprite: GameEntity/tree.png
+    speed: 0
+
+GAME ENTITY:
+    x: 88
+    y: 140
+    width: 64
+    height: 128
+    sprite: GameEntity/tree.png
+    speed: 0
+
+SLIME:
+    x: 613
+    y: 631
+    width: 32
+    height: 32
+    health: 25
+    sprite: GameEntity/Green_Slime.png
+    speed: 0.5
+
+GAME ENTITY:
+    x: 651
+    y: 968
+    width: 64
+    height: 128
+    sprite: GameEntity/tree.png
+    speed: 0
+
