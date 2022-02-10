@@ -192,8 +192,6 @@ public class Level implements Screen{
 		//for attack and shit u wanna do isKeyJustPressed rather than isKeyPressed
 		if(Gdx.input.isKeyPressed(Keys.W)){
 			if(checkForCollision('y',character.getY() + character.getSpeed())){
-				System.out.println("PRESSING UP");
-				System.out.println("Speed: "+character.getSpeed());
 				character.setY(character.getY() + character.getSpeed());
 			}
 		}
