@@ -28,6 +28,9 @@ public class Level implements Screen{
 	private Sprite img;
 	private Sprite backgroundPicture;
 	private Sprite UiBorder;
+	private Sprite UiStatusBar;
+	private Sprite UiInventory;
+	private Sprite UiTutorial;
 	private OrthographicCamera camera;
 	private Player character;
 	private FitViewport viewport;
@@ -52,6 +55,15 @@ public class Level implements Screen{
 		coinSprite = new Sprite((new Texture("Coin.png")));
 
 		UiBorder = new Sprite(new Texture("GUI/border.png"));
+		UiStatusBar = new Sprite(new Texture("GUI/status-bar-temp.png"));
+		UiInventory = new Sprite(new Texture("GUI/inventory.png"));
+		UiStatusBar.setX(20);
+		UiStatusBar.setY(20);
+
+		UiInventory.setX(20);
+		UiInventory.setY(150);
+
+		
 		camera = new OrthographicCamera();
 		viewport = new FitViewport(840, 563,camera);
 		viewport.apply();
@@ -154,7 +166,7 @@ public class Level implements Screen{
 	
 	@Override
 	public void render (float delta) {
-		ScreenUtils.clear(1, 0, 0, 1);//red background
+		ScreenUtils.clear(0, 0, 0, 1);//red background
 
 		camera.update();
 		batch.setProjectionMatrix(camera.combined);
@@ -236,6 +248,11 @@ public class Level implements Screen{
 		UIElements.begin();
 
 		UiBorder.draw(UIElements);
+		UiStatusBar.draw(UIElements);
+		UiInventory.draw(UIElements);
+
+		// UI StatusBar, 
+
 
 		UIElements.end();
 	}
