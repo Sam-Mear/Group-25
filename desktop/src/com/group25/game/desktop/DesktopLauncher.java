@@ -16,7 +16,7 @@ public class DesktopLauncher {
 		
 		//set the window title and size.
 		config.setTitle("Paper Bag Princess");
-		config.setWindowedMode(960,720);
+		config.setWindowedMode(840,563);
 		//launch the game
 		new Lwjgl3Application(new PaperBagPrincess(), config);
 	}

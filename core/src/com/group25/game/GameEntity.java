@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import java.awt.*;
 
-public class GameEntity {
+public abstract class GameEntity {
     protected float x = 0;
     protected float y = 0;
     protected int width;
@@ -13,16 +13,12 @@ public class GameEntity {
     protected Sprite sprite;
     protected float speed;
     protected boolean collidable = true;
-
 	protected Rectangle hitbox;
 
-	private int health;
-
-    public GameEntity(float positionX, float positionY, int width, int height, Sprite img, float entitySpeed){
+    public GameEntity(float positionX, float positionY, int width, int height, Sprite img){
 		x = positionX;
 		y = positionY;
 		sprite = img;
-		speed = entitySpeed;
 		this.width = width;
 		this.height = height;
 		hitbox = new Rectangle((int)positionX,(int)positionY,width,height);
@@ -36,14 +32,12 @@ public class GameEntity {
 	 * @param width
 	 * @param height
 	 * @param img
-	 * @param entitySpeed
 	 * @param hitbox
 	 */
-	public GameEntity(float positionX, float positionY, int width, int height, Sprite img, float entitySpeed, Rectangle hitbox) {
+	public GameEntity(float positionX, float positionY, int width, int height, Sprite img, Rectangle hitbox) {
 		x = positionX;
 		y = positionY;
 		sprite = img;
-		speed = entitySpeed;
 		this.width = width;
 		this.height = height;
 		this.hitbox = hitbox;
@@ -93,14 +87,6 @@ public class GameEntity {
 		this.sprite = sprite;
 	}
 
-	public float getSpeed() {
-		return speed;
-	}
-
-	public void setSpeed(int speed) {
-		this.speed = speed;
-	}
-
 	public boolean isCollidable() {
 		return collidable;
 	}
@@ -128,7 +114,7 @@ public class GameEntity {
 	public void updateHitbox() {
         this.getHitbox().setLocation((int)this.getX(),(int)this.getY());
     }
-
+  
 	public Rectangle getHitbox() {
 		return hitbox;
 	}
