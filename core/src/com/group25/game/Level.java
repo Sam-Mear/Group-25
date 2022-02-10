@@ -35,20 +35,18 @@ public class Level implements Screen{
 	ArrayList<GameEntity> trees = new ArrayList<GameEntity>(); // Create an ArrayList object
 	ArrayList<Enemy> enemies = new ArrayList<Enemy>(); // Create an ArrayList object
 
-	final int GAME_WORLD_WIDTH = 1240;
-	final int GAME_WORLD_HEIGHT = 1240;
+	final int GAME_WORLD_WIDTH = 1778;
+	final int GAME_WORLD_HEIGHT = 1334;
 	
 	public Level() {
 		batch = new SpriteBatch();
 		img = new Sprite(new Texture("GameEntity/character.png"));
-		backgroundPicture = new Sprite(new Texture("Backgrounds/tempBackground.jpg"));
-		backgroundPicture.setSize(GAME_WORLD_WIDTH,GAME_WORLD_HEIGHT);
 		camera = new OrthographicCamera();
 		viewport = new FitViewport(840, 563,camera);
 		viewport.apply();
 		camera.position.set(GAME_WORLD_WIDTH/2,GAME_WORLD_HEIGHT/2,0);
 
-		loadLevel("NewLevel");
+		loadLevel("TestLevel");
 		// TODO : this needs to be fixed haha
 		//"testlevel" would actually be anything that is parsed into the level constructor.
 		//so if "level1" was given to Level.java, then it would attempt to find the txt file containing level details 
@@ -71,8 +69,10 @@ public class Level implements Screen{
 			//make sure its not end of file
 			while (levelInfo.hasNextLine()) {
 				//line = line.replace("    ","");
-				if(line.equals("DEFAULT PLAYER POSITIONS:")){
-					// TODO : 
+				if(line.contains("BACKGROUND:")){
+					System.out.println("aaaaaaaaa");
+					backgroundPicture = new Sprite(new Texture("Backgrounds/"+line.split(": ")[1]));
+					backgroundPicture.setSize(GAME_WORLD_WIDTH,GAME_WORLD_HEIGHT);
 				}else if(line.equals("GAME ENTITY:")){
 					//list of arguments needed to make the GameEntity
 					ArrayList<String> args = new ArrayList<String>();
@@ -81,7 +81,6 @@ public class Level implements Screen{
 						String s = levelInfo.nextLine();
 						args.add(s.substring(s.indexOf(":")+2));
 					}
-					
 					//gotta do some mad type changing
 					trees.add(new GameEntity(Float.parseFloat(args.get(0)),
 												Float.parseFloat(args.get(1)),

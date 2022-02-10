@@ -12,11 +12,15 @@
  *  * Delete entities
  *    DONE
  * 
- *  * Adjust constructor values by clicking on a placed entity
+ *  * Adjust constructor values by clicking on a placed entity, including collision.
  *    NOT DONE
  * 
  *  * Grid system
  *    NOT DONE
+ * 
+ *  * Change map size values
+ *    NOT DONE
+ * 
  */
 
 package com.group25.game;
@@ -55,6 +59,11 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Scanner;
 
+/**
+ * pre gameEntity info first(like background and default player position)
+ * then GameEntity info
+ * both seperate arraylists.
+ */
 public class LevelCreator extends JFrame implements Screen{
     
 
@@ -137,7 +146,23 @@ public class LevelCreator extends JFrame implements Screen{
 		return buttons;
 	}
 
-    public void loadLevel(){
+    public void changeBackground() {
+		//popup, run listFilesForFolder but for Backgrounds/
+		//below code to change background
+		//setup the pre gameentity part of txt file so we
+		//can save the text file.
+		System.out.println("CHANGING BACKGROUND!!");
+		//this mess cause swing in different thread?
+		Gdx.app.postRunnable(new Runnable()  {
+			@Override
+			public void run() {
+			backgroundPicture.setRegion(new Texture(Gdx.files.internal("Backgrounds/unknown.png")));
+			}
+		});
+		
+	}
+	
+	public void loadLevel(){
 		buttonGroup = new ButtonGroup();
         JFrame f = new JFrame("Enter Level Name");
 		JButton saveLevelButton = new JButton("Save Level");
@@ -151,6 +176,16 @@ public class LevelCreator extends JFrame implements Screen{
 
 		});
 		f.add(saveLevelButton);
+		JButton changeBackgroundButton = new JButton("Change Background");
+		changeBackgroundButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e){
+				changeBackground();
+			}
+
+		});
+		f.add(changeBackgroundButton);
 		//f.add(loadLevelButton);
         //JPopupMenu popupMenu = new JPopupMenu("Enter Level Name1");
         //JTextField enterLevelName = new JTextField(10);
