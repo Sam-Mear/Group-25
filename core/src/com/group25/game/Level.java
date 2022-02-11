@@ -58,6 +58,8 @@ public class Level implements Screen{
 		coinSprite = new Sprite((new Texture("Coin.png")));
 
 		UiBorder = new Sprite(new Texture("GUI/border.png"));
+		UiBorder.setX(0);
+		UiBorder.setY(0);
 		UiStatusBar = new Sprite(new Texture("GUI/status-bar-temp.png"));
 		UiInventory = new Sprite(new Texture("GUI/inventory.png"));
 		UiStatusBar.setX(20);
@@ -68,7 +70,7 @@ public class Level implements Screen{
 
 		coinTest = new EnviromentAnimated(150, 150, 16, 16, new Sprite(new Texture("GameEntity/coin_animated.png")), 5, 5);
 		heartTest = new EnviromentAnimated(500, 1003, 22, 24, new Sprite(new Texture("GameEntity/heart_animated.png")), 10, 3);
-		waterfallTest3 = new EnviromentAnimated(835, 225, 16, 46, new Sprite(new Texture("GameEntity/Waterfall_Animated.png")), 9, 5);
+		waterfallTest3 = new EnviromentAnimated(835, 225, 16, 46, new Sprite(new Texture("GameEntity/waterfall_animated.png")), 9, 5);
 		
 		camera = new OrthographicCamera();
 		viewport = new FitViewport(840, 563,camera);

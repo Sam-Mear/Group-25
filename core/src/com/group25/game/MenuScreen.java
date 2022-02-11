@@ -3,6 +3,7 @@ package com.group25.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -10,6 +11,8 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public class MenuScreen implements Screen{
+
+    private Music menuMusic;
 
     private SpriteBatch batch;
     private Texture playButton;
@@ -30,6 +33,9 @@ public class MenuScreen implements Screen{
 	final int GAME_WORLD_HEIGHT = 720;
     
     public MenuScreen(){
+        menuMusic = Gdx.audio.newMusic(Gdx.files.internal("Music/Steventhedreamer - The bandit's wagon.mp3"));
+        //menuMusic.setLooping(true);
+        menuMusic.play();
         batch = new SpriteBatch();
         playButton = new Texture("GUI/tempPlayButton.png");
         playButtonHighlight = new Texture("GUI/tempPlayButtonHighlight.png");
