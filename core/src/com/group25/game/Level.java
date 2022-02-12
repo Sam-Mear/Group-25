@@ -36,6 +36,9 @@ public class Level implements Screen{
 	private Drop coin;
 	private Sprite coinSprite;
 
+	//To be deleted
+	private EnemySpawner spawner;
+
 	ArrayList<Enviroment> trees = new ArrayList<Enviroment>(); // Create an ArrayList object
 	ArrayList<Enemy> enemies = new ArrayList<Enemy>(); // Create an ArrayList object
 
@@ -67,7 +70,6 @@ public class Level implements Screen{
 
 		allertArea = new Sprite(new Texture(("Slime_Test_Area.png")));
 
-		MonsterSpawner s = new MonsterSpawner(0,0,40,40,img,slime);
 		//System.out.println("Speeddddd: "+character.getSpeed());
 	}
 
@@ -121,7 +123,9 @@ public class Level implements Screen{
 											Float.parseFloat(args.get(4))));
 					//TEMP DELETEME
 					slime = (Slime) enemies.get(0);
-				
+					EnemyFactory slimeCamp = new SlimeFactory();
+					slimeCamp.getNewMonster(50,50,100,slime.getSprite(),1);
+
 				}
 				line = levelInfo.nextLine();
 			}
@@ -154,9 +158,14 @@ public class Level implements Screen{
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		backgroundPicture.draw(batch);
+
+
+
+
 		int aWidth = 200;
 		int aHeight = 200;
 		batch.draw(allertArea,slime.getX()-(aWidth-slime.getWidth())/2,slime.getY()-(aHeight-slime.getHeight())/2);
+
 		if(!coin.isPickedUp()){
 			batch.draw(coin.sprite,coin.x,coin.y);
 		}
@@ -170,12 +179,15 @@ public class Level implements Screen{
 		}
 
 		batch.draw(character.getTexture(), character.getX(), character.getY());
+		batch.draw(spawner.getSprite().getTexture(),spawner.getX(),spawner.getY());
+
+//		spawner.spawn();
 
 		//for attack and shit u wanna do isKeyJustPressed rather than isKeyPressed
 		if(Gdx.input.isKeyPressed(Keys.W)){
 			if(checkForCollision('y',character.getY() + character.getSpeed())){
-				System.out.println("PRESSING UP");
-				System.out.println("Speed: "+character.getSpeed());
+				//System.out.println("PRESSING UP");
+				//System.out.println("Speed: "+character.getSpeed());
 				character.setY(character.getY() + character.getSpeed());
 			}
 		}
@@ -194,6 +206,8 @@ public class Level implements Screen{
 				character.setX(character.getX() + character.getSpeed());
 			}
 		}
+		//Testing purposes
+		//We want to kill a monster and then respawn them
 
 		/**
 		 * have camera always follow the player.

@@ -1,5 +1,7 @@
 package com.group25.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
@@ -20,10 +22,10 @@ public class Player extends Creature{
 
         animation = new EnitiyAnimation(new TextureRegion(img),3,20);
         currentTexture = animation.getCurrentFrame();
-
     }
 
     public void update() {
+       // System.out.println("Breka");
         this.getHitbox().setLocation((int) this.getX(), (int) this.getY());
        // System.out.printf("Player hitBox x: %d y: %d\n", (int) this.getX(), (int) this.getY());
         //System.out.println("Coin amount: "+coins);

@@ -9,33 +9,27 @@ import java.util.ArrayList;
 /**
  * Creating a spawner (point) where monsters will re-appear ones killed or some threshold is crossed
  */
-public class MonsterSpawner extends GameEntity {
-    private Enemy spawnType;    //Type of monster which will be spawned
-    private int spawnLimit;     //We want to only spawn enemies when the limit is reached
+public class EnemySpawner extends GameEntity {
+    private EnemyType spawnType;    //Type of monster which will be spawned
+    private int spawnLimit = 10;     //We want to only spawn enemies when the limit is reached
     private ArrayList<Enemy> enemies;
 
-
-    public MonsterSpawner(float positionX, float positionY, int width, int height, Sprite img,Enemy spawnType) {
+    public EnemySpawner(float positionX, float positionY, int width, int height, Sprite img,EnemyFactory factory) {
         super(positionX, positionY, width, height, img);
         this.spawnType = spawnType;
         enemies = new ArrayList<Enemy>();
         System.out.println(((Object) spawnType).getClass().getName());
     }
 
-    public MonsterSpawner(float positionX, float positionY, int width, int height, Sprite img, Rectangle hitbox,Enemy spawnType) {
+    public EnemySpawner(float positionX, float positionY, int width, int height, Sprite img, Rectangle hitbox,EnemyFactory factory) {
         super(positionX, positionY, width, height, img, hitbox);
         this.spawnType = spawnType;
         enemies = new ArrayList<Enemy>();
         System.out.println(((Object) spawnType).getClass().getName());
     }
 
-    public void spawn(){
-        if(enemies.size()<spawnLimit){
-            for(int i=0;i<spawnLimit-enemies.size();i++){
-                //enemies.add();
-            }
-            System.out.println("");
-        }
-    }
+    /**
+     * Generate an enemy of a given type, the type was set/provided in the constructor
+     */
 
 }
