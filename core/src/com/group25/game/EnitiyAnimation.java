@@ -47,8 +47,17 @@ public class EnitiyAnimation{
         currentFrame = startFrame;
     }
 
-    public void attackAnimation(){
-        
+    public int getCurrentFrameNumber(){
+        return currentFrame;
+    }
+
+    public void setCurrentFrameNumber(int x){
+        this.currentFrame = x;
+    }
+
+
+    public void end(){
+        this.endFrame = this.startFrame;
     }
 
 
@@ -58,12 +67,11 @@ public class EnitiyAnimation{
         if(currentFrameTime>frameTime){
             currentFrameTime = 0;
             currentFrame++;
-            System.out.println(currentFrame);
         }
 
         if(currentFrame >= numberOfFrames || currentFrame > endFrame){
             if(startFrame-endFrame > 2)
-                currentFrame = startFrame+1;
+                startFrame = startFrame+1;
             else{
                 currentFrame = startFrame;
             }

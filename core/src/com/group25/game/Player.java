@@ -44,9 +44,7 @@ public class Player extends Creature{
         this.img = img;
         this.currentLevel = currentLevel;
 
-        
-
-        animatePlayer(img, 10, startFrame, endFrame);
+        animatePlayer(startFrame, endFrame);
 
     }
 
@@ -59,9 +57,6 @@ public class Player extends Creature{
         APressed();
         SPressed();
         DPressed();
-        animatePlayer(img, 10, startFrame, endFrame);
-
-        mousePressed();
 
     }
 
@@ -79,21 +74,25 @@ public class Player extends Creature{
             moveUpAnimation = true;
         }
         else{
-            moveDownAnimation = false;
+            if(moveUpAnimation) animation.end();
+            moveUpAnimation = false;
+            upStarted = false;
         }
     }
+
     
     private void SPressed(){
         if(Gdx.input.isKeyPressed(Keys.S)){
             if(currentLevel.checkForCollision('y',getY() - getSpeed())){
 				setY(getY() - getSpeed());
                 setStartAndEndFrame(0, 2);
-                animatePlayer(img, 10, startFrame, endFrame);
 			}
             moveDownAnimation = true;
         }
         else{
+            if(moveDownAnimation) animation.end();
             moveDownAnimation = false;
+            downStarted = false;
         }
     }
 
@@ -106,7 +105,9 @@ public class Player extends Creature{
             moveLeftAnimation = true;
         }
         else{
+            if(leftStarted) animation.end();
             moveLeftAnimation = false;
+            leftStarted = false;  
         }
         
     }
@@ -120,42 +121,13 @@ public class Player extends Creature{
             moveRightAnimation = true;
         }
         else{
+            if(rightStarted) animation.end();
             moveRightAnimation = false;
+            rightStarted = false;
         }
     }
 
-    /**
-     * ATTACK ELEMENTS
-     */
-
-
-
-
-
-
-    /**
-     * function that returns true if the left mouse is pressed
-     */
-    private void mousePressed(){
-        Gdx.input.setInputProcessor(new InputAdapter() {
-            public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-                if (button == Buttons.LEFT) {
-                    System.out.print("left");
-                    leftMousePressed();
-                    return true;
-                }
-                return false;
-            }
-        });
-    }
-
-
-    public void leftMousePressed(){
-        currentLevel.attack(xAttackRange, yAttackRange, 1);
-    }
-
-
-
+  
 
     /**
      *  METHOD TO ANIMATE THE PLAYER
@@ -164,15 +136,47 @@ public class Player extends Creature{
      * @param startFrame
      * @param endFrame
      */
-    private void animatePlayer(Sprite direction, int nbOfFrames, int startFrame, int endFrame){
+    private void animatePlayer(int startFrame, int endFrame){
         TextureRegion selected = new TextureRegion(img);
-
      
-        animation = new EnitiyAnimation(selected, nbOfFrames, 20, startFrame, endFrame);
+        animation = new EnitiyAnimation(selected, 10, 20, startFrame, endFrame);
         currentTexture = animation.getCurrentFrame();
     }
 
+
+    boolean downStarted, upStarted, leftStarted, rightStarted = false;
+
     public void update() {
+
+        int currentFrame = animation.getCurrentFrameNumber();
+
+        if(currentFrame > 0 && currentFrame < 3 && !moveDownAnimation){
+            animation.setCurrentFrameNumber(0);
+        }
+
+        if(currentFrame > 3 && currentFrame < 6 && !moveUpAnimation){
+            animation.setCurrentFrameNumber(3);
+        }
+
+
+       
+        if(moveDownAnimation && !downStarted){
+            downStarted = true;
+            animatePlayer(1, 2);
+        }
+        if(moveUpAnimation && !upStarted){
+            upStarted = true;
+            animatePlayer(4, 5);
+        }
+        if(moveLeftAnimation && !leftStarted){
+            leftStarted = true;
+            animatePlayer(8, 9);
+        }
+        if(moveRightAnimation && !rightStarted){
+            rightStarted = true;
+            animatePlayer(6, 7);
+        }
+
         this.getHitbox().setLocation((int) this.getX(), (int) this.getY());
        // System.out.printf("Player hitBox x: %d y: %d\n", (int) this.getX(), (int) this.getY());
         //System.out.println("Coin amount: "+coins);
