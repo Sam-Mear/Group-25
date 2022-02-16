@@ -52,7 +52,6 @@ public abstract class Enemy extends Creature{
             }
         }
     }
-
     public void takeDamage(int damage){
         if(getHealth()-damage<0){
             //Then we want to drop all of the things
