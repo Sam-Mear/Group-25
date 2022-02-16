@@ -112,5 +112,6 @@ public class Player extends Creature{
     }
     public void spendCoins(int coins){
         coins -= coins;
+        //Some changes
     }
 }
