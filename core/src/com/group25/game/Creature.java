@@ -38,4 +38,12 @@ public abstract class Creature extends GameEntity{
     public int getHealth() {
         return health;
     }
+
+    public void moveX(float x){
+        this.setX(this.getX()+x);
+    }
+
+    public void moveY(float y){
+        this.setY(this.getY()+y);
+    }
 }
