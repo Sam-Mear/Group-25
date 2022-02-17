@@ -16,7 +16,7 @@ public class EnviromentAnimated extends GameEntity{
         super(positionX, positionY, width, height, img, hitbox);
         this.frames = frames;
         this.animationSpeed = animationSpeed;
-        animation = new EnitiyAnimation(new TextureRegion(img),frames,animationSpeed);
+        animation = new EnitiyAnimation(new TextureRegion(img),frames,animationSpeed, 1, 2);        // nees to add start and end frame
         currentTexture = animation.getCurrentFrame();
     }
 
@@ -24,7 +24,7 @@ public class EnviromentAnimated extends GameEntity{
         super(positionX, positionY, width, height, img);
         this.frames = frames;
         this.animationSpeed = animationSpeed;
-        animation = new EnitiyAnimation(new TextureRegion(img),frames,animationSpeed);
+        animation = new EnitiyAnimation(new TextureRegion(img),frames,animationSpeed, 0, 1);
         currentTexture = animation.getCurrentFrame();
     }
 

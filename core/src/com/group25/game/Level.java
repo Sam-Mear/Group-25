@@ -204,7 +204,7 @@ public class Level implements Screen{
 			batch.draw(enemies.get(i).getSprite(),enemies.get(i).getX(),enemies.get(i).getY());
 		}
 
-		// batch.draw(character.getTexture(), character.getX(), character.getY());
+		batch.draw(character.getTexture(), character.getX(), character.getY());
 		// batch.draw(spawner.getSprite().getTexture(),spawner.getX(),spawner.getY());
 
 //		spawner.spawn();
