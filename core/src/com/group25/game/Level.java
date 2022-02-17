@@ -185,9 +185,6 @@ public class Level implements Screen{
 		batch.begin();
 		backgroundPicture.draw(batch);
 
-
-
-
 		int aWidth = 200;
 		int aHeight = 200;
 		batch.draw(allertArea,slime.getX()-(aWidth-slime.getWidth())/2,slime.getY()-(aHeight-slime.getHeight())/2);
@@ -203,6 +200,7 @@ public class Level implements Screen{
 		for(int i=0;i<enemies.size();i++){
 			batch.draw(enemies.get(i).getSprite(),enemies.get(i).getX(),enemies.get(i).getY());
 		}
+		character.checkKeysPressed();
 
 		batch.draw(character.getTexture(), character.getX(), character.getY());
 		// batch.draw(spawner.getSprite().getTexture(),spawner.getX(),spawner.getY());
@@ -228,8 +226,7 @@ public class Level implements Screen{
 		//Testing purposes
 		//We want to kill a monster and then respawn them
 
-		character.checkKeysPressed();
-
+		
 		/**
 		 * have camera always follow the player.
 		 */
