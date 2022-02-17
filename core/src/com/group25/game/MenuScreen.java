@@ -15,6 +15,27 @@ public class MenuScreen implements Screen{
     private Music menuMusic;
 
     private SpriteBatch batch;
+
+    private Texture levelCompleteButton;
+    private Texture levelLockedButton;
+
+    private Texture playGameButton;
+    private Texture playGameButtonHighlighted;
+
+    private Texture soundToggleOn;
+    private Texture soundToggleOff;
+
+    private Texture leaderboardButton;
+    private Texture leaderboardButtonHighlighted;
+
+    private Texture createLevelButton;
+    private Texture createLevelButtonHighlighted;
+
+
+
+
+
+
     private Texture playButton;
     private Texture playButtonHighlight;
     private Texture levelCreatorButton;
@@ -37,6 +58,13 @@ public class MenuScreen implements Screen{
         //menuMusic.setLooping(true);
         menuMusic.play();
         batch = new SpriteBatch();
+
+
+
+
+
+
+        
         playButton = new Texture("GUI/tempPlayButton.png");
         playButtonHighlight = new Texture("GUI/tempPlayButtonHighlight.png");
 
