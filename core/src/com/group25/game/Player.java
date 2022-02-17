@@ -70,7 +70,8 @@ public class Player extends Creature{
             if(currentLevel.checkForCollision('y',getY() + getSpeed())){
 				setY(getY() + getSpeed());
 			}
-            moveUpAnimation = true;
+            if(!moveDownAnimation && !moveLeftAnimation && !moveRightAnimation)
+                moveUpAnimation = true;
         }
         else{
             if(moveUpAnimation) animation.end();
@@ -85,7 +86,8 @@ public class Player extends Creature{
             if(currentLevel.checkForCollision('y',getY() - getSpeed())){
 				setY(getY() - getSpeed());
 			}
-            moveDownAnimation = true;
+            if(!moveUpAnimation && !moveLeftAnimation && !moveRightAnimation)
+                moveDownAnimation = true;
         }
         else{
             if(moveDownAnimation) animation.end();
@@ -99,7 +101,8 @@ public class Player extends Creature{
             if(currentLevel.checkForCollision('x',getX() - getSpeed())){
 				setX(getX() - getSpeed());
 			}
-            moveLeftAnimation = true;
+            if(!moveDownAnimation && !moveUpAnimation && !moveRightAnimation)
+                moveLeftAnimation = true;
         }
         else{
             if(leftStarted) animation.end();
@@ -114,7 +117,8 @@ public class Player extends Creature{
             if(currentLevel.checkForCollision('x',getX() + getSpeed())){
 				setX(getX() + getSpeed());
 			}
-            moveRightAnimation = true;
+            if(!moveDownAnimation && !moveLeftAnimation && !moveUpAnimation)
+                moveRightAnimation = true;
         }
         else{
             if(rightStarted) animation.end();
@@ -149,12 +153,14 @@ public class Player extends Creature{
         if(currentFrame > 0 && currentFrame < 3 && !moveDownAnimation){
             animation.setCurrentFrameNumber(0);
             setStartAndEndFrame(0, 0);
+            animatePlayer(startFrame, endFrame);
             downStarted = upStarted = leftStarted = rightStarted = false;
         }
 
         if(currentFrame > 3 && currentFrame < 6 && !moveUpAnimation){
             animation.setCurrentFrameNumber(3);
             setStartAndEndFrame(3, 3);
+            animatePlayer(startFrame, endFrame);
             downStarted = upStarted = leftStarted = rightStarted = false;
         }
 
@@ -162,24 +168,29 @@ public class Player extends Creature{
        
         if(moveDownAnimation && !downStarted){
             upStarted = leftStarted = rightStarted = false;
+            moveLeftAnimation = moveRightAnimation = moveUpAnimation = false;
             downStarted = true;
             animatePlayer(1, 2);
         }
         if(moveUpAnimation && !upStarted){
             upStarted = true;
             downStarted = leftStarted = rightStarted = false;
+            moveLeftAnimation = moveRightAnimation = moveDownAnimation = false;
             animatePlayer(4, 5);
         }
         if(moveLeftAnimation && !leftStarted){
             leftStarted = true;
             downStarted = upStarted = rightStarted = false;
+            moveRightAnimation = moveUpAnimation = moveDownAnimation = false;
             animatePlayer(8, 9);
         }
         if(moveRightAnimation && !rightStarted){
             downStarted = upStarted = leftStarted = false;
+            moveLeftAnimation= moveUpAnimation = moveDownAnimation = false;
             rightStarted = true;
             animatePlayer(6, 7);
         }
+
 
        // System.out.println("Breka");
         this.getHitbox().setLocation((int) this.getX(), (int) this.getY());

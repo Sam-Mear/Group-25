@@ -56,6 +56,9 @@ public class EnitiyAnimation{
     }
 
 
+
+
+    
     public void end(){
         this.endFrame = this.startFrame;
     }
