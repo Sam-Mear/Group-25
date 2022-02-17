@@ -71,7 +71,6 @@ public class Level implements Screen{
 		UiInventory.setX(20);
 		UiInventory.setY(150);
 
-		coinTest = new EnviromentAnimated(150, 150, 16, 16, new Sprite(new Texture("GameEntity/coin_animated.png")), 5, 5);
 		heartTest = new EnviromentAnimated(500, 1003, 22, 24, new Sprite(new Texture("GameEntity/heart_animated.png")), 10, 3);
 		waterfallTest3 = new EnviromentAnimated(835, 225, 16, 46, new Sprite(new Texture("GameEntity/waterfall_animated.png")), 9, 5);
 		
@@ -97,7 +96,7 @@ public class Level implements Screen{
 
 	public void loadLevel(String levelName){
 
-		coin = new Drop(100, 100, 20, 20, coinSprite,1,DropType.COIN);
+		coin = new Drop(140, 120, 16, 16, new Sprite(new Texture("GameEntity/coin_animated.png")), 5, 5,1,DropType.COIN);
 		//unload the previous level if needed... TODO : Not done...
 		//would just be an emptying of the arraylists, with the appropriate dispose()?
 		//need to understand dispose() better...
@@ -190,7 +189,7 @@ public class Level implements Screen{
 		batch.draw(allertArea,slime.getX()-(aWidth-slime.getWidth())/2,slime.getY()-(aHeight-slime.getHeight())/2);
 
 		if(!coin.isPickedUp()){
-			batch.draw(coin.sprite,coin.x,coin.y);
+			batch.draw(coin.getTexture(), coin.getX(),coin.getY());
 		}
 
 		for(int i=0;i<trees.size();i++){
@@ -207,7 +206,6 @@ public class Level implements Screen{
 
 //		spawner.spawn();
 
-		batch.draw(coinTest.getTexture(), coinTest.getX(),coinTest.getY());
 		batch.draw(waterfallTest3.getTexture(),352,1003);
 		batch.draw(waterfallTest3.getTexture(),352+16,1003);
 		batch.draw(waterfallTest3.getTexture(),waterfallTest3.getX(),waterfallTest3.getY());
@@ -218,7 +216,7 @@ public class Level implements Screen{
 		batch.draw(waterfallTest3.getTexture(),1635+16,963);
 		batch.draw(waterfallTest3.getTexture(),1635+32,963);
 		batch.draw(heartTest.getTexture(),heartTest.getX(),heartTest.getY());
-		coinTest.update();
+		coin.update();
 		heartTest.update();
 		waterfallTest3.update();
 
