@@ -45,7 +45,7 @@ public class Player extends Creature{
         this.currentLevel = currentLevel;
 
         animatePlayer(startFrame, endFrame);
-
+    
     }
 
 

@@ -224,31 +224,11 @@ public class Level implements Screen{
 		heartTest.update();
 		waterfallTest3.update();
 
-		//for attack and shit u wanna do isKeyJustPressed rather than isKeyPressed
-		if(Gdx.input.isKeyPressed(Keys.W)){
-			if(checkForCollision('y',character.getY() + character.getSpeed())){
-				//System.out.println("PRESSING UP");
-				//System.out.println("Speed: "+character.getSpeed());
-				character.setY(character.getY() + character.getSpeed());
-			}
-		}
-		if(Gdx.input.isKeyPressed(Keys.S)){
-			if(checkForCollision('y',character.getY() - character.getSpeed())){
-				character.setY(character.getY() - character.getSpeed());
-			}
-		}
-		if(Gdx.input.isKeyPressed(Keys.A)){
-			if(checkForCollision('x',character.getX() - character.getSpeed())){
-				character.setX(character.getX() - character.getSpeed());
-			}
-		}
-		if(Gdx.input.isKeyPressed(Keys.D)){
-			if(checkForCollision('x',character.getX() + character.getSpeed())){
-				character.setX(character.getX() + character.getSpeed());
-			}
-		}
+		
 		//Testing purposes
 		//We want to kill a monster and then respawn them
+
+		character.checkKeysPressed();
 
 		/**
 		 * have camera always follow the player.
