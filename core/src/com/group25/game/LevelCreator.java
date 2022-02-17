@@ -102,8 +102,6 @@ public class LevelCreator extends JFrame implements Screen{
 		viewport.apply();
 		camera.position.set(GAME_WORLD_WIDTH/2,GAME_WORLD_HEIGHT/2,0);
 
-
-		
 	}
 
 	public void writeNewFile(){
