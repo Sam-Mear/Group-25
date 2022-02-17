@@ -69,7 +69,6 @@ public class Player extends Creature{
         if(Gdx.input.isKeyPressed(Keys.W)){
             if(currentLevel.checkForCollision('y',getY() + getSpeed())){
 				setY(getY() + getSpeed());
-                setStartAndEndFrame(3, 5);
 			}
             moveUpAnimation = true;
         }
@@ -85,7 +84,6 @@ public class Player extends Creature{
         if(Gdx.input.isKeyPressed(Keys.S)){
             if(currentLevel.checkForCollision('y',getY() - getSpeed())){
 				setY(getY() - getSpeed());
-                setStartAndEndFrame(0, 2);
 			}
             moveDownAnimation = true;
         }
@@ -100,7 +98,6 @@ public class Player extends Creature{
         if(Gdx.input.isKeyPressed(Keys.A)){
             if(currentLevel.checkForCollision('x',getX() - getSpeed())){
 				setX(getX() - getSpeed());
-                setStartAndEndFrame(8, 9);
 			}
             moveLeftAnimation = true;
         }
@@ -116,7 +113,6 @@ public class Player extends Creature{
         if(Gdx.input.isKeyPressed(Keys.D)){
             if(currentLevel.checkForCollision('x',getX() + getSpeed())){
 				setX(getX() + getSpeed());
-                setStartAndEndFrame(6, 7);
 			}
             moveRightAnimation = true;
         }
@@ -152,27 +148,35 @@ public class Player extends Creature{
 
         if(currentFrame > 0 && currentFrame < 3 && !moveDownAnimation){
             animation.setCurrentFrameNumber(0);
+            setStartAndEndFrame(0, 0);
+            downStarted = upStarted = leftStarted = rightStarted = false;
         }
 
         if(currentFrame > 3 && currentFrame < 6 && !moveUpAnimation){
             animation.setCurrentFrameNumber(3);
+            setStartAndEndFrame(3, 3);
+            downStarted = upStarted = leftStarted = rightStarted = false;
         }
 
-
+    
        
         if(moveDownAnimation && !downStarted){
+            upStarted = leftStarted = rightStarted = false;
             downStarted = true;
             animatePlayer(1, 2);
         }
         if(moveUpAnimation && !upStarted){
             upStarted = true;
+            downStarted = leftStarted = rightStarted = false;
             animatePlayer(4, 5);
         }
         if(moveLeftAnimation && !leftStarted){
             leftStarted = true;
+            downStarted = upStarted = rightStarted = false;
             animatePlayer(8, 9);
         }
         if(moveRightAnimation && !rightStarted){
+            downStarted = upStarted = leftStarted = false;
             rightStarted = true;
             animatePlayer(6, 7);
         }

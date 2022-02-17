@@ -69,6 +69,8 @@ public class EnitiyAnimation{
             currentFrame++;
         }
 
+        System.out.println(currentFrame);
+
         if(currentFrame >= numberOfFrames || currentFrame > endFrame){
             if(startFrame-endFrame > 2)
                 startFrame = startFrame+1;
