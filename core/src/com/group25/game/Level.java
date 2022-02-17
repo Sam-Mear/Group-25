@@ -24,35 +24,59 @@ import java.util.Scanner;
 
 public class Level implements Screen{
     private SpriteBatch batch;
+	private SpriteBatch UIElements;
 	private Sprite img;
 	private Sprite backgroundPicture;
+	private Sprite UiBorder;
+	private Sprite UiStatusBar;
+	private Sprite UiInventory;
+	private Sprite UiTutorial;
 	private OrthographicCamera camera;
 	private Player character;
 	private FitViewport viewport;
-
 	//TEMP DELETEME
 	private Slime slime;
 	private Sprite allertArea;
+	private EnviromentAnimated coinTest;
+	private EnviromentAnimated heartTest;
+	private EnviromentAnimated waterfallTest3;
 
 	private Drop coin;
 	private Sprite coinSprite;
 
+	//To be deleted
+	private EnemySpawner spawner;
+
 	ArrayList<Enviroment> trees = new ArrayList<Enviroment>(); // Create an ArrayList object
 	ArrayList<Enemy> enemies = new ArrayList<Enemy>(); // Create an ArrayList object
 
-	final int GAME_WORLD_WIDTH = 720;
-	final int GAME_WORLD_HEIGHT = 720;
+	final int GAME_WORLD_WIDTH = 1778;
+	final int GAME_WORLD_HEIGHT = 1334;
 	
 	public Level() {
 		batch = new SpriteBatch();
-		img = new Sprite(new Texture("Main_character_sprite.png"));
+		UIElements = new SpriteBatch();
+		img = new Sprite(new Texture("animation.png"));
 
 		coinSprite = new Sprite((new Texture("Coin.png")));
 
-		backgroundPicture = new Sprite(new Texture("tempBackground.jpg"));
-		backgroundPicture.setSize(GAME_WORLD_WIDTH,GAME_WORLD_HEIGHT);
+		UiBorder = new Sprite(new Texture("GUI/border.png"));
+		UiBorder.setX(0);
+		UiBorder.setY(0);
+		UiStatusBar = new Sprite(new Texture("GUI/status-bar-temp.png"));
+		UiInventory = new Sprite(new Texture("GUI/inventory.png"));
+		UiStatusBar.setX(20);
+		UiStatusBar.setY(20);
+
+		UiInventory.setX(20);
+		UiInventory.setY(150);
+
+		coinTest = new EnviromentAnimated(150, 150, 16, 16, new Sprite(new Texture("GameEntity/coin_animated.png")), 5, 5);
+		heartTest = new EnviromentAnimated(500, 1003, 22, 24, new Sprite(new Texture("GameEntity/heart_animated.png")), 10, 3);
+		waterfallTest3 = new EnviromentAnimated(835, 225, 16, 46, new Sprite(new Texture("GameEntity/waterfall_animated.png")), 9, 5);
+		
 		camera = new OrthographicCamera();
-		viewport = new FitViewport(480, 360,camera);
+		viewport = new FitViewport(840, 563,camera);
 		viewport.apply();
 		camera.position.set(GAME_WORLD_WIDTH/2,GAME_WORLD_HEIGHT/2,0);
 
@@ -63,12 +87,11 @@ public class Level implements Screen{
 		//for level 1.
 		//For a test, this is fine.
 
-		character = new Player(this, (int)GAME_WORLD_WIDTH/2-80,(int)GAME_WORLD_HEIGHT/2-80,64,64,100,img,5);//probably temp, just getting used to libgdx
+		character = new Player(null, (int)GAME_WORLD_WIDTH/2-80,(int)GAME_WORLD_HEIGHT/2-80,64,64,100,img,5);//probably temp, just getting used to libgdx
 		character.setSpeed(1);
 
 		allertArea = new Sprite(new Texture(("Slime_Test_Area.png")));
 
-		MonsterSpawner s = new MonsterSpawner(0,0,40,40,img,slime);
 		//System.out.println("Speeddddd: "+character.getSpeed());
 	}
 
@@ -80,14 +103,16 @@ public class Level implements Screen{
 		//need to understand dispose() better...
 		try{
 			//load file into levelInfo
-			Scanner levelInfo = new Scanner(new File(Gdx.files.internal("Levels/"+levelName+"/level.txt")+""));
+			Scanner levelInfo = new Scanner(new File(Gdx.files.internal("Levels/"+levelName+".txt")+""));
 			//Scanner allows us to go line by line in the file with.nextLine()
 			String line = levelInfo.nextLine();
 			//make sure its not end of file
 			while (levelInfo.hasNextLine()) {
 				//line = line.replace("    ","");
-				if(line.equals("DEFAULT PLAYER POSITIONS:")){
-					// TODO : 
+				if(line.contains("BACKGROUND:")){
+					System.out.println("aaaaaaaaa");
+					backgroundPicture = new Sprite(new Texture("Backgrounds/"+line.split(": ")[1]));
+					backgroundPicture.setSize(GAME_WORLD_WIDTH,GAME_WORLD_HEIGHT);
 				}else if(line.equals("GAME ENTITY:")){
 					//list of arguments needed to make the GameEntity
 					ArrayList<String> args = new ArrayList<String>();
@@ -96,13 +121,15 @@ public class Level implements Screen{
 						String s = levelInfo.nextLine();
 						args.add(s.substring(s.indexOf(":")+2));
 					}
-					
 					//gotta do some mad type changing
 					trees.add(new Enviroment(Float.parseFloat(args.get(0)),
 												Float.parseFloat(args.get(1)),
-												Integer.parseInt(args.get(4)), 
-												Integer.parseInt(args.get(5)), 
-												new Sprite(new Texture(args.get(2)))));
+												Integer.parseInt(args.get(2)), 
+												Integer.parseInt(args.get(3)), 
+												new Sprite(new Texture(args.get(4)))));
+												//new Sprite(new Texture(args.get(4))), 
+												//Integer.parseInt(args.get(5))));
+
 
 				}else if(line.equals("SLIME:")){
 					// TODO : enemy might not be final. 
@@ -115,14 +142,16 @@ public class Level implements Screen{
 
 					enemies.add(new Slime(Float.parseFloat(args.get(0)),
 											Float.parseFloat(args.get(1)),
-											Integer.parseInt(args.get(5)),
-											Integer.parseInt(args.get(6)),
 											Integer.parseInt(args.get(2)),
-											new Sprite(new Texture(args.get(3))),
-											Float.parseFloat(args.get(4))));
+											Integer.parseInt(args.get(3)),
+											Integer.parseInt(args.get(4)),
+											new Sprite(new Texture(args.get(5))),
+											Float.parseFloat(args.get(6))));
 					//TEMP DELETEME
 					slime = (Slime) enemies.get(0);
-				
+					EnemyFactory slimeCamp = new SlimeFactory();
+					slimeCamp.getNewMonster(50,50,100,slime.getSprite(),1);
+
 				}
 				line = levelInfo.nextLine();
 			}
@@ -149,15 +178,20 @@ public class Level implements Screen{
 	
 	@Override
 	public void render (float delta) {
-		ScreenUtils.clear(1, 0, 0, 1);//red background
+		ScreenUtils.clear(0, 0, 0, 1);//red background
 
 		camera.update();
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		backgroundPicture.draw(batch);
+
+
+
+
 		int aWidth = 200;
 		int aHeight = 200;
 		batch.draw(allertArea,slime.getX()-(aWidth-slime.getWidth())/2,slime.getY()-(aHeight-slime.getHeight())/2);
+
 		if(!coin.isPickedUp()){
 			batch.draw(coin.sprite,coin.x,coin.y);
 		}
@@ -170,9 +204,51 @@ public class Level implements Screen{
 			batch.draw(enemies.get(i).getSprite(),enemies.get(i).getX(),enemies.get(i).getY());
 		}
 
-		batch.draw(character.getTexture(), character.getX(), character.getY());
+		// batch.draw(character.getTexture(), character.getX(), character.getY());
+		// batch.draw(spawner.getSprite().getTexture(),spawner.getX(),spawner.getY());
 
-		character.checkKeysPressed();
+//		spawner.spawn();
+
+		batch.draw(coinTest.getTexture(), coinTest.getX(),coinTest.getY());
+		batch.draw(waterfallTest3.getTexture(),352,1003);
+		batch.draw(waterfallTest3.getTexture(),352+16,1003);
+		batch.draw(waterfallTest3.getTexture(),waterfallTest3.getX(),waterfallTest3.getY());
+		batch.draw(waterfallTest3.getTexture(),waterfallTest3.getX()+16,waterfallTest3.getY());
+		batch.draw(waterfallTest3.getTexture(),waterfallTest3.getX()+32,waterfallTest3.getY());
+		batch.draw(waterfallTest3.getTexture(),waterfallTest3.getX()+48,waterfallTest3.getY());
+		batch.draw(waterfallTest3.getTexture(),1635,963);
+		batch.draw(waterfallTest3.getTexture(),1635+16,963);
+		batch.draw(waterfallTest3.getTexture(),1635+32,963);
+		batch.draw(heartTest.getTexture(),heartTest.getX(),heartTest.getY());
+		coinTest.update();
+		heartTest.update();
+		waterfallTest3.update();
+
+		//for attack and shit u wanna do isKeyJustPressed rather than isKeyPressed
+		if(Gdx.input.isKeyPressed(Keys.W)){
+			if(checkForCollision('y',character.getY() + character.getSpeed())){
+				//System.out.println("PRESSING UP");
+				//System.out.println("Speed: "+character.getSpeed());
+				character.setY(character.getY() + character.getSpeed());
+			}
+		}
+		if(Gdx.input.isKeyPressed(Keys.S)){
+			if(checkForCollision('y',character.getY() - character.getSpeed())){
+				character.setY(character.getY() - character.getSpeed());
+			}
+		}
+		if(Gdx.input.isKeyPressed(Keys.A)){
+			if(checkForCollision('x',character.getX() - character.getSpeed())){
+				character.setX(character.getX() - character.getSpeed());
+			}
+		}
+		if(Gdx.input.isKeyPressed(Keys.D)){
+			if(checkForCollision('x',character.getX() + character.getSpeed())){
+				character.setX(character.getX() + character.getSpeed());
+			}
+		}
+		//Testing purposes
+		//We want to kill a monster and then respawn them
 
 		/**
 		 * have camera always follow the player.
@@ -201,33 +277,23 @@ public class Level implements Screen{
 		//If the entire person has entered the slime territory
 
 		batch.end();
+
+		/**
+		 * Drawing UI
+		 */
+
+		UIElements.begin();
+
+		UiBorder.draw(UIElements);
+		UiStatusBar.draw(UIElements);
+		UiInventory.draw(UIElements);
+
+		// UI StatusBar, 
+
+
+		UIElements.end();
 	}
 	
-	/**
-	 * FUNCTION THAT CHECKS IN ENEMIES ARE IN THE RANGE OF SOMETHING 
-	 * 	WILL BE USED MAINLY FOR THE ATTACK FUNCTION OF THE PLAYER
-	 */
-	
-	public boolean attack(int x, int y, int z){
-		return true;
-	}
-
-	/**
-	 *  CORRECT FUNCTION
-	 */
-	// public boolean attack(int xAttackRange, int yAttackRange, int damage){
-	// 	for(int i=0; i<enemies.size(); i++){
-	// 		Enemy enemy = enemies.get(i);
-	// 		System.out.print(enemy.getX());
-	// 		if( Math.abs(enemy.getX() - character.getX()) < xAttackRange  
-	// 			&&  Math.abs(enemy.getY() - character.getY()) < yAttackRange){
-	// 				enemy.takeDamage(damage);
-	// 				return true;
-	// 		}
-	// 	}
-	// 	return false;
-	// }
-
 	@Override
 	public void dispose () {
 		batch.dispose();

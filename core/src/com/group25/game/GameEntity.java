@@ -42,6 +42,10 @@ public abstract class GameEntity {
 		this.height = height;
 		this.hitbox = hitbox;
 	}
+
+	public void dispose() {
+		//dispose sprite
+	}
     
 	public float getX() {
 		return x;
@@ -91,6 +95,14 @@ public abstract class GameEntity {
 		this.collidable = collidable;
 	}
 
+	public void update(){
+
+	}
+
+	public void updateHitbox() {
+        this.getHitbox().setLocation((int)this.getX(),(int)this.getY());
+    }
+  
 	public Rectangle getHitbox() {
 		return hitbox;
 	}

@@ -7,7 +7,7 @@ import java.awt.*;
 
 //Items will not appear on the game window i.e. on the floor
 //This only really applies to drop items i guess?
-public abstract class Item extends GameEntity {
+public abstract class Item extends GameEntity {// TODO : make item extend EnviromentAnimated maybe for the animationsQ!!!!!
 
     private boolean pickedUp = false;   //This would mean an item has been rendered
 

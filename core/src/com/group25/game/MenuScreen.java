@@ -3,6 +3,7 @@ package com.group25.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -11,12 +12,16 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public class MenuScreen implements Screen{
 
+    private Music menuMusic;
+
     private SpriteBatch batch;
     private Texture playButton;
     private Texture playButtonHighlight;
+    private Texture levelCreatorButton;
+    private Texture levelCreatorHighlight;
     private Texture exitButton;
     private Texture exitButtonHighlight;
-    private final int BUTTON_HEIGHT = 200;
+    private final int BUTTON_HEIGHT = 200; // change this
     private final int BUTTON_WIDTH = 400;
     private OrthographicCamera camera;
     private FitViewport viewport;
@@ -28,11 +33,19 @@ public class MenuScreen implements Screen{
 	final int GAME_WORLD_HEIGHT = 720;
     
     public MenuScreen(){
+        menuMusic = Gdx.audio.newMusic(Gdx.files.internal("Music/Steventhedreamer - The bandit's wagon.mp3"));
+        //menuMusic.setLooping(true);
+        menuMusic.play();
         batch = new SpriteBatch();
-        playButton = new Texture("tempPlayButton.png");
-        playButtonHighlight = new Texture("tempPlayButtonHighlight.png");
-        exitButton = new Texture("tempExitButton.png");
-        exitButtonHighlight = new Texture("tempExitButtonHighlight.png");
+        playButton = new Texture("GUI/tempPlayButton.png");
+        playButtonHighlight = new Texture("GUI/tempPlayButtonHighlight.png");
+
+
+        levelCreatorButton = new Texture("GUI/tempPlayButton.png");
+        levelCreatorHighlight = new Texture("GUI/tempPlayButtonHighlight.png");
+
+        exitButton = new Texture("GUI/tempExitButton.png");
+        exitButtonHighlight = new Texture("GUI/tempExitButtonHighlight.png");
         //The stuff below is not needed in here and works without it
         camera = new OrthographicCamera();
         viewport = new FitViewport(960 , 720, camera);
@@ -61,14 +74,28 @@ public class MenuScreen implements Screen{
         //buttons at center of map
 
         //Play button
-        if ((Gdx.input.getX()< centerX + BUTTON_WIDTH && Gdx.input.getX()>centerX) && (GAME_WORLD_HEIGHT - Gdx.input.getY()< 400 + BUTTON_HEIGHT && GAME_WORLD_HEIGHT - Gdx.input.getY()>400)){
-            batch.draw(playButtonHighlight,centerX,400);
+        if ((Gdx.input.getX()< centerX + BUTTON_WIDTH && Gdx.input.getX()>centerX) && (GAME_WORLD_HEIGHT - Gdx.input.getY()< 500 + BUTTON_HEIGHT && GAME_WORLD_HEIGHT - Gdx.input.getY()>500)){
+            batch.draw(playButtonHighlight,centerX,500);
             if(Gdx.input.isTouched()){
                 ((Game)Gdx.app.getApplicationListener()).setScreen(new Level());
             }
         }else{
-            batch.draw(playButton,centerX,400);
+            batch.draw(playButton,centerX,500);
         }
+
+
+        //Level creator button
+        if ((Gdx.input.getX()< centerX + BUTTON_WIDTH && Gdx.input.getX()>centerX) && (GAME_WORLD_HEIGHT - Gdx.input.getY()< 300 + BUTTON_HEIGHT && GAME_WORLD_HEIGHT - Gdx.input.getY()>300)){
+            batch.draw(levelCreatorHighlight,centerX,300);
+            if(Gdx.input.isTouched()){
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new LevelCreator());
+            }
+        }else{
+            batch.draw(levelCreatorButton,centerX,300);
+        }
+
+
+
         //EXit button
         if ((Gdx.input.getX()< centerX + BUTTON_WIDTH && Gdx.input.getX()>centerX) && (GAME_WORLD_HEIGHT - Gdx.input.getY()< 100 + BUTTON_HEIGHT && GAME_WORLD_HEIGHT - Gdx.input.getY()>100)){
             batch.draw(exitButtonHighlight,centerX,100);

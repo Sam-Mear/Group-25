@@ -181,6 +181,7 @@ public class Player extends Creature{
             animatePlayer(6, 7);
         }
 
+       // System.out.println("Breka");
         this.getHitbox().setLocation((int) this.getX(), (int) this.getY());
        // System.out.printf("Player hitBox x: %d y: %d\n", (int) this.getX(), (int) this.getY());
         //System.out.println("Coin amount: "+coins);
