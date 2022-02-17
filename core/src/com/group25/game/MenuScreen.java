@@ -136,13 +136,44 @@ public class MenuScreen implements Screen{
 
 
         //Play button
-        if ((Gdx.input.getX() < 59 + BUTTON_WIDTH && Gdx.input.getX()>centerX) && (GAME_WORLD_HEIGHT - Gdx.input.getY()< 149 + BUTTON_HEIGHT && GAME_WORLD_HEIGHT - Gdx.input.getY()>149)){
-            batch.draw(playButtonHighlight,142,59);
+        if ((Gdx.input.getX() < 43 + BUTTON_WIDTH && Gdx.input.getX()>centerX) && (GAME_WORLD_HEIGHT - Gdx.input.getY()< 149 + BUTTON_HEIGHT && GAME_WORLD_HEIGHT - Gdx.input.getY()>149)){
+            batch.draw(playGameButtonHighlighted,177,106);
             if(Gdx.input.isTouched()){
                 ((Game)Gdx.app.getApplicationListener()).setScreen(new Level());
             }
         }else{
-            batch.draw(playGameButton,142,59);
+            batch.draw(playGameButton,177,106);
+        }
+
+
+        // Sound toggle
+        if ((Gdx.input.getX() < 43 + BUTTON_WIDTH && Gdx.input.getX()>centerX) && (GAME_WORLD_HEIGHT - Gdx.input.getY()< 149 + BUTTON_HEIGHT && GAME_WORLD_HEIGHT - Gdx.input.getY()>149)){
+            batch.draw(soundToggleOn,336,106);
+            if(Gdx.input.isTouched()){
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new Level());
+            }
+        }else{
+            batch.draw(soundToggleOff,336,106);
+        }
+
+        // Leaderboard
+        if ((Gdx.input.getX() < 43 + BUTTON_WIDTH && Gdx.input.getX()>centerX) && (GAME_WORLD_HEIGHT - Gdx.input.getY()< 149 + BUTTON_HEIGHT && GAME_WORLD_HEIGHT - Gdx.input.getY()>149)){
+            batch.draw(leaderboardButtonHighlighted,490,106);
+            if(Gdx.input.isTouched()){
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new Level());
+            }
+        }else{
+            batch.draw(leaderboardButton,490,106);
+        }
+
+        // Create Level
+        if ((Gdx.input.getX() < 43 + BUTTON_WIDTH && Gdx.input.getX()>centerX) && (GAME_WORLD_HEIGHT - Gdx.input.getY()< 149 + BUTTON_HEIGHT && GAME_WORLD_HEIGHT - Gdx.input.getY()>149)){
+            batch.draw(createLevelButtonHighlighted,647,106);
+            if(Gdx.input.isTouched()){
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new Level());
+            }
+        }else{
+            batch.draw(createLevelButton,647,106);
         }
 
 
