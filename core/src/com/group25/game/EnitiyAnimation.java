@@ -31,7 +31,7 @@ public class EnitiyAnimation{
 
     public EnitiyAnimation(TextureRegion animationSegment,int numberOfFrames,int frameTime, int startFrame, int endFrame){
         int frameWidth = animationSegment.getRegionWidth()/numberOfFrames;
-        int framdeHeight = animationSegment.getTexture().getHeight();
+        int frameHeight = animationSegment.getTexture().getHeight();
 
         this.numberOfFrames = numberOfFrames;
         this.frameTime = frameTime;
@@ -42,7 +42,7 @@ public class EnitiyAnimation{
         frames = new Array<TextureRegion>();
 
         for(int i=0;i<numberOfFrames;i++){
-            frames.add(new TextureRegion(animationSegment,i*frameWidth,0,frameWidth,framdeHeight));
+            frames.add(new TextureRegion(animationSegment,i*frameWidth,0,frameWidth,frameHeight));
         }
         currentFrame = startFrame;
     }
