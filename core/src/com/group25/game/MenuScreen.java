@@ -170,11 +170,76 @@ public class MenuScreen implements Screen{
         if ((Gdx.input.getX() < 43 + BUTTON_WIDTH && Gdx.input.getX()>centerX) && (GAME_WORLD_HEIGHT - Gdx.input.getY()< 149 + BUTTON_HEIGHT && GAME_WORLD_HEIGHT - Gdx.input.getY()>149)){
             batch.draw(createLevelButtonHighlighted,647,106);
             if(Gdx.input.isTouched()){
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new Level());
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new LevelCreator());
             }
         }else{
             batch.draw(createLevelButton,647,106);
         }
+
+
+
+
+
+
+
+        // Level 1
+        if ((Gdx.input.getX() < 43 + BUTTON_WIDTH && Gdx.input.getX()>centerX) && (GAME_WORLD_HEIGHT - Gdx.input.getY()< 149 + BUTTON_HEIGHT && GAME_WORLD_HEIGHT - Gdx.input.getY()>149)){
+            batch.draw(levelCompleteButtonHighlighted,629,470);
+            if(Gdx.input.isTouched()){
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new LevelCreator());
+            }
+        }else{
+            batch.draw(levelCompleteButton,629,473);
+        }
+
+
+        // Level 2
+        if ((Gdx.input.getX() < 43 + BUTTON_WIDTH && Gdx.input.getX()>centerX) && (GAME_WORLD_HEIGHT - Gdx.input.getY()< 149 + BUTTON_HEIGHT && GAME_WORLD_HEIGHT - Gdx.input.getY()>149)){
+            batch.draw(levelCompleteButtonHighlighted,629,470);
+            if(Gdx.input.isTouched()){
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new LevelCreator());
+            }
+        }else{
+            batch.draw(levelCompleteButton,629,409);
+        }
+
+
+        // Level 3
+        if ((Gdx.input.getX() < 43 + BUTTON_WIDTH && Gdx.input.getX()>centerX) && (GAME_WORLD_HEIGHT - Gdx.input.getY()< 149 + BUTTON_HEIGHT && GAME_WORLD_HEIGHT - Gdx.input.getY()>149)){
+            batch.draw(levelCompleteButtonHighlighted,629,470);
+            if(Gdx.input.isTouched()){
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new LevelCreator());
+            }
+        }else{
+            batch.draw(levelCompleteButton,629,342);
+        }
+
+
+
+        // Level 4
+        if ((Gdx.input.getX() < 43 + BUTTON_WIDTH && Gdx.input.getX()>centerX) && (GAME_WORLD_HEIGHT - Gdx.input.getY()< 149 + BUTTON_HEIGHT && GAME_WORLD_HEIGHT - Gdx.input.getY()>149)){
+            batch.draw(levelCompleteButtonHighlighted,629,470);
+            if(Gdx.input.isTouched()){
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new LevelCreator());
+            }
+        }else{
+            batch.draw(levelCompleteButton,629,276);
+        }
+
+
+
+        // Level 5
+        if ((Gdx.input.getX() < 43 + BUTTON_WIDTH && Gdx.input.getX()>centerX) && (GAME_WORLD_HEIGHT - Gdx.input.getY()< 149 + BUTTON_HEIGHT && GAME_WORLD_HEIGHT - Gdx.input.getY()>149)){
+            batch.draw(levelCompleteButtonHighlighted,629,470);
+            if(Gdx.input.isTouched()){
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new LevelCreator());
+            }
+        }else{
+            batch.draw(levelCompleteButton,629,212);
+        }
+
+
+
 
 
         // //Level creator button
