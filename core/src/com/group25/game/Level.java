@@ -23,7 +23,7 @@ import java.util.Scanner;
 
 
 public class Level implements Screen{
-    private SpriteBatch batch;
+  private SpriteBatch batch;
 	private SpriteBatch UIElements;
 	private Sprite img;
 	private Sprite backgroundPicture;
@@ -58,7 +58,7 @@ public class Level implements Screen{
 		UIElements = new SpriteBatch();
 		img = new Sprite(new Texture("animation.png"));
 
-		coinSprite = new Sprite((new Texture("Coin.png")));
+		//coinSprite = new Sprite((new Texture("Coin.png")));
 
 		UiBorder = new Sprite(new Texture("GUI/border.png"));
 		UiBorder.setX(0);
@@ -79,7 +79,7 @@ public class Level implements Screen{
 		viewport.apply();
 		camera.position.set(GAME_WORLD_WIDTH/2,GAME_WORLD_HEIGHT/2,0);
 
-		loadLevel("TestLevel");
+		loadLevel("NewLevel");
 		// TODO : this needs to be fixed haha
 		//"testlevel" would actually be anything that is parsed into the level constructor.
 		//so if "level1" was given to Level.java, then it would attempt to find the txt file containing level details 
@@ -104,9 +104,10 @@ public class Level implements Screen{
 			//load file into levelInfo
 			Scanner levelInfo = new Scanner(new File(Gdx.files.internal("Levels/"+levelName+".txt")+""));
 			//Scanner allows us to go line by line in the file with.nextLine()
-			String line = levelInfo.nextLine();
+			String line;
 			//make sure its not end of file
 			while (levelInfo.hasNextLine()) {
+				line = levelInfo.nextLine();
 				//line = line.replace("    ","");
 				if(line.contains("BACKGROUND:")){
 					System.out.println("aaaaaaaaa");
@@ -152,7 +153,7 @@ public class Level implements Screen{
 					slimeCamp.getNewMonster(50,50,100,slime.getSprite(),1);
 
 				}
-				line = levelInfo.nextLine();
+				
 			}
 		} catch(FileNotFoundException fileNotFoundException){
 			System.out.println("file "+Gdx.files.internal("Levels/"+levelName+"/level.txt")+ " not found!");

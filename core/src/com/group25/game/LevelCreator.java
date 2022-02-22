@@ -4,7 +4,7 @@
  *    DONE
  * 
  *  * Able to change background
- *    NOT DONE
+ *    DONE
  * 
  *  * Click on an already placed entity to change its x and y position
  *    DONE
@@ -67,7 +67,7 @@ import java.util.Scanner;
 public class LevelCreator extends JFrame implements Screen{
     
 
-    private SpriteBatch batch;
+  private SpriteBatch batch;
 	private Sprite img;
 	private Sprite backgroundPicture;
 	private OrthographicCamera camera;
@@ -83,14 +83,15 @@ public class LevelCreator extends JFrame implements Screen{
 	private int selectedEntity = -1;
 
 	ArrayList<GameEntity> trees = new ArrayList<GameEntity>(); // Create an ArrayList object
-	ArrayList<ArrayList<String>> textFileOutput = new ArrayList<ArrayList<String>>(); // Create an ArrayList object
+	ArrayList<ArrayList<String>> preTextFileOutput = new ArrayList<ArrayList<String>>(); //pre game entity data like bakcground image.
+	ArrayList<ArrayList<String>> textFileOutput = new ArrayList<ArrayList<String>>(); // GameEntity data to be written to file
 
-	final int GAME_WORLD_WIDTH = 1240;
-	final int GAME_WORLD_HEIGHT = 1240;
+	int GAME_WORLD_WIDTH = 1240;
+	int GAME_WORLD_HEIGHT = 1240;
 	
 	public LevelCreator() {
 
-        loadLevel();
+    loadLevel();
         
 
 		batch = new SpriteBatch();
@@ -117,6 +118,12 @@ public class LevelCreator extends JFrame implements Screen{
 			}
 
 			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(newFile)));
+			for(int i=0;i<preTextFileOutput.size();i++){
+				for (int j=0;j<preTextFileOutput.get(i).size();j++){
+					bw.write(preTextFileOutput.get(i).get(j));
+					bw.newLine();
+				}
+			}
 			for(int i=0;i<textFileOutput.size();i++){
 				for (int j=0;j<textFileOutput.get(i).size();j++){
 					bw.write(textFileOutput.get(i).get(j));
@@ -131,40 +138,126 @@ public class LevelCreator extends JFrame implements Screen{
 		}
 	}
 
-	public ArrayList<JRadioButton> listFilesForFolder(final File folder) {
+	public ArrayList<JRadioButton> listFilesForFolder(final File folder,int folderflag) {
 		ArrayList<JRadioButton> buttons = new ArrayList<JRadioButton>();
 		for (final File fileEntry : folder.listFiles()) {
 			if (fileEntry.isDirectory()) {
-				listFilesForFolder(fileEntry);
+				listFilesForFolder(fileEntry,folderflag);
 			} else {
 				String temp = fileEntry.getName();
 				if(!temp.contains(".txt")){
-					buttons.add(new JRadioButton(temp,new ImageIcon(new ImageIcon(Gdx.files.internal("GameEntity/"+temp) + "").getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT))));
+					if(folderflag == 1){
+						buttons.add(new JRadioButton(temp,new ImageIcon(new ImageIcon(Gdx.files.internal("Backgrounds/"+temp) + "").getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT))));
+					}else{
+						buttons.add(new JRadioButton(temp,new ImageIcon(new ImageIcon(Gdx.files.internal("GameEntity/"+temp) + "").getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT))));
+					}
 				}
 			}
 		}
 		return buttons;
 	}
 
-    public void changeBackground() {
-		//popup, run listFilesForFolder but for Backgrounds/
-		//below code to change background
-		//setup the pre gameentity part of txt file so we
-		//can save the text file.
+  public void changeBackground(String backgroundName) {
+		final String backgroundName1 = backgroundName;
+		
+		try{
+			//load file into defaultEntityInfo
+			Scanner defaultEntityInfo = new Scanner(new File(Gdx.files.internal(backgroundName)+".txt"));
+			//store contents as arraylist, each item being a line to be 
+			//written to the level.txt
+			ArrayList<String> backgroundInfo = new ArrayList<String>();
+			//Scanner allows us to go line by line in the file with.nextLine()
+			String line = defaultEntityInfo.nextLine();
+			backgroundInfo.add(line);
+
+			//make sure its not end of file
+			while (defaultEntityInfo.hasNextLine()) {
+				
+				line = defaultEntityInfo.nextLine();
+				if(line.contains(" width:")){
+					GAME_WORLD_WIDTH = Integer.parseInt(line.split(": ")[1]);
+				}else if(line.contains(" height:")){
+					GAME_WORLD_HEIGHT = Integer.parseInt(line.split(": ")[1]);
+				}
+
+				backgroundInfo.add(line);
+			}
+			System.out.println(backgroundInfo);
+			if(preTextFileOutput.size()>0){
+				preTextFileOutput.remove(0);
+			}
+			preTextFileOutput.add(backgroundInfo);
+		} catch(FileNotFoundException fileNotFoundException){
+			System.out.println("file "+Gdx.files.internal(backgroundName)+ " not found!");
+			//System.out.println("running default game entity info");
+			//run this function again but with gameEntityDefaults.txt
+			//return readDefaultValues("GameEntity/GameEntity.txt", x, y);
+			//remember i need to change the sprite....
+		}
+
+
 		System.out.println("CHANGING BACKGROUND!!");
 		//this mess cause swing in different thread?
 		Gdx.app.postRunnable(new Runnable()  {
 			@Override
 			public void run() {
-			backgroundPicture.setRegion(new Texture(Gdx.files.internal("Backgrounds/unknown.png")));
+			backgroundPicture.setRegion(new Texture(Gdx.files.internal(backgroundName1)));
+			backgroundPicture.setSize(GAME_WORLD_WIDTH,GAME_WORLD_HEIGHT);
+			//viewport.update(GAME_WORLD_WIDTH,GAME_WORLD_HEIGHT,true);
+			viewport.setWorldHeight(GAME_WORLD_HEIGHT);
+			viewport.setWorldWidth(GAME_WORLD_WIDTH);
+			camera.position.set(GAME_WORLD_WIDTH/2,GAME_WORLD_HEIGHT/2,0);
 			}
+
 		});
+	}
+	
+	public void changeBackgroundMenu() {
+		//popup, run listFilesForFolder but for Backgrounds/
+		JFrame f = new JFrame("Enter Level Name");
+		final ButtonGroup backgroundButtonGroup = new ButtonGroup();
+
+		final File folder = new File(Gdx.files.internal("Backgrounds/") + "");
+		ArrayList<JRadioButton> buttons = listFilesForFolder(folder,1);
+		for (JRadioButton jRadioButton : buttons) {
+			f.add(jRadioButton);
+			backgroundButtonGroup.add(jRadioButton);
+		}
+
+		JButton submitButton = new JButton("Submit");
+		//JButton loadLevelButton = new JButton("Load Level");
+		submitButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e){
+				Enumeration elements = backgroundButtonGroup.getElements();
+				while (elements.hasMoreElements()){
+					AbstractButton button = (AbstractButton)elements.nextElement();
+					if (button.isSelected()) {
+						changeBackground("Backgrounds/"+button.getText());
+					}
+				}
+				
+				//f.dispose();
+			}
+
+		});
+		f.add(submitButton);
+
+		f.setSize(200,500);
+		f.setLayout(new FlowLayout());
+		f.setDefaultCloseOperation(f.DISPOSE_ON_CLOSE);
+		f.setVisible(true);
+		//below code to change background
+		//setup the pre gameentity part of txt file so we
+		//can save the text file.
+		
 		
 	}
 	
 	public void loadLevel(){
 		buttonGroup = new ButtonGroup();
-        JFrame f = new JFrame("Enter Level Name");
+    JFrame f = new JFrame("Enter Level Name");
 		JButton saveLevelButton = new JButton("Save Level");
 		//JButton loadLevelButton = new JButton("Load Level");
 		saveLevelButton.addActionListener(new ActionListener() {
@@ -181,7 +274,7 @@ public class LevelCreator extends JFrame implements Screen{
 
 			@Override
 			public void actionPerformed(ActionEvent e){
-				changeBackground();
+				changeBackgroundMenu();
 			}
 
 		});
@@ -191,7 +284,7 @@ public class LevelCreator extends JFrame implements Screen{
         //JTextField enterLevelName = new JTextField(10);
 
 		final File folder = new File(Gdx.files.internal("GameEntity/") + "");
-		ArrayList<JRadioButton> buttons = listFilesForFolder(folder);
+		ArrayList<JRadioButton> buttons = listFilesForFolder(folder,0);
 		for (JRadioButton jRadioButton : buttons) {
 			f.add(jRadioButton);
 			buttonGroup.add(jRadioButton);
@@ -202,13 +295,13 @@ public class LevelCreator extends JFrame implements Screen{
 		deleteTool = new JCheckBox("Delete Tool");
 		f.add(deleteTool);
 
-        f.setSize(200,500);
+    f.setSize(200,500);
 		f.setLayout(new FlowLayout());
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //popupMenu.add(enterLevelName);
-        //f.add(enterLevelName);
-        f.setVisible(true);
-    }
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//popupMenu.add(enterLevelName);
+		//f.add(enterLevelName);
+		f.setVisible(true);
+  }
 
 	public void addEntityToGameWindow(ArrayList<String> entityValues){
 		Float x,y;
@@ -360,7 +453,7 @@ public class LevelCreator extends JFrame implements Screen{
 		batch.begin();
 		backgroundPicture.draw(batch);
 
-        if(Gdx.input.justTouched()){
+    if(Gdx.input.justTouched()){
 			System.out.println("X Coordinate: " + Gdx.input.getX());
 			System.out.println("Y Coordinate: " + Gdx.input.getY());
 			Vector3 mousePos = new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
