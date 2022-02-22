@@ -16,10 +16,16 @@
  *    NOT DONE
  * 
  *  * Grid system
- *    NOT DONE
+ *    DONE
  * 
  *  * Change map size values
- *    NOT DONE
+ *    kinda done? i would rather just resize the background image. or you can change the .txt value where the image is stored.
+ * 
+ *  * add animation?
+ *    uhhhh, could just have it be default value txt thing, and it looks a bit shit in the level creator....
+ * 
+ *  * Hitbox things
+ *    NOT DONE. could do it with 2 clicks of the mouse.
  * 
  */
 
@@ -75,9 +81,11 @@ public class LevelCreator extends JFrame implements Screen{
 
 	//button group of the radio buttons
 	private ButtonGroup buttonGroup;
-	//movetool
+	//tools
 	private JCheckBox moveTool;
 	private JCheckBox deleteTool;
+	private JCheckBox gridTool;
+	private JTextField gridNumber;
 	//the below is -1 for not selected.
 	//after moving an etity, it goes back to -1.
 	private int selectedEntity = -1;
@@ -294,6 +302,11 @@ public class LevelCreator extends JFrame implements Screen{
 		f.add(moveTool);
 		deleteTool = new JCheckBox("Delete Tool");
 		f.add(deleteTool);
+		gridTool = new JCheckBox("Grid Tool");
+		f.add(gridTool);
+		gridNumber = new JTextField(10);
+		f.add(gridNumber);
+
 
     f.setSize(200,500);
 		f.setLayout(new FlowLayout());
@@ -486,13 +499,21 @@ public class LevelCreator extends JFrame implements Screen{
 					System.out.println(temp);
 				}
 			}else{
+				int x = (int)mousePos.x;
+				int y = (int)mousePos.y;
+				int grid = Integer.parseInt(gridNumber.getText());
+				if(gridTool.isSelected()){
+					x = (int)(grid*(Math.floor(Math.abs(x/grid))));
+					y = (int)(grid*(Math.floor(Math.abs(y/grid))));
+				}
 				// TODO : see Sam Notes
 				Enumeration elements = buttonGroup.getElements();
 				while (elements.hasMoreElements()){
 					AbstractButton button = (AbstractButton)elements.nextElement();
 					if (button.isSelected()) {
+						
 						//trees.add(new GameEntity((int)mousePos.x,(int)mousePos.y,10,10,new Sprite(new Texture("GameEntity/"+button.getText())),0));
-						ArrayList <String> entityValues = readDefaultValues("GameEntity/"+button.getText()+".txt",(int)mousePos.x,(int)mousePos.y);
+						ArrayList <String> entityValues = readDefaultValues("GameEntity/"+button.getText()+".txt",x,y);
 						addEntityToGameWindow(entityValues);
 						textFileOutput.add(entityValues);
 					}
