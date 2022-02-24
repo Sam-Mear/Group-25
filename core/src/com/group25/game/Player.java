@@ -1,5 +1,6 @@
 package com.group25.game;
 
+import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
@@ -12,9 +13,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 
 import java.awt.*;
 
-public class Player extends Creature{
+public class Player extends Creature implements ApplicationListener{
 
-    Level currentLevel;
+    Level currentLevel;         
 
     private int coins;
     private int currentMana;
@@ -57,6 +58,7 @@ public class Player extends Creature{
         APressed();
         SPressed();
         DPressed();
+        leftMousePressed();
 
     }
 
@@ -127,6 +129,14 @@ public class Player extends Creature{
         }
     }
 
+
+    public void leftMousePressed(){
+        if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
+           attack(this, 10, 50, 50);
+           System.out.println(this.getHealth());
+            
+        }
+    }
   
 
     /**
@@ -279,6 +289,41 @@ public class Player extends Creature{
     }
     public void spendCoins(int coins){
         coins -= coins;
+    }
+
+
+    @Override
+    public void create() {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    @Override
+    public void resize(int width, int height) {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    @Override
+    public void render() {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    @Override
+    public void pause() {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    @Override
+    public void resume() {
+        // TODO Auto-generated method stub
+        
     }
 
    

@@ -6,12 +6,17 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import java.awt.*;
 import java.util.Collection;
 import java.util.Collections;
+import java.lang.Math;
+import java.lang.*;
+
+
+
 
 public abstract class Creature extends GameEntity{
 
     private Rectangle DamageArea;
     protected float speed;
-    protected int health;
+    protected int health = 100;
     protected float attackSpeed;
     protected float attackDamage;
 
@@ -28,28 +33,18 @@ public abstract class Creature extends GameEntity{
     }
 
     //Attack Section
-    public void DamageArea(int takeDamage){
-        if (this.getDamageArea().contains(Creature.getposition())) {
-            if (this.getY() < Creature.getY()) {
+    public void attack(Creature target, int damage, int xRange, int yRange){
+    //    if(  (Math.abs(this.getX() + xRange  - 10) < Math.abs(target.getX()/2))
+    //         && (Math.abs(this.getY() + yRange   - 10) < Math.abs(target.getY()/2)) ){
+                System.out.println(this.getX());
+                System.out.println(this.getY());
+                System.out.println(target.getX());
+                System.out.println(target.getY());
 
-                this.health = this.health - takeDamage;
-            }
+                System.out.println("attack");
 
-            if (this.getY() > Creature.getY()) {
-
-                this.health = this.health - takeDamage;
-            }
-
-            if (this.getX() < Creature.getY()) {
-
-                this.health = this.health - takeDamage;
-            }
-
-            if (this.getX() > Creature.getY() ) {
-
-                this.health = this.health - takeDamage;
-            }
-        }
+                target.setHealth(target.getHealth()-damage);
+    //    }
     }
 
     private static Object getposition() {
@@ -74,5 +69,9 @@ public abstract class Creature extends GameEntity{
 
     public int getHealth() {
         return health;
+    }
+
+    public void setHealth(int health){
+        this.health = health;
     }
 }
