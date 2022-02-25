@@ -49,6 +49,7 @@ public class Level implements Screen{
 
 	ArrayList<Enviroment> trees = new ArrayList<Enviroment>(); // Create an ArrayList object
 	ArrayList<Enemy> enemies = new ArrayList<Enemy>(); // Create an ArrayList object
+	ArrayList<Creature> targets = new ArrayList<>(); // arrayList where all possible targets are stored (including enemies and main character and/or object if there will be any)
 
 	final int GAME_WORLD_WIDTH = 1778;
 	final int GAME_WORLD_HEIGHT = 1334;
@@ -88,6 +89,7 @@ public class Level implements Screen{
 
 		character = new Player(this, (int)GAME_WORLD_WIDTH/2-80,(int)GAME_WORLD_HEIGHT/2-80,64,64,100,img,5);//probably temp, just getting used to libgdx
 		character.setSpeed(1);
+		targets.add(character);
 
 		allertArea = new Sprite(new Texture(("Slime_Test_Area.png")));
 
@@ -139,7 +141,8 @@ public class Level implements Screen{
 						args.add(s.substring(s.indexOf(":")+2));
 					}
 
-					enemies.add(new Slime(Float.parseFloat(args.get(0)),
+					enemies.add(new Slime(	this, 
+											Float.parseFloat(args.get(0)),
 											Float.parseFloat(args.get(1)),
 											Integer.parseInt(args.get(2)),
 											Integer.parseInt(args.get(3)),
@@ -148,6 +151,7 @@ public class Level implements Screen{
 											Float.parseFloat(args.get(6))));
 					//TEMP DELETEME
 					slime = (Slime) enemies.get(0);
+					addEnemy(slime);
 					EnemyFactory slimeCamp = new SlimeFactory();
 					slimeCamp.getNewMonster(50,50,100,slime.getSprite(),1);
 
@@ -157,6 +161,9 @@ public class Level implements Screen{
 		} catch(FileNotFoundException fileNotFoundException){
 			System.out.println("file "+Gdx.files.internal("Levels/"+levelName+"/level.txt")+ " not found!");
 		}
+
+
+		slime.setHealth(100);
 	}
 	
 	@Override
@@ -174,6 +181,57 @@ public class Level implements Screen{
 
 		return false;
 	}
+
+	public void addEnemy(Enemy enemy){
+		System.out.println("enemy added");
+		targets.add(enemy);
+	}
+
+	public Creature getEnemy(int xRange, int yRange, Creature attacker){
+		for(int i=0; i<enemies.size(); i++){
+			Creature potential = enemies.get(i);
+			System.out.println(potential.getHealth());
+
+			if(potential != attacker){
+
+				if(attacker.getDirection() == "right"){
+					if(potential.getX() - attacker.getX() <= xRange)
+						if(potential.getX() - attacker.getX() >= 0)
+							if(potential.getY() - attacker.getY() <= yRange/2)
+								if(potential.getY() - attacker.getY() >= 0)
+									return potential;
+						
+				}
+				if(attacker.getDirection() == "left"){
+					if(attacker.getX() - potential.getX() <= xRange)
+						if(attacker.getX() - potential.getX() >= 0)
+							if(attacker.getY() - potential.getY() <= yRange/2)
+								if(attacker.getY() - potential.getY() >= 0)
+									return potential;
+							
+				}
+
+				if(attacker.getDirection() == "down"){
+					if(attacker.getY() - potential.getY() <= xRange)
+						if(attacker.getY() - potential.getY() >= 0)
+							if(attacker.getX() - potential.getX() <= yRange/2)
+								if(attacker.getX() - potential.getX() >= 0)
+									return potential;
+							
+				}
+
+				if(attacker.getDirection() == "up"){
+					if(potential.getY() - attacker.getY() <= xRange)
+						if(potential.getY() - attacker.getY() >= 0)
+							if(potential.getX() - attacker.getX() <= yRange/2)
+								if(potential.getX() - attacker.getX() >= 0)
+									return potential;
+							
+				}
+			}
+		}
+		return null;
+	}
 	
 	@Override
 	public void render (float delta) {
@@ -185,8 +243,8 @@ public class Level implements Screen{
 		backgroundPicture.draw(batch);
 
 		int aWidth = 200;
-		int aHeight = 200;
-		batch.draw(allertArea,slime.getX()-(aWidth-slime.getWidth())/2,slime.getY()-(aHeight-slime.getHeight())/2);
+		int aHeight = 200;		
+	
 
 		if(!coin.isPickedUp()){
 			batch.draw(coin.getTexture(), coin.getX(),coin.getY());
@@ -197,7 +255,11 @@ public class Level implements Screen{
 		}
 
 		for(int i=0;i<enemies.size();i++){
-			batch.draw(enemies.get(i).getSprite(),enemies.get(i).getX(),enemies.get(i).getY());
+			if(enemies.get(i).alive()){
+				batch.draw(allertArea,enemies.get(i).getX()-(aWidth-enemies.get(i).getWidth())/2,enemies.get(i).getY()-(aHeight-enemies.get(i).getHeight())/2);
+				batch.draw(enemies.get(i).getSprite(),enemies.get(i).getX(),enemies.get(i).getY());
+			}
+			
 		}
 		character.checkKeysPressed();
 

@@ -14,7 +14,7 @@ public class EnemySpawner extends GameEntity {
     private int spawnLimit = 10;     //We want to only spawn enemies when the limit is reached
     private ArrayList<Enemy> enemies;
 
-    public EnemySpawner(float positionX, float positionY, int width, int height, Sprite img,EnemyFactory factory) {
+    public EnemySpawner(float positionX, float positionY, int width, int height, Sprite img, EnemyFactory factory) {
         super(positionX, positionY, width, height, img);
         this.spawnType = spawnType;
         enemies = new ArrayList<Enemy>();

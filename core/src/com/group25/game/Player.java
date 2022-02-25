@@ -46,7 +46,6 @@ public class Player extends Creature implements ApplicationListener{
         this.currentLevel = currentLevel;
 
         animatePlayer(startFrame, endFrame);
-    
     }
 
 
@@ -69,6 +68,7 @@ public class Player extends Creature implements ApplicationListener{
 
     private void WPressed(){
         if(Gdx.input.isKeyPressed(Keys.W)){
+            setDirection("up");
             if(currentLevel.checkForCollision('y',getY() + getSpeed())){
 				setY(getY() + getSpeed());
 			}
@@ -85,6 +85,7 @@ public class Player extends Creature implements ApplicationListener{
     
     private void SPressed(){
         if(Gdx.input.isKeyPressed(Keys.S)){
+            setDirection("down");
             if(currentLevel.checkForCollision('y',getY() - getSpeed())){
 				setY(getY() - getSpeed());
 			}
@@ -100,6 +101,7 @@ public class Player extends Creature implements ApplicationListener{
 
     private void APressed(){
         if(Gdx.input.isKeyPressed(Keys.A)){
+            setDirection("left");
             if(currentLevel.checkForCollision('x',getX() - getSpeed())){
 				setX(getX() - getSpeed());
 			}
@@ -116,6 +118,7 @@ public class Player extends Creature implements ApplicationListener{
    
     private void DPressed(){
         if(Gdx.input.isKeyPressed(Keys.D)){
+            setDirection("right");
             if(currentLevel.checkForCollision('x',getX() + getSpeed())){
 				setX(getX() + getSpeed());
 			}
@@ -132,8 +135,8 @@ public class Player extends Creature implements ApplicationListener{
 
     public void leftMousePressed(){
         if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
-           attack(this, 10, 50, 50);
-           System.out.println(this.getHealth());
+           attack(currentLevel, 10, 50, 50);
+        //    System.out.println(this.getHealth());
             
         }
     }
@@ -174,6 +177,8 @@ public class Player extends Creature implements ApplicationListener{
             downStarted = upStarted = leftStarted = rightStarted = false;
         }
 
+
+        System.out.println(getDirection());
     
        
         if(moveDownAnimation && !downStarted){
