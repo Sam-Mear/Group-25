@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 public class MenuScreen implements Screen{
 
     private Music menuMusic;
+    private boolean sound;
 
     private SpriteBatch batch;
     private Sprite backgroundImage;
@@ -58,12 +59,21 @@ public class MenuScreen implements Screen{
 	final int GAME_WORLD_HEIGHT = 720;
     
     public MenuScreen(){
-        menuMusic = Gdx.audio.newMusic(Gdx.files.internal("Music/Steventhedreamer - The bandit's wagon.mp3"));
+        sound = true;
+
+        if (sound == true) {
+            menuMusic = Gdx.audio.newMusic(Gdx.files.internal(""));
+            menuMusic.setLooping(true);
+            menuMusic.play();
+        }
+        else {
+            menuMusic.setLooping(false);
+            menuMusic.stop();
+        }
+
         backgroundImage = new Sprite(new Texture("Backgrounds/menu-background.png"));
         backgroundImage.setX(0);
 		backgroundImage.setY(0);
-        //menuMusic.setLooping(true);
-        menuMusic.play();
         batch = new SpriteBatch();
 
         levelCompleteButton = new Texture("GUI/Complete.png");
@@ -240,8 +250,6 @@ public class MenuScreen implements Screen{
 
 
 
-
-
         // //Level creator button
         // if ((Gdx.input.getX()< centerX + BUTTON_WIDTH && Gdx.input.getX()>centerX) && (GAME_WORLD_HEIGHT - Gdx.input.getY()< 300 + BUTTON_HEIGHT && GAME_WORLD_HEIGHT - Gdx.input.getY()>300)){
         //     batch.draw(levelCreatorHighlight,centerX,300);
@@ -267,6 +275,21 @@ public class MenuScreen implements Screen{
         batch.end();
 
     }
+
+    private void toggleMusic(){
+
+        if (sound == true){
+            sound = false;
+        }
+
+        if (sound == false) {
+            sound = true;
+        }
+    }
+
+
+
+
 
     @Override
     public void resize(int width, int height){
