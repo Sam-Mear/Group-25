@@ -11,14 +11,12 @@ public interface EnemyFactory {
 
     /**
      * Returns a new monster based on the type you have passed it will then create that type of monster
-     * @param width
-     * @param height
-     * @param health
-     * @param img
-     * @param entitySpeed
-     * @param hitbox
-     * @param alertArea
+     * @param width     - width of monster
+     * @param height    - height of monster
+     * @param health    - monsters health
+     * @param img       - sprite of how the monster will look like
+     * @param entitySpeed   - How quickly the monster wil travel across the map
      * @return
      */
-    public Enemy getNewMonster(int width, int height, int health, Sprite img, float entitySpeed);
+    public Enemy getNewMonster(int x, int y,int width, int height, int health, Sprite img, float entitySpeed);
 }
