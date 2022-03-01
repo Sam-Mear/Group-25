@@ -8,6 +8,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -190,8 +191,6 @@ public class Level implements Screen{
 	public Creature getEnemy(int xRange, int yRange, Creature attacker){
 		for(int i=0; i<enemies.size(); i++){
 			Creature potential = enemies.get(i);
-			System.out.println(potential.getHealth());
-
 			if(potential != attacker){
 
 				if(attacker.getDirection() == "right"){
@@ -210,7 +209,6 @@ public class Level implements Screen{
 									return potential;
 							
 				}
-
 				if(attacker.getDirection() == "down"){
 					if(attacker.getY() - potential.getY() <= xRange)
 						if(attacker.getY() - potential.getY() >= 0)
@@ -219,7 +217,6 @@ public class Level implements Screen{
 									return potential;
 							
 				}
-
 				if(attacker.getDirection() == "up"){
 					if(potential.getY() - attacker.getY() <= xRange)
 						if(potential.getY() - attacker.getY() >= 0)
@@ -233,6 +230,15 @@ public class Level implements Screen{
 		return null;
 	}
 	
+	public Batch getBatch(){
+		return this.batch;
+	}
+
+	public void drawRangedAttack(RangeAttack range,int x, int y){
+		batch.draw(range.getTexture(), x, y);
+	}
+
+
 	@Override
 	public void render (float delta) {
 		ScreenUtils.clear(0, 0, 0, 1);//red background
@@ -263,6 +269,7 @@ public class Level implements Screen{
 		}
 		character.checkKeysPressed();
 
+	
 		batch.draw(character.getTexture(), character.getX(), character.getY());
 		// batch.draw(spawner.getSprite().getTexture(),spawner.getX(),spawner.getY());
 

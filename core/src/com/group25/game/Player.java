@@ -58,7 +58,7 @@ public class Player extends Creature implements ApplicationListener{
         SPressed();
         DPressed();
         leftMousePressed();
-
+        rightMousePressed();
     }
 
     private void setStartAndEndFrame(int startFrame, int endFrame){
@@ -140,7 +140,18 @@ public class Player extends Creature implements ApplicationListener{
             
         }
     }
-  
+
+    
+    public void rightMousePressed(){
+        if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
+          RangeAttack range = new RangeAttack(currentLevel, this, 300, 10, 10);
+            System.out.println("right");
+            
+        }
+    }
+
+    
+
 
     /**
      *  METHOD TO ANIMATE THE PLAYER
@@ -177,9 +188,6 @@ public class Player extends Creature implements ApplicationListener{
             downStarted = upStarted = leftStarted = rightStarted = false;
         }
 
-
-        System.out.println(getDirection());
-    
        
         if(moveDownAnimation && !downStarted){
             upStarted = leftStarted = rightStarted = false;
