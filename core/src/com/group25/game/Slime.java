@@ -6,10 +6,18 @@ import java.awt.*;
 
 public class Slime extends Enemy{
 
-    public Slime(float positionX, float positionY,int width, int height,int health, Sprite img, float entitySpeed){
+    private int healt ;
+
+    public Slime(Level level, float positionX, float positionY,int width, int height,int health, Sprite img, float entitySpeed){
         super(positionX, positionY, width, height, health, img, entitySpeed,
                 new Rectangle((int)positionX,(int)positionY,width,height),  //Hitbox
                 new Rectangle((int)positionX,(int)positionY,200,200)); //AlertArea
+
+                this.health = health;
+
+                level.addEnemy(this);
+
+
     }
 
     @Override
@@ -21,4 +29,6 @@ public class Slime extends Enemy{
        // System.out.printf("Slime alertArea: width: %d height: %d\n", 200, 200);
         this.chasePlayer(player);
     }
+
+  
 }

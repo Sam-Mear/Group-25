@@ -1,5 +1,6 @@
 package com.group25.game;
 
+import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
@@ -12,9 +13,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 
 import java.awt.*;
 
-public class Player extends Creature{
+public class Player extends Creature implements ApplicationListener{
 
-    Level currentLevel;
+    Level currentLevel;         
 
     private int coins;
     private int currentMana;
@@ -45,7 +46,6 @@ public class Player extends Creature{
         this.currentLevel = currentLevel;
 
         animatePlayer(startFrame, endFrame);
-    
     }
 
 
@@ -57,7 +57,8 @@ public class Player extends Creature{
         APressed();
         SPressed();
         DPressed();
-
+        leftMousePressed();
+        rightMousePressed();
     }
 
     private void setStartAndEndFrame(int startFrame, int endFrame){
@@ -67,6 +68,7 @@ public class Player extends Creature{
 
     private void WPressed(){
         if(Gdx.input.isKeyPressed(Keys.W)){
+            setDirection("up");
             if(currentLevel.checkForCollision('y',getY() + getSpeed())){
 				setY(getY() + getSpeed());
 			}
@@ -83,6 +85,7 @@ public class Player extends Creature{
     
     private void SPressed(){
         if(Gdx.input.isKeyPressed(Keys.S)){
+            setDirection("down");
             if(currentLevel.checkForCollision('y',getY() - getSpeed())){
 				setY(getY() - getSpeed());
 			}
@@ -98,6 +101,7 @@ public class Player extends Creature{
 
     private void APressed(){
         if(Gdx.input.isKeyPressed(Keys.A)){
+            setDirection("left");
             if(currentLevel.checkForCollision('x',getX() - getSpeed())){
 				setX(getX() - getSpeed());
 			}
@@ -114,6 +118,7 @@ public class Player extends Creature{
    
     private void DPressed(){
         if(Gdx.input.isKeyPressed(Keys.D)){
+            setDirection("right");
             if(currentLevel.checkForCollision('x',getX() + getSpeed())){
 				setX(getX() + getSpeed());
 			}
@@ -127,7 +132,26 @@ public class Player extends Creature{
         }
     }
 
-  
+
+    public void leftMousePressed(){
+        if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
+           attack(currentLevel, 10, 50, 50);
+        //    System.out.println(this.getHealth());
+            
+        }
+    }
+
+    
+    public void rightMousePressed(){
+        if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
+          RangeAttack range = new RangeAttack(currentLevel, this, 300, 10, 10);
+            System.out.println("right");
+            
+        }
+    }
+
+    
+
 
     /**
      *  METHOD TO ANIMATE THE PLAYER
@@ -164,7 +188,6 @@ public class Player extends Creature{
             downStarted = upStarted = leftStarted = rightStarted = false;
         }
 
-    
        
         if(moveDownAnimation && !downStarted){
             upStarted = leftStarted = rightStarted = false;
@@ -279,6 +302,41 @@ public class Player extends Creature{
     }
     public void spendCoins(int coins){
         coins -= coins;
+    }
+
+
+    @Override
+    public void create() {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    @Override
+    public void resize(int width, int height) {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    @Override
+    public void render() {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    @Override
+    public void pause() {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    @Override
+    public void resume() {
+        // TODO Auto-generated method stub
+        
     }
 
    
