@@ -25,7 +25,7 @@
  *    uhhhh, could just have it be default value txt thing, and it looks a bit shit in the level creator....
  * 
  *  * Hitbox things
- *    NOT DONE. could do it with 2 clicks of the mouse.
+ *    DONE
  * 
  */
 
@@ -495,11 +495,11 @@ public class LevelCreator extends JFrame implements Screen{
 		hitbox.get(hitbox.size()-1).setY(firstY);
 		hitbox.get(hitbox.size()-1).setSize(width, height);
 		ArrayList<String> hitboxString = new ArrayList<String>();
-		hitboxString.add("HITBOX: ");
-		hitboxString.add("    x: "+firstX+" ");
-		hitboxString.add("    y: "+firstY+" ");
-		hitboxString.add("    width: "+width+" ");
-		hitboxString.add("    height: "+height+" ");
+		hitboxString.add("HITBOX:");
+		hitboxString.add("    x: "+firstX);
+		hitboxString.add("    y: "+firstY);
+		hitboxString.add("    width: "+width);
+		hitboxString.add("    height: "+height);
 		hitboxOutput.add(hitboxString);
 	}
 	

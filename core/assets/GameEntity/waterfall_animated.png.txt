@@ -5,7 +5,5 @@ GAME ENTITY ANIMATED:
     width: 16
     height: 46
     sprite: GameEntity/waterfall_animated.png
-    speed: 0
     frames: 9
     animationSpeed: 5
-

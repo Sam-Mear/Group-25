@@ -3,16 +3,44 @@ MAP SIZE:
     height: 1334
 BACKGROUND: paper-bag-map.png
 
+HITBOX:
+    x: 567
+    y: 1031
+    width: 238
+    height: 93
+HITBOX:
+    x: 860
+    y: 987
+    width: 188
+    height: 76
+HITBOX:
+    x: 867
+    y: 457
+    width: 65
+    height: 196
+HITBOX:
+    x: 836
+    y: 294
+    width: 63
+    height: 179
+HITBOX:
+    x: 795
+    y: 272
+    width: 146
+    height: 35
+HITBOX:
+    x: 478
+    y: 17
+    width: 1284
+    height: 113
+HITBOX SPECIAL:
+    x: 0
+    y: 0
+    width: 64
+    height: 64
+    level name: TestLevel
 GAME ENTITY:
-    x: 793
-    y: 1303
-    width: 34
-    height: 61
-    sprite: GameEntity/tree.png
-    speed: 0
-
-GAME ENTITY:
-    x: 674
+    x: 792
     y: 1281
     width: 34
     height: 61
@@ -20,287 +48,7 @@ GAME ENTITY:
     speed: 0
 
 GAME ENTITY:
-    x: 258
-    y: 1281
-    width: 34
-    height: 61
-    sprite: GameEntity/tree.png
-    speed: 0
-
-GAME ENTITY:
-    x: 18
-    y: 1239
-    width: 34
-    height: 61
-    sprite: GameEntity/tree.png
-    speed: 0
-
-GAME ENTITY:
-    x: 118
-    y: 1274
-    width: 34
-    height: 61
-    sprite: GameEntity/tree.png
-    speed: 0
-
-GAME ENTITY:
-    x: 30
-    y: 1142
-    width: 34
-    height: 61
-    sprite: GameEntity/tree.png
-    speed: 0
-
-GAME ENTITY:
-    x: 2
-    y: 969
-    width: 34
-    height: 61
-    sprite: GameEntity/tree.png
-    speed: 0
-
-GAME ENTITY:
-    x: 123
-    y: 1111
-    width: 34
-    height: 61
-    sprite: GameEntity/tree.png
-    speed: 0
-
-GAME ENTITY:
-    x: 151
-    y: 1016
-    width: 34
-    height: 61
-    sprite: GameEntity/tree.png
-    speed: 0
-
-GAME ENTITY:
-    x: 319
-    y: 900
-    width: 34
-    height: 61
-    sprite: GameEntity/tree.png
-    speed: 0
-
-GAME ENTITY:
-    x: 37
-    y: 898
-    width: 34
-    height: 61
-    sprite: GameEntity/tree.png
-    speed: 0
-
-GAME ENTITY:
-    x: 312
-    y: 412
-    width: 34
-    height: 61
-    sprite: GameEntity/tree.png
-    speed: 0
-
-GAME ENTITY:
-    x: 265
-    y: 381
-    width: 34
-    height: 61
-    sprite: GameEntity/tree.png
-    speed: 0
-
-GAME ENTITY:
-    x: 437
-    y: 561
-    width: 34
-    height: 61
-    sprite: GameEntity/tree.png
-    speed: 0
-
-GAME ENTITY:
-    x: 665
-    y: 488
-    width: 34
-    height: 61
-    sprite: GameEntity/tree.png
-    speed: 0
-
-GAME ENTITY:
-    x: 454
-    y: 364
-    width: 34
-    height: 61
-    sprite: GameEntity/tree.png
-    speed: 0
-
-GAME ENTITY:
-    x: 333
-    y: 369
-    width: 34
-    height: 61
-    sprite: GameEntity/tree.png
-    speed: 0
-
-GAME ENTITY:
-    x: 359
-    y: 530
-    width: 34
-    height: 61
-    sprite: GameEntity/tree.png
-    speed: 0
-
-GAME ENTITY:
-    x: 1103
-    y: 611
-    width: 34
-    height: 61
-    sprite: GameEntity/tree.png
-    speed: 0
-
-GAME ENTITY:
-    x: 1276
-    y: 715
-    width: 34
-    height: 61
-    sprite: GameEntity/tree.png
-    speed: 0
-
-GAME ENTITY:
-    x: 1418
-    y: 715
-    width: 34
-    height: 61
-    sprite: GameEntity/tree.png
-    speed: 0
-
-GAME ENTITY:
-    x: 1501
-    y: 708
-    width: 34
-    height: 61
-    sprite: GameEntity/tree.png
-    speed: 0
-
-GAME ENTITY:
-    x: 1330
-    y: 701
-    width: 34
-    height: 61
-    sprite: GameEntity/tree.png
-    speed: 0
-
-GAME ENTITY:
-    x: 1358
-    y: 663
-    width: 34
-    height: 61
-    sprite: GameEntity/tree.png
-    speed: 0
-
-GAME ENTITY:
-    x: 1460
-    y: 656
-    width: 34
-    height: 61
-    sprite: GameEntity/tree.png
-    speed: 0
-
-GAME ENTITY:
-    x: 1522
-    y: 627
-    width: 34
-    height: 61
-    sprite: GameEntity/tree.png
-    speed: 0
-
-GAME ENTITY:
-    x: 1496
-    y: 613
-    width: 34
-    height: 61
-    sprite: GameEntity/tree.png
-    speed: 0
-
-GAME ENTITY:
-    x: 1425
-    y: 606
-    width: 34
-    height: 61
-    sprite: GameEntity/tree.png
-    speed: 0
-
-GAME ENTITY:
-    x: 1384
-    y: 528
-    width: 34
-    height: 61
-    sprite: GameEntity/tree.png
-    speed: 0
-
-GAME ENTITY:
-    x: 1496
-    y: 552
-    width: 34
-    height: 61
-    sprite: GameEntity/tree.png
-    speed: 0
-
-GAME ENTITY:
-    x: 1527
-    y: 507
-    width: 34
-    height: 61
-    sprite: GameEntity/tree.png
-    speed: 0
-
-GAME ENTITY:
-    x: 1456
-    y: 504
-    width: 34
-    height: 61
-    sprite: GameEntity/tree.png
-    speed: 0
-
-GAME ENTITY:
-    x: 1586
-    y: 443
-    width: 34
-    height: 61
-    sprite: GameEntity/tree.png
-    speed: 0
-
-GAME ENTITY:
-    x: 1401
-    y: 623
-    width: 34
-    height: 61
-    sprite: GameEntity/tree.png
-    speed: 0
-
-GAME ENTITY:
-    x: 1714
-    y: 758
-    width: 34
-    height: 61
-    sprite: GameEntity/tree.png
-    speed: 0
-
-GAME ENTITY:
-    x: 1733
-    y: 1052
-    width: 34
-    height: 61
-    sprite: GameEntity/tree.png
-    speed: 0
-
-GAME ENTITY:
-    x: 1740
-    y: 935
-    width: 34
-    height: 61
-    sprite: GameEntity/tree.png
-    speed: 0
-
-GAME ENTITY:
-    x: 1749
+    x: 1026
     y: 1251
     width: 34
     height: 61
@@ -308,138 +56,271 @@ GAME ENTITY:
     speed: 0
 
 GAME ENTITY:
-    x: 1647
-    y: 1265
+    x: 738
+    y: 1270
     width: 34
     height: 61
     sprite: GameEntity/tree.png
     speed: 0
 
 GAME ENTITY:
-    x: 1531
-    y: 1307
+    x: 358
+    y: 1290
     width: 34
     height: 61
     sprite: GameEntity/tree.png
     speed: 0
 
 GAME ENTITY:
-    x: 1579
-    y: 1241
+    x: 48
+    y: 1266
     width: 34
     height: 61
     sprite: GameEntity/tree.png
     speed: 0
 
 GAME ENTITY:
-    x: 1460
-    y: 1281
+    x: 39
+    y: 1209
     width: 34
     height: 61
     sprite: GameEntity/tree.png
     speed: 0
 
 GAME ENTITY:
-    x: 1384
-    y: 1300
+    x: 2
+    y: 996
     width: 34
     height: 61
     sprite: GameEntity/tree.png
     speed: 0
 
 GAME ENTITY:
-    x: 1089
-    y: 1291
+    x: 19
+    y: 889
     width: 34
     height: 61
     sprite: GameEntity/tree.png
     speed: 0
 
 GAME ENTITY:
-    x: 996
-    y: 1153
+    x: 120
+    y: 1011
     width: 34
     height: 61
     sprite: GameEntity/tree.png
     speed: 0
 
 GAME ENTITY:
-    x: 840
-    y: 1078
+    x: 314
+    y: 893
     width: 34
     height: 61
     sprite: GameEntity/tree.png
     speed: 0
 
 GAME ENTITY:
-    x: 956
-    y: 1075
+    x: 220
+    y: 917
     width: 34
     height: 61
     sprite: GameEntity/tree.png
     speed: 0
 
 GAME ENTITY:
-    x: 670
-    y: 1139
+    x: 452
+    y: 542
     width: 34
     height: 61
     sprite: GameEntity/tree.png
     speed: 0
 
 GAME ENTITY:
-    x: 703
-    y: 1291
+    x: 332
+    y: 429
     width: 34
     height: 61
     sprite: GameEntity/tree.png
     speed: 0
 
 GAME ENTITY:
-    x: 861
-    y: 1277
+    x: 439
+    y: 357
     width: 34
     height: 61
     sprite: GameEntity/tree.png
     speed: 0
 
 GAME ENTITY:
-    x: 984
-    y: 1310
+    x: 257
+    y: 385
     width: 34
     height: 61
     sprite: GameEntity/tree.png
     speed: 0
 
 GAME ENTITY:
-    x: 764
-    y: 1274
+    x: 655
+    y: 496
     width: 34
     height: 61
     sprite: GameEntity/tree.png
     speed: 0
 
 GAME ENTITY:
-    x: 973
-    y: 1291
+    x: 1467
+    y: 649
+    width: 34
+    height: 61
+    sprite: GameEntity/tree.png
+    speed: 0
+
+GAME ENTITY:
+    x: 1282
+    y: 725
+    width: 34
+    height: 61
+    sprite: GameEntity/tree.png
+    speed: 0
+
+GAME ENTITY:
+    x: 1520
+    y: 575
+    width: 34
+    height: 61
+    sprite: GameEntity/tree.png
+    speed: 0
+
+GAME ENTITY:
+    x: 1188
+    y: 625
+    width: 34
+    height: 61
+    sprite: GameEntity/tree.png
+    speed: 0
+
+GAME ENTITY:
+    x: 1745
+    y: 1270
+    width: 34
+    height: 61
+    sprite: GameEntity/tree.png
+    speed: 0
+
+GAME ENTITY:
+    x: 1572
+    y: 1268
     width: 34
     height: 61
     sprite: GameEntity/tree.png
     speed: 0
 
 SLIME:
-    x: 472
-    y: 831
+    x: 1692
+    y: 418
     width: 32
     height: 32
     health: 25
     sprite: GameEntity/Green_Slime.png
     speed: 0.5
 
-GAME ENTITY:
-    x: 907
-    y: 87
-    width: 64
-    height: 64
-    sprite: GameEntity/badlogic.jpg
-    speed: 0
+SLIME:
+    x: 528
+    y: 941
+    width: 32
+    height: 32
+    health: 25
+    sprite: GameEntity/Green_Slime.png
+    speed: 0.5
+
+SLIME:
+    x: 78
+    y: 629
+    width: 32
+    height: 32
+    health: 25
+    sprite: GameEntity/Green_Slime.png
+    speed: 0.5
+
+GAME ENTITY ANIMATED:
+    x: 352
+    y: 1003
+    width: 16
+    height: 46
+    sprite: GameEntity/waterfall_animated.png
+    frames: 9
+    animationSpeed: 5
+
+GAME ENTITY ANIMATED:
+    x: 368
+    y: 1003
+    width: 16
+    height: 46
+    sprite: GameEntity/waterfall_animated.png
+    frames: 9
+    animationSpeed: 5
+
+GAME ENTITY ANIMATED:
+    x: 835
+    y: 225
+    width: 16
+    height: 46
+    sprite: GameEntity/waterfall_animated.png
+    frames: 9
+    animationSpeed: 5
+
+GAME ENTITY ANIMATED:
+    x: 851
+    y: 225
+    width: 16
+    height: 46
+    sprite: GameEntity/waterfall_animated.png
+    frames: 9
+    animationSpeed: 5
+
+GAME ENTITY ANIMATED:
+    x: 867
+    y: 225
+    width: 16
+    height: 46
+    sprite: GameEntity/waterfall_animated.png
+    frames: 9
+    animationSpeed: 5
+
+GAME ENTITY ANIMATED:
+    x: 883
+    y: 225
+    width: 16
+    height: 46
+    sprite: GameEntity/waterfall_animated.png
+    frames: 9
+    animationSpeed: 5
+
+GAME ENTITY ANIMATED:
+    x: 1635
+    y: 963
+    width: 16
+    height: 46
+    sprite: GameEntity/waterfall_animated.png
+    frames: 9
+    animationSpeed: 5
+
+GAME ENTITY ANIMATED:
+    x: 1651
+    y: 963
+    width: 16
+    height: 46
+    sprite: GameEntity/waterfall_animated.png
+    frames: 9
+    animationSpeed: 5
+
+GAME ENTITY ANIMATED:
+    x: 1667
+    y: 963
+    width: 16
+    height: 46
+    sprite: GameEntity/waterfall_animated.png
+    frames: 9
+    animationSpeed: 5
+
+

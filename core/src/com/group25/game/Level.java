@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
@@ -39,7 +40,6 @@ public class Level implements Screen{
 	private Sprite allertArea;
 	private EnviromentAnimated coinTest;
 	private EnviromentAnimated heartTest;
-	private EnviromentAnimated waterfallTest3;
 
 	private Drop coin;
 	private Sprite coinSprite;
@@ -48,10 +48,13 @@ public class Level implements Screen{
 	private EnemySpawner spawner;
 
 	ArrayList<Enviroment> trees = new ArrayList<Enviroment>(); // Create an ArrayList object
+	ArrayList<EnviromentAnimated> animatedEnviroment = new ArrayList<EnviromentAnimated>();
 	ArrayList<Enemy> enemies = new ArrayList<Enemy>(); // Create an ArrayList object
+	ArrayList<Rectangle> enviromentHitboxes = new ArrayList<Rectangle>();// list of enviroment hitboxes, read from level.txt
+	ArrayList<Teleport> teleports = new ArrayList<Teleport>();
 
-	final int GAME_WORLD_WIDTH = 1778;
-	final int GAME_WORLD_HEIGHT = 1334;
+	int GAME_WORLD_WIDTH = 1778;
+	int GAME_WORLD_HEIGHT = 1334;
 	
 	public Level() {
 		batch = new SpriteBatch();
@@ -72,7 +75,7 @@ public class Level implements Screen{
 		UiInventory.setY(150);
 
 		heartTest = new EnviromentAnimated(500, 1003, 22, 24, new Sprite(new Texture("GameEntity/heart_animated.png")), 10, 3);
-		waterfallTest3 = new EnviromentAnimated(835, 225, 16, 46, new Sprite(new Texture("GameEntity/waterfall_animated.png")), 9, 5);
+		coin = new Drop(140, 120, 16, 16, new Sprite(new Texture("GameEntity/coin_animated.png")), 5, 5,1,DropType.COIN);
 		
 		camera = new OrthographicCamera();
 		viewport = new FitViewport(840, 563,camera);
@@ -86,7 +89,7 @@ public class Level implements Screen{
 		//for level 1.
 		//For a test, this is fine.
 
-		character = new Player(this, (int)GAME_WORLD_WIDTH/2-80,(int)GAME_WORLD_HEIGHT/2-80,64,64,100,img,5);//probably temp, just getting used to libgdx
+		character = new Player(this, (int)GAME_WORLD_WIDTH/2-80,(int)GAME_WORLD_HEIGHT/2-80,42,42,100,img,5);//probably temp, just getting used to libgdx
 		character.setSpeed(1);
 
 		allertArea = new Sprite(new Texture(("Slime_Test_Area.png")));
@@ -95,11 +98,25 @@ public class Level implements Screen{
 	}
 
 	public void loadLevel(String levelName){
-
-		coin = new Drop(140, 120, 16, 16, new Sprite(new Texture("GameEntity/coin_animated.png")), 5, 5,1,DropType.COIN);
-		//unload the previous level if needed... TODO : Not done...
-		//would just be an emptying of the arraylists, with the appropriate dispose()?
-		//need to understand dispose() better...
+		//unload the previous level if needed...
+		for(int i = trees.size(); i>0;i--){
+			trees.get(i-1).dispose();
+			trees.remove(i-1);
+		}
+		for(int i = animatedEnviroment.size(); i>0;i--){
+			animatedEnviroment.get(i-1).dispose();
+			animatedEnviroment.remove(i-1);
+		}
+		for(int i = enviromentHitboxes.size(); i>0;i--){
+			enviromentHitboxes.remove(i-1);
+		}
+		for(int i = enemies.size(); i>0;i--){
+			enemies.get(i-1).dispose();
+			enemies.remove(i-1);
+		}
+		for(int i = teleports.size(); i>0;i--){
+			teleports.remove(i-1);
+		}
 		try{
 			//load file into levelInfo
 			Scanner levelInfo = new Scanner(new File(Gdx.files.internal("Levels/"+levelName+".txt")+""));
@@ -109,10 +126,22 @@ public class Level implements Screen{
 			while (levelInfo.hasNextLine()) {
 				line = levelInfo.nextLine();
 				//line = line.replace("    ","");
-				if(line.contains("BACKGROUND:")){
-					System.out.println("aaaaaaaaa");
+				if(line.equals("MAP SIZE:")){
+					System.out.println("MAP SIZE");
+				}else if(line.contains("BACKGROUND:")){
 					backgroundPicture = new Sprite(new Texture("Backgrounds/"+line.split(": ")[1]));
 					backgroundPicture.setSize(GAME_WORLD_WIDTH,GAME_WORLD_HEIGHT);
+				}else if(line.equals("HITBOX:")){
+					ArrayList<String> args = new ArrayList<String>();
+					for(int i=0;i<4;i++){
+						//populate the arguments arraylist.
+						String s = levelInfo.nextLine();
+						args.add(s.substring(s.indexOf(":")+2));
+					}
+					enviromentHitboxes.add(new Rectangle(Integer.parseInt(args.get(0)),
+																							Integer.parseInt(args.get(1)),
+																							Integer.parseInt(args.get(2)),
+																							Integer.parseInt(args.get(3))));
 				}else if(line.equals("GAME ENTITY:")){
 					//list of arguments needed to make the GameEntity
 					ArrayList<String> args = new ArrayList<String>();
@@ -152,6 +181,36 @@ public class Level implements Screen{
 					EnemyFactory slimeCamp = new SlimeFactory();
 					slimeCamp.getNewMonster(50,50,100,slime.getSprite(),1);
 
+				}else if(line.equals("GAME ENTITY ANIMATED:")){
+					//list of arguments needed to make the GameEntity
+					ArrayList<String> args = new ArrayList<String>();
+					for(int i=0;i<7;i++){
+						//populate the arguments arraylist.
+						String s = levelInfo.nextLine();
+						args.add(s.substring(s.indexOf(":")+2));
+					}
+					//gotta do some mad type changing
+					animatedEnviroment.add(new EnviromentAnimated(Float.parseFloat(args.get(0)),
+												Float.parseFloat(args.get(1)),
+												Integer.parseInt(args.get(2)), 
+												Integer.parseInt(args.get(3)), 
+												new Sprite(new Texture(args.get(4))),
+												Integer.parseInt(args.get(5)), 
+												Integer.parseInt(args.get(6))));
+
+
+				}else if(line.equals("HITBOX SPECIAL:")){
+					ArrayList<String> args = new ArrayList<String>();
+					for(int i=0;i<5;i++){
+						//populate the arguments arraylist.
+						String s = levelInfo.nextLine();
+						args.add(s.substring(s.indexOf(":")+2));
+					}
+					teleports.add(new Teleport(Integer.parseInt(args.get(0)),
+																			Integer.parseInt(args.get(1)),
+																			Integer.parseInt(args.get(2)),
+																			Integer.parseInt(args.get(3)),
+																			args.get(4)));
 				}
 				
 			}
@@ -165,13 +224,82 @@ public class Level implements Screen{
 		viewport.update(width,height);
 	}
 
+	public String checkForTeleport(){
+		for(int i = 0;i<teleports.size();i++){
+			//bottom left
+			if(teleports.get(i).contains(character.getX(), character.getY())){
+				return teleports.get(i).getLevelName();
+			}
+			//top right
+			if(teleports.get(i).contains(character.getX()+character.getWidth(), character.getY()+(character.getHeight()/2))){
+				return teleports.get(i).getLevelName();
+			}
+			//top left
+			if(teleports.get(i).contains(character.getX(), character.getY()+(character.getHeight()/2))){
+				return teleports.get(i).getLevelName();
+			}
+			//bottom right
+			if(teleports.get(i).contains(character.getX()+character.getWidth(), character.getY())){
+				return teleports.get(i).getLevelName();
+			}
+		}
+			
+
+		return "";
+	}
+
 	public boolean checkForCollision(char axis, float coordinate){
+		if(checkForTeleport() != ""){
+			loadLevel(checkForTeleport());
+		}
 		//check for map boundaries
 		//game world is square
-		if(coordinate < GAME_WORLD_WIDTH-character.width && coordinate > 0){
-			//then check if theres an object(Thing) in the way and if its collidable?
-			return true;
+		if(axis == 'x'){
+			if(coordinate < GAME_WORLD_WIDTH-character.width && coordinate > 0){
+				for(int i = 0;i<enviromentHitboxes.size();i++){
+					//bottom left
+					if(enviromentHitboxes.get(i).contains(coordinate, character.getY())){
+						return false;
+					}
+					//top right
+					if(enviromentHitboxes.get(i).contains(coordinate+character.getWidth(), character.getY()+(character.getHeight()/2))){
+						return false;
+					}
+					//top left
+					if(enviromentHitboxes.get(i).contains(coordinate, character.getY()+(character.getHeight()/2))){
+						return false;
+					}
+					//bottom right
+					if(enviromentHitboxes.get(i).contains(coordinate+character.getWidth(), character.getY())){
+						return false;
+					}
+				}
+				return true;
+			}
+		}else if(axis == 'y'){
+			if(coordinate < GAME_WORLD_HEIGHT-character.height && coordinate > 0){
+				for(int i = 0;i<enviromentHitboxes.size();i++){
+					//bottom left
+					if(enviromentHitboxes.get(i).contains(character.getX(), coordinate)){
+						return false;
+					}
+					//top right
+					if(enviromentHitboxes.get(i).contains(character.getX()+character.getWidth(), coordinate+(character.getHeight()/2))){
+						return false;
+					}
+					//top left
+					if(enviromentHitboxes.get(i).contains(character.getX(), coordinate+(character.getHeight()/2))){
+						return false;
+					}
+					//bottom right
+					if(enviromentHitboxes.get(i).contains(character.getX()+character.getWidth(), coordinate)){
+						return false;
+					}
+				}
+				return true;
+			}
 		}
+		
 
 		return false;
 	}
@@ -207,19 +335,14 @@ public class Level implements Screen{
 
 //		spawner.spawn();
 
-		batch.draw(waterfallTest3.getTexture(),352,1003);
-		batch.draw(waterfallTest3.getTexture(),352+16,1003);
-		batch.draw(waterfallTest3.getTexture(),waterfallTest3.getX(),waterfallTest3.getY());
-		batch.draw(waterfallTest3.getTexture(),waterfallTest3.getX()+16,waterfallTest3.getY());
-		batch.draw(waterfallTest3.getTexture(),waterfallTest3.getX()+32,waterfallTest3.getY());
-		batch.draw(waterfallTest3.getTexture(),waterfallTest3.getX()+48,waterfallTest3.getY());
-		batch.draw(waterfallTest3.getTexture(),1635,963);
-		batch.draw(waterfallTest3.getTexture(),1635+16,963);
-		batch.draw(waterfallTest3.getTexture(),1635+32,963);
+		for(int i=0;i<animatedEnviroment.size();i++){
+			batch.draw(animatedEnviroment.get(i).getTexture(),animatedEnviroment.get(i).getX(),animatedEnviroment.get(i).getY());
+			animatedEnviroment.get(i).update();
+		}
+		
 		batch.draw(heartTest.getTexture(),heartTest.getX(),heartTest.getY());
 		coin.update();
 		heartTest.update();
-		waterfallTest3.update();
 
 		
 		//Testing purposes
