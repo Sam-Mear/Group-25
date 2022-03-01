@@ -1,7 +1,7 @@
 MAP SIZE:
     width: 1778
     height: 1334
-BACKGROUND: paper-bag-map.png
+BACKGROUND: tempBackground.jpg
 GAME ENTITY:
     x: 106
     y: 1130

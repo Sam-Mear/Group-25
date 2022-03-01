@@ -1,0 +1,5 @@
+MAP SIZE:
+    width: 1778
+    height: 1334
+BACKGROUND: paper-bag-map.png
+
