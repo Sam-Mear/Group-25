@@ -189,7 +189,7 @@ public class Player extends Creature implements ApplicationListener{
 
         for(int i=0; i< projectiles.size(); i++){
             projectiles.get(i).setShooting(projectiles.get(i).attack());
-            projectiles.get(i).attack();
+            // projectiles.get(i).attack();
         }
 
         int currentFrame = animation.getCurrentFrameNumber();
