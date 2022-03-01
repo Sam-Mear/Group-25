@@ -51,6 +51,8 @@ public class Level implements Screen{
 	ArrayList<Enviroment> trees = new ArrayList<Enviroment>(); // Create an ArrayList object
 	ArrayList<Enemy> enemies = new ArrayList<Enemy>(); // Create an ArrayList object
 	ArrayList<Creature> targets = new ArrayList<>(); // arrayList where all possible targets are stored (including enemies and main character and/or object if there will be any)
+	ArrayList<RangeAttack> projectiles;
+
 
 	final int GAME_WORLD_WIDTH = 1778;
 	final int GAME_WORLD_HEIGHT = 1334;
@@ -228,14 +230,6 @@ public class Level implements Screen{
 		}
 		return null;
 	}
-	
-	public Batch getBatch(){
-		return this.batch;
-	}
-
-	public void drawRangedAttack(RangeAttack range,int x, int y){
-		batch.draw(range.getTexture(), x, y);
-	}
 
 
 	@Override
@@ -247,8 +241,12 @@ public class Level implements Screen{
 		batch.begin();
 		backgroundPicture.draw(batch);
 
-		if(character.)
-		batch.draw()
+		projectiles = character.getProjectiles();
+
+		for(int i=0; i<projectiles.size(); i++){
+			System.out.println("i");
+			batch.draw(projectiles.get(i).getTexture(), projectiles.get(i).getX(), projectiles.get(i).getY());
+		}
 
 		int aWidth = 200;
 		int aHeight = 200;		

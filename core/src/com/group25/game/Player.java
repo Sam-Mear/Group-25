@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Player extends Creature implements ApplicationListener{
 
@@ -34,7 +35,12 @@ public class Player extends Creature implements ApplicationListener{
     private boolean moveRightAnimation;
     private boolean moveLeftAnimation;
 
+    boolean downStarted, upStarted, leftStarted, rightStarted = false;
+
+
     private boolean shootingRange = false;
+  
+    ArrayList<RangeAttack> projectiles = new ArrayList();
 
     private int startFrame, endFrame = 0;
 
@@ -145,13 +151,21 @@ public class Player extends Creature implements ApplicationListener{
     
     public void rightMousePressed(){
         if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
-            RangeAttack range = new RangeAttack(currentLevel, this, 300, 10, 10);
-            if(!(range.attack(getDirection(), this.getX(), this.getY())))
-            currentLevel.drawRangedAttack(range, range.getX(), range.getY());          
+            RangeAttack range = new RangeAttack(currentLevel, this, this.getDirection(), 300, this.getX(), this.getY());
+            projectiles.add(range);
         }
     }
 
 
+    public ArrayList<RangeAttack> getProjectiles(){
+        for(int i=0; i<projectiles.size(); i++){
+            if(!projectiles.get(i).shooting()){
+                projectiles.remove(projectiles.get(i));
+            }
+        }
+
+        return projectiles;
+    }
 
 
     /**
@@ -169,11 +183,14 @@ public class Player extends Creature implements ApplicationListener{
     }
 
 
-    boolean downStarted, upStarted, leftStarted, rightStarted = false;
-
     public void update() {
 
         System.out.println(this.health);
+
+        for(int i=0; i< projectiles.size(); i++){
+            projectiles.get(i).setShooting(projectiles.get(i).attack());
+            projectiles.get(i).attack();
+        }
 
         int currentFrame = animation.getCurrentFrameNumber();
 
@@ -218,12 +235,12 @@ public class Player extends Creature implements ApplicationListener{
         }
 
 
-       // System.out.println("Breka");
+        // System.out.println("Breka");
         this.getHitbox().setLocation((int) this.getX(), (int) this.getY());
-       // System.out.printf("Player hitBox x: %d y: %d\n", (int) this.getX(), (int) this.getY());
+        // System.out.printf("Player hitBox x: %d y: %d\n", (int) this.getX(), (int) this.getY());
         //System.out.println("Coin amount: "+coins);
         animation.update(1);
-       // animation.getCurrentFrame();
+        // animation.getCurrentFrame();
         currentTexture = animation.getCurrentFrame();
     }
 
