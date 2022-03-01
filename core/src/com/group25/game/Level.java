@@ -247,7 +247,8 @@ public class Level implements Screen{
 		batch.begin();
 		backgroundPicture.draw(batch);
 
-		
+		if(character.)
+		batch.draw()
 
 		int aWidth = 200;
 		int aHeight = 200;		
@@ -276,6 +277,8 @@ public class Level implements Screen{
 		// batch.draw(spawner.getSprite().getTexture(),spawner.getX(),spawner.getY());
 
 //		spawner.spawn();
+
+		
 
 		batch.draw(waterfallTest3.getTexture(),352,1003);
 		batch.draw(waterfallTest3.getTexture(),352+16,1003);

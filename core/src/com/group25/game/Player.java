@@ -34,6 +34,8 @@ public class Player extends Creature implements ApplicationListener{
     private boolean moveRightAnimation;
     private boolean moveLeftAnimation;
 
+    private boolean shootingRange = false;
+
     private int startFrame, endFrame = 0;
 
     private Sprite img;
@@ -144,11 +146,12 @@ public class Player extends Creature implements ApplicationListener{
     public void rightMousePressed(){
         if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
             RangeAttack range = new RangeAttack(currentLevel, this, 300, 10, 10);
-            range.getTexture();          
+            if(!(range.attack(getDirection(), this.getX(), this.getY())))
+            currentLevel.drawRangedAttack(range, range.getX(), range.getY());          
         }
     }
 
-    
+
 
 
     /**

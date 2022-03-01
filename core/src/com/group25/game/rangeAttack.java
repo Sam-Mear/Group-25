@@ -22,10 +22,32 @@ public class RangeAttack{
     private Sprite attack;
     private boolean shooting = false;
     private Level level;
+    private int distance = 0;
+    private int range;
     
     public RangeAttack(Level level, Creature creature, int range, int xSize, int ySize){
         attack = new Sprite(new Texture("coin.png"));
         this.level = level;
+    }
+
+    public boolean attack(String direction, float f, float g){
+        if(direction == "up" && Math.abs(g - y) <= range){
+           this.setY(y + 1);
+            return true;
+        }
+        if(direction == "down" && Math.abs(g + y) <= range){
+            this.setY(y + 1);
+            return true;
+        }
+        if(direction == "right" && Math.abs(f - x) <= range){
+            this.setY(y + 1);
+            return true;
+        }
+        if(direction == "left" && Math.abs(f - y) <= range){
+            this.setY(y + 1);
+            return true;
+        }
+       return false;
     }
 
     public TextureRegion getTexture(){
@@ -48,7 +70,7 @@ public class RangeAttack{
         this.x = x;
     }
 
-    public void getY(int y){
+    public void setY(int y){
         this.y = y;
     }
     
