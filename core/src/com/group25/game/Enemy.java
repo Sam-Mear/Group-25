@@ -29,6 +29,8 @@ public abstract class Enemy extends Creature{
      */
     public abstract void explore(Player player);
 
+    public abstract void turn();
+
     public void chasePlayer(Player player){
         if (this.getAlertArea().contains(player.getHitbox())) {
             if (this.getY() < player.getY()) {

@@ -172,7 +172,6 @@ public class Level implements Screen{
 		if(!coin.isPickedUp()){
 			batch.draw(coin.sprite,coin.x,coin.y);
 		}
-
 		for(int i=0;i<trees.size();i++){
 			batch.draw(trees.get(i).getSprite(),trees.get(i).getX(),trees.get(i).getY());
 		}

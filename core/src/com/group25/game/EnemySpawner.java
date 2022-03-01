@@ -37,6 +37,7 @@ public class EnemySpawner extends GameEntity {
         this.spawnTime = spawnTime;
         repeatedFrames = 0;
         associatedEnemies = new Enemy[spawnLimit];
+       // spawnLimit = 1;
     }
 
     public EnemySpawner(float positionX, float positionY, int width, int height, Sprite img, Rectangle hitbox,EnemyFactory factory, int spawnTime) {
@@ -46,6 +47,7 @@ public class EnemySpawner extends GameEntity {
         this.spawnTime = spawnTime;
         repeatedFrames = 0;
         associatedEnemies = new Enemy[spawnLimit];
+        //spawnLimit = 1;
     }
 
     /**
