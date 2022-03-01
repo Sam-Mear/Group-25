@@ -422,16 +422,21 @@ public class Level implements Screen{
 		/**
 		 * have camera always follow the player.
 		 */
-		if(camera.position.x-(character.getWidth()/2) > character.getX()){
-			camera.translate(-((camera.position.x-(character.getWidth()/2) - character.getX())/25),0);
-		}else if(camera.position.x-(character.getWidth()/2) < character.getX()){
-			camera.translate(-((camera.position.x-(character.getWidth()/2) - character.getX())/25),0);
+		if(character.getX() + 430 < GAME_WORLD_WIDTH && character.getX() - 410 > 0){
+			if(camera.position.x-(character.getWidth()/2) > character.getX()){
+				camera.translate(-((camera.position.x-(character.getWidth()/2) - character.getX())/25),0);
+			}else if(camera.position.x-(character.getWidth()/2) < character.getX()){
+				camera.translate(-((camera.position.x-(character.getWidth()/2) - character.getX())/25),0);
+			}
 		}
-		if(camera.position.y-(character.getHeight()/2) > character.getY()){
-			camera.translate(0,-((camera.position.y-(character.getHeight()/2) - character.getY())/25));
-		}else if(camera.position.y-(character.getHeight()/2) < character.getY()){
-			camera.translate(0,-((camera.position.y-(character.getHeight()/2) - character.getY())/25));
+		if(character.getY() + 256 < GAME_WORLD_HEIGHT && character.getY() -256 > 0){
+			if(camera.position.y-(character.getHeight()/2) > character.getY()){
+				camera.translate(0,-((camera.position.y-(character.getHeight()/2) - character.getY())/25));
+			}else if(camera.position.y-(character.getHeight()/2) < character.getY()){
+				camera.translate(0,-((camera.position.y-(character.getHeight()/2) - character.getY())/25));
+			}
 		}
+
 
 		character.update();
 
