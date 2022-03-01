@@ -20,7 +20,7 @@ public class Player extends Creature implements ApplicationListener{
     private int coins;
     private int currentMana;
     private int manaLimit = 100;
-    private int healthLimit = 10;
+    private int healthLimit = 100;
     private EnitiyAnimation animation;
     private TextureRegion currentTexture;
 
@@ -135,8 +135,7 @@ public class Player extends Creature implements ApplicationListener{
 
     public void leftMousePressed(){
         if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
-           attack(currentLevel, 10, 50, 50);
-        //    System.out.println(this.getHealth());
+           playerAttack(currentLevel, 10, 50, 50);
             
         }
     }
@@ -144,9 +143,8 @@ public class Player extends Creature implements ApplicationListener{
     
     public void rightMousePressed(){
         if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
-          RangeAttack range = new RangeAttack(currentLevel, this, 300, 10, 10);
-            System.out.println("right");
-            
+            RangeAttack range = new RangeAttack(currentLevel, this, 300, 10, 10);
+            range.getTexture();          
         }
     }
 
@@ -171,6 +169,8 @@ public class Player extends Creature implements ApplicationListener{
     boolean downStarted, upStarted, leftStarted, rightStarted = false;
 
     public void update() {
+
+        System.out.println(this.health);
 
         int currentFrame = animation.getCurrentFrameNumber();
 

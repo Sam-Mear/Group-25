@@ -192,7 +192,6 @@ public class Level implements Screen{
 		for(int i=0; i<enemies.size(); i++){
 			Creature potential = enemies.get(i);
 			if(potential != attacker){
-
 				if(attacker.getDirection() == "right"){
 					if(potential.getX() - attacker.getX() <= xRange)
 						if(potential.getX() - attacker.getX() >= 0)
@@ -248,6 +247,8 @@ public class Level implements Screen{
 		batch.begin();
 		backgroundPicture.draw(batch);
 
+		
+
 		int aWidth = 200;
 		int aHeight = 200;		
 	
@@ -262,6 +263,7 @@ public class Level implements Screen{
 
 		for(int i=0;i<enemies.size();i++){
 			if(enemies.get(i).alive()){
+				enemies.get(i).playerAttack(this, 10, 25, 25);
 				batch.draw(allertArea,enemies.get(i).getX()-(aWidth-enemies.get(i).getWidth())/2,enemies.get(i).getY()-(aHeight-enemies.get(i).getHeight())/2);
 				batch.draw(enemies.get(i).getSprite(),enemies.get(i).getX(),enemies.get(i).getY());
 			}
@@ -297,15 +299,19 @@ public class Level implements Screen{
 		/**
 		 * have camera always follow the player.
 		 */
-		if(camera.position.x-(character.getWidth()/2) > character.getX()){
-			camera.translate(-((camera.position.x-(character.getWidth()/2) - character.getX())/25),0);
-		}else if(camera.position.x-(character.getWidth()/2) < character.getX()){
-			camera.translate(-((camera.position.x-(character.getWidth()/2) - character.getX())/25),0);
+		if(character.getX() + 430 < GAME_WORLD_WIDTH && character.getX() - 410 > 0){
+			if(camera.position.x-(character.getWidth()/2) > character.getX()){
+				camera.translate(-((camera.position.x-(character.getWidth()/2) - character.getX())/25),0);
+			}else if(camera.position.x-(character.getWidth()/2) < character.getX()){
+				camera.translate(-((camera.position.x-(character.getWidth()/2) - character.getX())/25),0);
+			}
 		}
-		if(camera.position.y-(character.getHeight()/2) > character.getY()){
-			camera.translate(0,-((camera.position.y-(character.getHeight()/2) - character.getY())/25));
-		}else if(camera.position.y-(character.getHeight()/2) < character.getY()){
-			camera.translate(0,-((camera.position.y-(character.getHeight()/2) - character.getY())/25));
+		if(character.getY() + 256 < GAME_WORLD_HEIGHT && character.getY() -256 > 0){
+			if(camera.position.y-(character.getHeight()/2) > character.getY()){
+				camera.translate(0,-((camera.position.y-(character.getHeight()/2) - character.getY())/25));
+			}else if(camera.position.y-(character.getHeight()/2) < character.getY()){
+				camera.translate(0,-((camera.position.y-(character.getHeight()/2) - character.getY())/25));
+			}
 		}
 
 		character.update();

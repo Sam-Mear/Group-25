@@ -20,22 +20,28 @@ public class RangeAttack{
     private boolean end;
     Batch batch;
     private Sprite attack;
+    private boolean shooting = false;
+    private Level level;
     
     public RangeAttack(Level level, Creature creature, int range, int xSize, int ySize){
         attack = new Sprite(new Texture("coin.png"));
+        this.level = level;
     }
 
     public TextureRegion getTexture(){
-        return attack;
+        return this.attack;
     }
 
+    public boolean shooting(){
+        return shooting;
+    }
 
     public int getX(){
         return x;
     }
 
-    public void getY(){
-
+    public int getY(){
+        return y;
     }
 
     public void setX(int x){

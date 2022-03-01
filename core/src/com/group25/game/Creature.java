@@ -47,7 +47,7 @@ public abstract class Creature extends GameEntity{
     }
 
     //Attack Section
-    public void attack(Level level, int damage, int xRange, int yRange){
+    public void playerAttack(Level level, int damage, int xRange, int yRange){
         Creature target = level.getEnemy(xRange, yRange, this);
         if(target == null){
             return;
@@ -57,7 +57,6 @@ public abstract class Creature extends GameEntity{
             target.setHealth(target.getHealth()-damage);
 
         }
-  
     }
 
     private static Object getposition() {

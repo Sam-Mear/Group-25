@@ -43,6 +43,7 @@ SLIME:
     sprite: GameEntity/Green_Slime.png
     speed: 0.5
 
+
 GAME ENTITY:
     x: 651
     y: 968
