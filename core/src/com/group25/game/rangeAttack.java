@@ -22,7 +22,7 @@ public class RangeAttack{
     private Sprite attack;
     
     public RangeAttack(Level level, Creature creature, int range, int xSize, int ySize){
-        attack = new Sprite(new Texture("coin.png"));
+        attack = new Sprite(new Texture("heart.png"));
     }
 
     public TextureRegion getTexture(){
