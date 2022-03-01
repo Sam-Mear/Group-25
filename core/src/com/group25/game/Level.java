@@ -131,7 +131,14 @@ public class Level implements Screen{
 				line = levelInfo.nextLine();
 				//line = line.replace("    ","");
 				if(line.equals("MAP SIZE:")){
-					System.out.println("MAP SIZE");
+					line = levelInfo.nextLine();
+					if(line.contains("width: ")){
+						GAME_WORLD_WIDTH = Integer.parseInt(line.split(": ")[1]);
+					}
+					line = levelInfo.nextLine();
+					if(line.contains("height: ")){
+						GAME_WORLD_HEIGHT = Integer.parseInt(line.split(": ")[1]);
+					}
 				}else if(line.contains("BACKGROUND:")){
 					backgroundPicture = new Sprite(new Texture("Backgrounds/"+line.split(": ")[1]));
 					backgroundPicture.setSize(GAME_WORLD_WIDTH,GAME_WORLD_HEIGHT);
