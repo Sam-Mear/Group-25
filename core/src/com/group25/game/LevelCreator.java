@@ -41,6 +41,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -86,11 +87,20 @@ public class LevelCreator extends JFrame implements Screen{
 	private JCheckBox deleteTool;
 	private JCheckBox gridTool;
 	private JTextField gridNumber;
+	private JCheckBox hitboxTool;
 	//the below is -1 for not selected.
 	//after moving an etity, it goes back to -1.
 	private int selectedEntity = -1;
+	//for the case where hitbox tool is selected but only used one click then tries to place an object
+	//after he first click, hitboxvalue goes to 1 so the second click is always finishing the hitbox.
+	private int hitboxValue = 0;
+	//firstX and firstY is the coords of the first click.
+	private int firstX;
+	private int firstY;
 
 	ArrayList<GameEntity> trees = new ArrayList<GameEntity>(); // Create an ArrayList object
+	ArrayList<Sprite> hitbox = new ArrayList<Sprite>();
+	ArrayList<ArrayList<String>> hitboxOutput = new ArrayList<ArrayList<String>>();
 	ArrayList<ArrayList<String>> preTextFileOutput = new ArrayList<ArrayList<String>>(); //pre game entity data like bakcground image.
 	ArrayList<ArrayList<String>> textFileOutput = new ArrayList<ArrayList<String>>(); // GameEntity data to be written to file
 
@@ -100,7 +110,6 @@ public class LevelCreator extends JFrame implements Screen{
 	public LevelCreator() {
 
     loadLevel();
-        
 
 		batch = new SpriteBatch();
 		img = new Sprite(new Texture("GameEntity/character.png"));
@@ -129,6 +138,12 @@ public class LevelCreator extends JFrame implements Screen{
 			for(int i=0;i<preTextFileOutput.size();i++){
 				for (int j=0;j<preTextFileOutput.get(i).size();j++){
 					bw.write(preTextFileOutput.get(i).get(j));
+					bw.newLine();
+				}
+			}
+			for(int i=0;i<hitboxOutput.size();i++){
+				for (int j=0;j<hitboxOutput.get(i).size();j++){
+					bw.write(hitboxOutput.get(i).get(j));
 					bw.newLine();
 				}
 			}
@@ -306,6 +321,8 @@ public class LevelCreator extends JFrame implements Screen{
 		f.add(gridTool);
 		gridNumber = new JTextField(10);
 		f.add(gridNumber);
+		hitboxTool = new JCheckBox("Hitbox Tool");
+		f.add(hitboxTool);
 
 
     f.setSize(200,500);
@@ -457,6 +474,35 @@ public class LevelCreator extends JFrame implements Screen{
 		}
 	}
 	
+	public void newHitbox(int secondX, int secondY){
+		//firstX and firstY has to be smaller than the second set of values.
+		if(firstX > secondX){
+			//swap the values around
+			int temp = firstX;
+			firstX = secondX;
+			secondX = temp;
+		}
+		if(firstY > secondY){
+			//swap values around.
+			int temp = firstY;
+			firstY = secondY;
+			secondY = temp;
+		}
+		int width = secondX - firstX;
+		int height = secondY-firstY;
+		hitbox.add(new Sprite(new Texture("Dev/rectangle.png")));
+		hitbox.get(hitbox.size()-1).setX(firstX);
+		hitbox.get(hitbox.size()-1).setY(firstY);
+		hitbox.get(hitbox.size()-1).setSize(width, height);
+		ArrayList<String> hitboxString = new ArrayList<String>();
+		hitboxString.add("HITBOX: ");
+		hitboxString.add("    x: "+firstX+" ");
+		hitboxString.add("    y: "+firstY+" ");
+		hitboxString.add("    width: "+width+" ");
+		hitboxString.add("    height: "+height+" ");
+		hitboxOutput.add(hitboxString);
+	}
+	
 	@Override
 	public void render (float delta) {
 		ScreenUtils.clear(1, 0, 0, 1);//red background
@@ -465,14 +511,39 @@ public class LevelCreator extends JFrame implements Screen{
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		backgroundPicture.draw(batch);
-
-    if(Gdx.input.justTouched()){
-			System.out.println("X Coordinate: " + Gdx.input.getX());
-			System.out.println("Y Coordinate: " + Gdx.input.getY());
+		
+		
+		if(Gdx.input.justTouched()){
 			Vector3 mousePos = new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
 			camera.unproject(mousePos); // mousePos is now in world coordinates
 			System.out.println(mousePos);
-			if(moveTool.isSelected()){
+			if(hitboxValue == 1){
+				newHitbox((int)mousePos.x,(int)mousePos.y);
+				hitboxValue = 0;
+			}else if(deleteTool.isSelected()){
+				if(hitboxTool.isSelected()){
+					for(int i=0; i<hitbox.size();i++){
+						//checking if mouse click is within x axis of hitbox
+						if(((int)mousePos.x >= hitbox.get(i).getX()) && ((int)mousePos.x <= hitbox.get(i).getX() + hitbox.get(i).getWidth())){
+							//aaand the y position.
+							if(((int)mousePos.y >= hitbox.get(i).getY()) && ((int)mousePos.y <= hitbox.get(i).getY() + hitbox.get(i).getHeight())){
+								hitbox.remove(i);
+								hitboxOutput.remove(i);
+							}
+						}
+					}
+				}else{
+					for(int i=0; i<trees.size();i++){
+						Rectangle temp = trees.get(i).getHitbox();
+						if(temp.contains((int)mousePos.x,(int)mousePos.y)){
+							trees.remove(i);
+							textFileOutput.remove(i);
+							// NOTE : might need to .dispose() the gameEntity.
+						}
+						System.out.println(temp);
+					}
+				}
+			}else if(moveTool.isSelected()){
 				if(selectedEntity == -1){
 					//no entity is selected, the user must be trying to select
 					for(int i=0; i<trees.size();i++){
@@ -488,21 +559,16 @@ public class LevelCreator extends JFrame implements Screen{
 					moveEntity((int)mousePos.x,(int)mousePos.y);
 					selectedEntity = -1;
 				}
-			}else if(deleteTool.isSelected()){
-				for(int i=0; i<trees.size();i++){
-					Rectangle temp = trees.get(i).getHitbox();
-					if(temp.contains((int)mousePos.x,(int)mousePos.y)){
-						trees.remove(i);
-						textFileOutput.remove(i);
-						// NOTE : might need to .dispose() the gameEntity.
-					}
-					System.out.println(temp);
-				}
+			}else if(hitboxTool.isSelected()){
+				firstX = (int)mousePos.x;
+				firstY = (int)mousePos.y;
+				hitboxValue = 1;
 			}else{
 				int x = (int)mousePos.x;
 				int y = (int)mousePos.y;
-				int grid = Integer.parseInt(gridNumber.getText());
+				int grid = 1;
 				if(gridTool.isSelected()){
+					grid = Integer.parseInt(gridNumber.getText());
 					x = (int)(grid*(Math.floor(Math.abs(x/grid))));
 					y = (int)(grid*(Math.floor(Math.abs(y/grid))));
 				}
@@ -524,6 +590,9 @@ public class LevelCreator extends JFrame implements Screen{
 
 		for(int i=0;i<trees.size();i++){
 			batch.draw(trees.get(i).getSprite(),trees.get(i).getX(),trees.get(i).getY());
+		}
+		for(int i=0; i<hitbox.size();i++){
+			hitbox.get(i).draw(batch);
 		}
 
 		//batch.draw(character.getSprite(), character.x, character.y);
