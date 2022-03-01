@@ -41,12 +41,13 @@ public class Level implements Screen{
 	private Sprite allertArea;
 	private EnviromentAnimated coinTest;
 	private EnviromentAnimated heartTest;
+	//private EnemySpawner slimeSpawner;
 
 	private Drop coin;
 	private Sprite coinSprite;
 
 	//To be deleted
-	private EnemySpawner spawner;
+	private EnemySpawner slimeSpawner;
 
 	ArrayList<Enviroment> trees = new ArrayList<Enviroment>(); // Create an ArrayList object
 	ArrayList<EnviromentAnimated> animatedEnviroment = new ArrayList<EnviromentAnimated>();
@@ -86,6 +87,12 @@ public class Level implements Screen{
 		camera.position.set(GAME_WORLD_WIDTH/2,GAME_WORLD_HEIGHT/2,0);
 
 		loadLevel("NewLevel");
+		EnemyFactory slimeCamp = new SlimeFactory();
+		Sprite camp = new Sprite(new Texture("campfire.png"));
+		slimeSpawner = new EnemySpawner(50,50,100,100,camp,slimeCamp,100);
+
+
+		loadLevel("TestLevel");
 		// TODO : this needs to be fixed haha
 		//"testlevel" would actually be anything that is parsed into the level constructor.
 		//so if "level1" was given to Level.java, then it would attempt to find the txt file containing level details 
@@ -382,10 +389,12 @@ public class Level implements Screen{
 		int aHeight = 200;		
 	
 
+		int aHeight = 200;
+		batch.draw(allertArea,slime.getX()-(aWidth-slime.getWidth())/2,slime.getY()-(aHeight-slime.getHeight())/2);
+		//batch.draw(slimeSpawner.getSprite(),slimeSpawner.getX(),slimeSpawner.getY());
 		if(!coin.isPickedUp()){
 			batch.draw(coin.getTexture(), coin.getX(),coin.getY());
 		}
-
 		for(int i=0;i<trees.size();i++){
 			batch.draw(trees.get(i).getSprite(),trees.get(i).getX(),trees.get(i).getY());
 		}
@@ -402,6 +411,7 @@ public class Level implements Screen{
 	
 		batch.draw(character.getTexture(), character.getX(), character.getY());
 		// batch.draw(spawner.getSprite().getTexture(),spawner.getX(),spawner.getY());
+		batch.draw(slimeSpawner.getSprite().getTexture(),slimeSpawner.getX(),slimeSpawner.getY());
 
 //		spawner.spawn();
 
@@ -434,14 +444,17 @@ public class Level implements Screen{
 		}
 
 		character.update();
-
+		slimeSpawner.spawnNewMonster(enemies,(int)slimeSpawner.getX()+100,(int)slimeSpawner.getY()+100,100,100,50,slime.getSprite(),1);
 		//Would be changed into an array of all the coins
 		//Coins removed would not be checked this is for testing purposes
 		if(!coin.isPickedUp()){
 			character.pickUp(coin);
 		}
-
-		slime.explore(character);
+		//FOLLOW PLAYER CODE
+		for(Enemy e:enemies){
+			e.explore(character);
+		}
+		//slime.explore(character);
 		//If person enters slimes territory
 		//If the entire person has entered the slime territory
 
