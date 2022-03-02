@@ -65,15 +65,12 @@ public class Level implements Screen{
 		UIElements = new SpriteBatch();
 		img = new Sprite(new Texture("animation.png"));
 
-		//coinSprite = new Sprite((new Texture("Coin.png")));
+		EnemyFactory slimeCamp = new SlimeFactory();
+		Sprite camp = new Sprite(new Texture("campfire.png"));
+		slimeSpawner = new EnemySpawner(50,50,100,100,camp,slimeCamp,10);
 
-		UiBorder = new Sprite(new Texture("GUI/border.png"));
-		UiBorder.setX(0);
-		UiBorder.setY(0);
-		UiStatusBar = new Sprite(new Texture("GUI/status-bar-temp.png"));
-		UiInventory = new Sprite(new Texture("GUI/inventory.png"));
-		UiStatusBar.setX(20);
-		UiStatusBar.setY(20);
+
+		coinSprite = new Sprite((new Texture("Coin.png")));
 
 		UiInventory.setX(20);
 		UiInventory.setY(150);
@@ -85,12 +82,6 @@ public class Level implements Screen{
 		viewport = new FitViewport(840, 563,camera);
 		viewport.apply();
 		camera.position.set(GAME_WORLD_WIDTH/2,GAME_WORLD_HEIGHT/2,0);
-
-		loadLevel("NewLevel");
-		EnemyFactory slimeCamp = new SlimeFactory();
-		Sprite camp = new Sprite(new Texture("campfire.png"));
-		slimeSpawner = new EnemySpawner(50,50,100,100,camp,slimeCamp,100);
-
 
 		loadLevel("TestLevel");
 		// TODO : this needs to be fixed haha
