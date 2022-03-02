@@ -244,9 +244,11 @@ public class Level implements Screen{
 		projectiles = character.getProjectiles();
 
 		for(int i=0; i<projectiles.size(); i++){
-			System.out.println("i");
+			projectiles.get(i).update();
 			batch.draw(projectiles.get(i).getTexture(), projectiles.get(i).getX(), projectiles.get(i).getY());
+			// System.out.println(projectiles.get(i).getX());
 		}
+
 
 		int aWidth = 200;
 		int aHeight = 200;		
@@ -260,8 +262,17 @@ public class Level implements Screen{
 			batch.draw(trees.get(i).getSprite(),trees.get(i).getX(),trees.get(i).getY());
 		}
 
+		// System.out.println(character.getHealth());
+
 		for(int i=0;i<enemies.size();i++){
 			if(enemies.get(i).alive()){
+				System.out.println(enemies.get(i).getHealth());
+				for(int j=0;j<projectiles.size(); j++){
+					if(	Math.abs(projectiles.get(j).getX() - enemies.get(i).getX()) <= projectiles.get(j).getSize() && 
+						Math.abs(projectiles.get(j).getY() - enemies.get(i).getY()) <= projectiles.get(j).getSize()) {
+							enemies.get(i).setHealth(enemies.get(i).getHealth() - 100);
+					}
+				}
 				enemies.get(i).playerAttack(this, 10, 25, 25);
 				batch.draw(allertArea,enemies.get(i).getX()-(aWidth-enemies.get(i).getWidth())/2,enemies.get(i).getY()-(aHeight-enemies.get(i).getHeight())/2);
 				batch.draw(enemies.get(i).getSprite(),enemies.get(i).getX(),enemies.get(i).getY());

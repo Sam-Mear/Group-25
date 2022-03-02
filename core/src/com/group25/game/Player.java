@@ -148,22 +148,27 @@ public class Player extends Creature implements ApplicationListener{
         }
     }
 
+    private boolean leftPressed = false;
     
     public void rightMousePressed(){
-        if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
-            RangeAttack range = new RangeAttack(currentLevel, this, this.getDirection(), 300, this.getX(), this.getY());
+        if(Gdx.input.isButtonPressed(Input.Buttons.LEFT) && !leftPressed){
+            RangeAttack range = new RangeAttack(currentLevel, getDirection(), 300, getX(), getY(), 200);
             projectiles.add(range);
+            leftPressed = true;
+
+        }
+        else{
+            leftPressed = false;
         }
     }
 
 
     public ArrayList<RangeAttack> getProjectiles(){
         for(int i=0; i<projectiles.size(); i++){
-            if(!projectiles.get(i).shooting()){
+            if(!projectiles.get(i).getAlive()){
                 projectiles.remove(projectiles.get(i));
             }
         }
-
         return projectiles;
     }
 
@@ -184,13 +189,6 @@ public class Player extends Creature implements ApplicationListener{
 
 
     public void update() {
-
-        System.out.println(this.health);
-
-        for(int i=0; i< projectiles.size(); i++){
-            projectiles.get(i).setShooting(projectiles.get(i).attack());
-            // projectiles.get(i).attack();
-        }
 
         int currentFrame = animation.getCurrentFrameNumber();
 
