@@ -146,6 +146,8 @@ public class Level implements Screen{
 						args.add(s.substring(s.indexOf(":")+2));
 					}
 
+
+					// ADDED 3 MORE VALUESl RANGE, DAMAGE AND ATTACK SPEED
 					enemies.add(new Slime(	this, 
 											Float.parseFloat(args.get(0)),
 											Float.parseFloat(args.get(1)),
@@ -153,7 +155,7 @@ public class Level implements Screen{
 											Integer.parseInt(args.get(3)),
 											Integer.parseInt(args.get(4)),
 											new Sprite(new Texture(args.get(5))),
-											Float.parseFloat(args.get(6))));
+											Float.parseFloat(args.get(6)), 100, 10, 25));
 					//TEMP DELETEME
 					slime = (Slime) enemies.get(0);
 					addEnemy(slime);
@@ -270,7 +272,6 @@ public class Level implements Screen{
 
 		for(int i=0;i<targets.size();i++){
 			if(targets.get(i).alive()){
-				targets.get(i).playerAttack(this, 10, 25, 25);
 				if(targets.get(i) == character){
 					batch.draw(character.getTexture(), character.getX(), character.getY());
 				}else{
@@ -287,7 +288,7 @@ public class Level implements Screen{
 							projectiles.get(j).setAlive(false);
 						}		
 				}
-				System.out.println(targets.get(i).getHealth());
+				// System.out.println(targets.get(i).getHealth());
 				// batch.draw(allertArea,enemies.get(i).getX()-(aWidth-enemies.get(i).getWidth())/2,enemies.get(i).getY()-(aHeight-enemies.get(i).getHeight())/2);
 			}
 			
@@ -322,20 +323,24 @@ public class Level implements Screen{
 		/**
 		 * have camera always follow the player.
 		 */
-		if(character.getX() + 430 < GAME_WORLD_WIDTH && character.getX() - 410 > 0){
-			if(camera.position.x-(character.getWidth()/2) > character.getX()){
-				camera.translate(-((camera.position.x-(character.getWidth()/2) - character.getX())/25),0);
-			}else if(camera.position.x-(character.getWidth()/2) < character.getX()){
-				camera.translate(-((camera.position.x-(character.getWidth()/2) - character.getX())/25),0);
+
+		 if(character.alive()){
+			if(character.getX() + 430 < GAME_WORLD_WIDTH && character.getX() - 410 > 0){
+				if(camera.position.x-(character.getWidth()/2) > character.getX()){
+					camera.translate(-((camera.position.x-(character.getWidth()/2) - character.getX())/25),0);
+				}else if(camera.position.x-(character.getWidth()/2) < character.getX()){
+					camera.translate(-((camera.position.x-(character.getWidth()/2) - character.getX())/25),0);
+				}
 			}
-		}
-		if(character.getY() + 256 < GAME_WORLD_HEIGHT && character.getY() -256 > 0){
-			if(camera.position.y-(character.getHeight()/2) > character.getY()){
-				camera.translate(0,-((camera.position.y-(character.getHeight()/2) - character.getY())/25));
-			}else if(camera.position.y-(character.getHeight()/2) < character.getY()){
-				camera.translate(0,-((camera.position.y-(character.getHeight()/2) - character.getY())/25));
+			if(character.getY() + 256 < GAME_WORLD_HEIGHT && character.getY() -256 > 0){
+				if(camera.position.y-(character.getHeight()/2) > character.getY()){
+					camera.translate(0,-((camera.position.y-(character.getHeight()/2) - character.getY())/25));
+				}else if(camera.position.y-(character.getHeight()/2) < character.getY()){
+					camera.translate(0,-((camera.position.y-(character.getHeight()/2) - character.getY())/25));
+				}
 			}
-		}
+		 }
+		
 
 		character.update();
 

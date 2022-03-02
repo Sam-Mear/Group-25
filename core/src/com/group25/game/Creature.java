@@ -64,6 +64,8 @@ public abstract class Creature extends GameEntity{
         }
     }
 
+    
+
     private static Object getposition() {
         return getposition();
     }

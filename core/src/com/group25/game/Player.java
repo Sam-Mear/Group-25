@@ -192,6 +192,8 @@ public class Player extends Creature implements ApplicationListener{
 
         counter++;
 
+        System.out.println(this.getHealth());
+
         int currentFrame = animation.getCurrentFrameNumber();
 
         if(currentFrame > 0 && currentFrame < 5 && !moveDownAnimation){
