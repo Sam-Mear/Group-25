@@ -155,7 +155,7 @@ public class Level implements Screen{
 											Integer.parseInt(args.get(3)),
 											Integer.parseInt(args.get(4)),
 											new Sprite(new Texture(args.get(5))),
-											Float.parseFloat(args.get(6)), 100, 10, 25));
+											Float.parseFloat(args.get(6)), 50, 5, 25));
 					//TEMP DELETEME
 					slime = (Slime) enemies.get(0);
 					addEnemy(slime);
@@ -194,10 +194,24 @@ public class Level implements Screen{
 		targets.add(enemy);
 	}
 
+
+	public void addProjectile(RangeAttack range){
+		projectiles.add(range);
+	}
+
 	public Creature getEnemy(int xRange, int yRange, Creature attacker){
 		for(int i=0; i<enemies.size(); i++){
+		Creature potential;
+		if(attacker instanceof Enemy){
+			potential = character;
+		}else{
 			if(enemies.get(i).alive()){
-				Creature potential = enemies.get(i);
+				potential = enemies.get(i);
+			}
+			else{
+				break;
+			}
+		}
 				if(potential != attacker){
 					if(attacker.getDirection() == "right"){
 						if(potential.getX() - attacker.getX() <= xRange)
@@ -232,10 +246,11 @@ public class Level implements Screen{
 								
 					}
 				}
-			}
+			
 		}
 		return null;
 	}
+
 
 
 	@Override
@@ -252,7 +267,6 @@ public class Level implements Screen{
 		for(int i=0; i<projectiles.size(); i++){
 			projectiles.get(i).update();
 			batch.draw(projectiles.get(i).getTexture(), projectiles.get(i).getX(), projectiles.get(i).getY());
-			// System.out.println(projectiles.get(i).getX());
 		}
 
 
@@ -267,8 +281,6 @@ public class Level implements Screen{
 		for(int i=0;i<trees.size();i++){
 			batch.draw(trees.get(i).getSprite(),trees.get(i).getX(),trees.get(i).getY());
 		}
-
-		// System.out.println(character.getHealth());
 
 		for(int i=0;i<targets.size();i++){
 			if(targets.get(i).alive()){

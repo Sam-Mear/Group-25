@@ -174,6 +174,11 @@ public class Player extends Creature implements ApplicationListener{
     }
 
 
+    public Level getLevel(){
+        return this.currentLevel;
+    }
+
+
     /**
      *  METHOD TO ANIMATE THE PLAYER
      * @param direction
@@ -192,7 +197,7 @@ public class Player extends Creature implements ApplicationListener{
 
         counter++;
 
-        System.out.println(this.getHealth());
+        // System.out.println(this.getHealth());
 
         int currentFrame = animation.getCurrentFrameNumber();
 

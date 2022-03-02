@@ -10,8 +10,8 @@ public abstract class Enemy extends Creature{
     private int coinDrop;
     private int manaDrop;
     private int heartDrop;
-    private int range;
-    private int damage;
+    private float range;
+    private float damage;
     private boolean alive = true;
 
     public Enemy(float positionX, float positionY, int width, int height, int health, Sprite img, float entitySpeed,Rectangle hitbox, Rectangle alertArea) {
@@ -34,36 +34,60 @@ public abstract class Enemy extends Creature{
 
     private int counter = 0;
 
-    public void chasePlayer(Player player, int range, int damage, int  attackCounter){
+    public void chasePlayer(Player player, int range, int damage, int  attackCounter, Creature attacker){
+        System.out.println(attacker.getHealth());
 
-        counter++;
-        if(this instanceof Slime && counter%attackCounter==0 && player.alive()){
+
+        System.out.println(attacker.alive());
+
+
+        if(attacker.alive()){
+            counter++;
+            if(this instanceof Slime && counter%attackCounter==0 && player.alive()){
+                
+                suroundAttack(player, range, damage);
+            }
             
-            suroundAttack(player, range, damage);
-        }
-        
-        if (this.getAlertArea().contains(player.getHitbox())) {
-            if (this.getY() < player.getY()) {
-                //go down
-                this.setY(this.getY() + this.getSpeed());
-            }
-
-            if (this.getY() > player.getY()) {
-                //go down
-                this.setY(this.getY() - this.getSpeed());
-            }
-
-            if (this.getX() < player.getX()) {
-                //go down
-                this.setX(this.getX() + this.getSpeed());
-            }
-
-            if (this.getX() > player.getX()) {
-                //go down
-                this.setX(this.getX() - this.getSpeed());
+            if (this.getAlertArea().contains(player.getHitbox())) {
+                if (this.getY() < player.getY()) {
+                    //go down
+                    this.setY(this.getY() + this.getSpeed());
+                    if(counter% (attackCounter*10) ==0)
+                        rangeAttack(player, range, damage, "up", getX() ,getY()+30);
+                }
+    
+                if (this.getY() > player.getY()) {
+                    //go down
+                    this.setY(this.getY() - this.getSpeed());
+                    if(counter% (attackCounter*10)==0)
+                         rangeAttack(player, range, damage, "down", getX() ,getY()-30);
+                }
+    
+                if (this.getX() < player.getX()) {
+                    //go down
+                    this.setX(this.getX() + this.getSpeed());
+                    if(counter% (attackCounter*10)==0)
+                        rangeAttack(player, range, damage, "right", getX()+30 ,getY());
+                }
+    
+                if (this.getX() > player.getX()) {
+                    //go down
+                    this.setX(this.getX() - this.getSpeed());
+                    if(counter% (attackCounter*10)==0)
+                        rangeAttack(player, range, damage, "left", getX()-30 ,getY());
+                }
             }
         }
     }
+
+    public void rangeAttack(Player player, float range, int damage, String direction, float xStart, float yStart){
+        RangeAttack rangeAttack = new RangeAttack(player.getLevel(), direction, 200, xStart, yStart, 3);
+        player.getLevel().addProjectile(rangeAttack);
+    }
+
+
+    
+
 
     public void suroundAttack(Player player,int  range,int damage){
            

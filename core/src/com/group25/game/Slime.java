@@ -33,7 +33,7 @@ public class Slime extends Enemy{
        // System.out.printf("Slime alertArea left x: %d bottom y: %d\n", (int) (this.getX() - (200 - this.getWidth()) / 2), (int) (this.getY() - (200 - this.getHeight()) / 2));
        // System.out.printf("Slime alertArea right x: %d top y: %d\n", (int) (this.getX() - (200 - this.getWidth()) / 2) + 200, (int) (this.getY() - (200 - this.getHeight()) / 2) + 200);
        // System.out.printf("Slime alertArea: width: %d height: %d\n", 200, 200);
-        this.chasePlayer(player, range, damage, attackSpeed);
+        this.chasePlayer(player, range, damage, attackSpeed, this);
     }
 
   

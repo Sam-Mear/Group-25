@@ -33,6 +33,8 @@ public class RangeAttack{
         this.alive = true;
     }
 
+    
+
     public void update(){
         boolean found = true;
         if(distance >= range){
