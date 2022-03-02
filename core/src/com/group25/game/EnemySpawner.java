@@ -16,16 +16,16 @@ public class EnemySpawner extends GameEntity {
 
     public EnemySpawner(float positionX, float positionY, int width, int height, Sprite img,EnemyFactory factory) {
         super(positionX, positionY, width, height, img);
-        this.spawnType = spawnType;
+       // this.spawnType = spawnType;
         enemies = new ArrayList<Enemy>();
-        System.out.println(((Object) spawnType).getClass().getName());
+       // System.out.println(((Object) spawnType).getClass().getName());
     }
 
     public EnemySpawner(float positionX, float positionY, int width, int height, Sprite img, Rectangle hitbox,EnemyFactory factory) {
         super(positionX, positionY, width, height, img, hitbox);
-        this.spawnType = spawnType;
+        //this.spawnType = spawnType;
         enemies = new ArrayList<Enemy>();
-        System.out.println(((Object) spawnType).getClass().getName());
+        //System.out.println(((Object) spawnType).getClass().getName());
     }
 
     /**

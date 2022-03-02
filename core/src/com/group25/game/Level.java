@@ -45,7 +45,7 @@ public class Level implements Screen{
 	private Sprite coinSprite;
 
 	//To be deleted
-	private EnemySpawner spawner;
+	private EnemySpawner slimeSpawner;
 
 	ArrayList<Enviroment> trees = new ArrayList<Enviroment>(); // Create an ArrayList object
 	ArrayList<Enemy> enemies = new ArrayList<Enemy>(); // Create an ArrayList object
@@ -59,6 +59,10 @@ public class Level implements Screen{
 		img = new Sprite(new Texture("animation.png"));
 
 		coinSprite = new Sprite((new Texture("Coin.png")));
+
+		EnemyFactory slimeCamp = new SlimeFactory();
+		Sprite camp = new Sprite(new Texture("campfire.png"));
+		slimeSpawner = new EnemySpawner(50,50,100,100,camp,slimeCamp);
 
 		UiBorder = new Sprite(new Texture("GUI/border.png"));
 		UiBorder.setX(0);
@@ -205,7 +209,7 @@ public class Level implements Screen{
 		}
 
 		batch.draw(character.getTexture(), character.getX(), character.getY());
-		batch.draw(spawner.getSprite().getTexture(),spawner.getX(),spawner.getY());
+		batch.draw(slimeSpawner.getSprite().getTexture(),slimeSpawner.getX(),slimeSpawner.getY());
 
 //		spawner.spawn();
 
