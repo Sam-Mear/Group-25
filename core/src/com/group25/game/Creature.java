@@ -34,6 +34,11 @@ public abstract class Creature extends GameEntity{
         this.speed = entitySpeed;
     }
 
+    public float getSize(){
+        return (width+height)/2;
+    }
+
+
     public void setDirection(String direction){
         this.direction = direction;
     }

@@ -62,7 +62,7 @@ public class Level implements Screen{
 	public Level() {
 		batch = new SpriteBatch();
 		UIElements = new SpriteBatch();
-		img = new Sprite(new Texture("animation.png"));
+		img = new Sprite(new Texture("Main_character_sprite.png"));
 
 		coinSprite = new Sprite((new Texture("Coin.png")));
 
@@ -92,7 +92,7 @@ public class Level implements Screen{
 		//for level 1.
 		//For a test, this is fine.
 
-		character = new Player(this, (int)GAME_WORLD_WIDTH/2-80,(int)GAME_WORLD_HEIGHT/2-80,64,64,100,img,5);//probably temp, just getting used to libgdx
+		character = new Player(this, (int)GAME_WORLD_WIDTH/2-80,(int)GAME_WORLD_HEIGHT/2-80,42,28,100,img,5);//probably temp, just getting used to libgdx
 		character.setSpeed(1);
 		targets.add(character);
 
@@ -268,41 +268,37 @@ public class Level implements Screen{
 
 		// System.out.println(character.getHealth());
 
+		for(int i=0;i<targets.size();i++){
+			if(targets.get(i).alive()){
+				targets.get(i).playerAttack(this, 10, 25, 25);
+				if(targets.get(i) == character){
+					batch.draw(character.getTexture(), character.getX(), character.getY());
+				}else{
+					batch.draw(targets.get(i).getSprite(),targets.get(i).getX(),targets.get(i).getY());
+				}
 
-
-		for(int i=0;i<enemies.size();i++){
-			if(enemies.get(i).alive()){
-				enemies.get(i).playerAttack(this, 10, 25, 25);
-				batch.draw(allertArea,enemies.get(i).getX()-(aWidth-enemies.get(i).getWidth())/2,enemies.get(i).getY()-(aHeight-enemies.get(i).getHeight())/2);
-				batch.draw(enemies.get(i).getSprite(),enemies.get(i).getX(),enemies.get(i).getY());
-
-				Creature currentC = enemies.get(i);
+				Creature currentC = targets.get(i);
 				for(int j=0; j<projectiles.size(); j++){
 					RangeAttack currentR = projectiles.get(j);
-					if(currentR.getDirection() == "left" || currentR.getDirection() == "right"){
-						if(Math.abs(currentR.getSize() + currentR.getX() - currentC.getX()) <= currentR.getSize()){
-							enemies.get(i).setHealth(enemies.get(i).getHealth() - 100);
-						}
-					}
-					if(currentR.getDirection() == "up" || currentR.getDirection() == "down"){
-						if(Math.abs(currentR.getSize() + currentR.getY() - currentC.getY()) <= currentR.getSize()){
-							enemies.get(i).setHealth(enemies.get(i).getHealth() - 100);
-						}
-					}		
+
+					if(Math.abs(currentR.getSize()/2 + currentR.getY() - currentC.getY()) <= currentC.getSize()/2)
+						if(Math.abs(currentR.getSize()/2 + currentR.getX() - currentC.getX()) <= currentC.getSize()/2){
+							targets.get(i).setHealth(targets.get(i).getHealth() - 10);
+							projectiles.get(j).setAlive(false);
+						}		
 				}
+				System.out.println(targets.get(i).getHealth());
+				// batch.draw(allertArea,enemies.get(i).getX()-(aWidth-enemies.get(i).getWidth())/2,enemies.get(i).getY()-(aHeight-enemies.get(i).getHeight())/2);
 			}
 			
 			
 		}
 		character.checkKeysPressed();
 
-	
-		batch.draw(character.getTexture(), character.getX(), character.getY());
 		// batch.draw(spawner.getSprite().getTexture(),spawner.getX(),spawner.getY());
 
 //		spawner.spawn();
 
-		
 
 		batch.draw(waterfallTest3.getTexture(),352,1003);
 		batch.draw(waterfallTest3.getTexture(),352+16,1003);

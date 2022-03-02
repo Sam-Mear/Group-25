@@ -65,7 +65,7 @@ public class EnitiyAnimation{
 
 
 
-    public void update(float dt){
+    public void update(double dt){
         currentFrameTime += dt;
         if(currentFrameTime>frameTime){
             currentFrameTime = 0;

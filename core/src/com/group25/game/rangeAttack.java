@@ -2,17 +2,9 @@ package com.group25.game;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.ApplicationListener;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+
 
 public class RangeAttack{
 
@@ -31,7 +23,7 @@ public class RangeAttack{
     private int size;
     
     public RangeAttack(Level level,String direction, int range, float xStart, float yStart, int size){
-        attack = new Sprite(new Texture("coin.png"));;
+        attack = new Sprite(new Texture("projectile.png"));;
         this.range = range;
         this.x = xStart;
         this.y = yStart;
@@ -40,7 +32,6 @@ public class RangeAttack{
         this.creature = creature;
         this.alive = true;
     }
-
 
     public void update(){
         boolean found = true;
@@ -65,8 +56,6 @@ public class RangeAttack{
                 found = false;
              }
         }
-
-
     }
 
     public String getDirection(){
@@ -85,6 +74,10 @@ public class RangeAttack{
         return alive;
     }
 
+    public void setAlive(boolean alive){
+        this.alive = alive;
+    }
+
     public float getX(){
         return x;
     }
@@ -100,8 +93,4 @@ public class RangeAttack{
     public void setY(float y){
         this.y = y;
     }
-    
-
-
-
 }
