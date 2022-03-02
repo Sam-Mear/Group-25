@@ -46,42 +46,38 @@ public abstract class Enemy extends Creature{
             counter++;
             if(this instanceof Slime && counter%attackCounter==0 && player.alive()){
                 
-               // suroundAttack(player, range, damage);
+               suroundAttack(player, range, damage);
             }
             
             if (this.getAlertArea().contains(player.getHitbox())) {
                 if (this.getY() < player.getY()) {
-                    //go down
                     this.setY(this.getY() + this.getSpeed());
                     if(counter% (attackCounter*10) ==0)
-                       // rangeAttack(player, range, damage, "up", getX() ,getY()+30);
+                        rangeAttack(player, range, damage, "up", getX() ,getY()+30);
                         this.direction = "up";
                         directedShortAttack(player, range, damage/5, direction, getX(), getY());
                 }
     
                 if (this.getY() > player.getY()) {
-                    //go down
                     this.setY(this.getY() - this.getSpeed());
                     if(counter% (attackCounter*10)==0)
-                       //  rangeAttack(player, range, damage, "down", getX() ,getY()-30);
+                        rangeAttack(player, range, damage, "down", getX() ,getY()-30);
                          this.direction = "down";
                          directedShortAttack(player, range, damage/5, direction, getX(), getY());
                 }
     
                 if (this.getX() < player.getX()) {
-                    //go down
                     this.setX(this.getX() + this.getSpeed());
                     if(counter% (attackCounter*10)==0)
-                     //   rangeAttack(player, range, damage, "right", getX()+30 ,getY());
+                        rangeAttack(player, range, damage, "right", getX()+30 ,getY());
                         this.direction = "right";
                         directedShortAttack(player, range, damage/5, direction, getX(), getY());
                 }
     
                 if (this.getX() > player.getX()) {
-                    //go down
                     this.setX(this.getX() - this.getSpeed());
                     if(counter% (attackCounter*10)==0)
-                      //  rangeAttack(player, range, damage, "left", getX()-30 ,getY());
+                       rangeAttack(player, range, damage, "left", getX()-30 ,getY());
                         this.direction = "left";
                         directedShortAttack(player, range, damage/5, direction, getX(), getY());
                 }
