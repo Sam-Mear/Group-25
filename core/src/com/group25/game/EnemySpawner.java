@@ -38,6 +38,9 @@ public class EnemySpawner extends GameEntity {
         repeatedFrames = 0;
         associatedEnemies = new Enemy[spawnLimit];
        // spawnLimit = 1;
+       // this.spawnType = spawnType;
+        enemies = new ArrayList<Enemy>();
+       // System.out.println(((Object) spawnType).getClass().getName());
     }
 
     public EnemySpawner(float positionX, float positionY, int width, int height, Sprite img, Rectangle hitbox,EnemyFactory factory, int spawnTime) {
@@ -48,6 +51,9 @@ public class EnemySpawner extends GameEntity {
         repeatedFrames = 0;
         associatedEnemies = new Enemy[spawnLimit];
         //spawnLimit = 1;
+        //this.spawnType = spawnType;
+        enemies = new ArrayList<Enemy>();
+        //System.out.println(((Object) spawnType).getClass().getName());
     }
 
     /**

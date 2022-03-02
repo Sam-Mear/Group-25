@@ -70,7 +70,13 @@ public class Level implements Screen{
 		slimeSpawner = new EnemySpawner(50,50,100,100,camp,slimeCamp,10);
 
 
-		coinSprite = new Sprite((new Texture("Coin.png")));
+		UiBorder = new Sprite(new Texture("GUI/border.png"));
+		UiBorder.setX(0);
+		UiBorder.setY(0);
+		UiStatusBar = new Sprite(new Texture("GUI/status-bar-temp.png"));
+		UiInventory = new Sprite(new Texture("GUI/inventory.png"));
+		UiStatusBar.setX(20);
+		UiStatusBar.setY(20);
 
 		UiInventory.setX(20);
 		UiInventory.setY(150);
@@ -401,7 +407,6 @@ public class Level implements Screen{
 
 	
 		batch.draw(character.getTexture(), character.getX(), character.getY());
-		// batch.draw(spawner.getSprite().getTexture(),spawner.getX(),spawner.getY());
 		batch.draw(slimeSpawner.getSprite().getTexture(),slimeSpawner.getX(),slimeSpawner.getY());
 
 //		spawner.spawn();
