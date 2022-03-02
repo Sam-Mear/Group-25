@@ -197,7 +197,7 @@ public class Player extends Creature implements ApplicationListener{
 
         counter++;
 
-        // System.out.println(this.getHealth());
+         System.out.println(this.getHealth());
 
         int currentFrame = animation.getCurrentFrameNumber();
 
