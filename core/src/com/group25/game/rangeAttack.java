@@ -69,6 +69,10 @@ public class RangeAttack{
 
     }
 
+    public String getDirection(){
+        return direction;
+    }
+
     public int getSize(){
         return size;
     }

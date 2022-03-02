@@ -14,6 +14,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
+import org.w3c.dom.ranges.Range;
+
 /**
  * Other Imports
  */
@@ -192,39 +194,41 @@ public class Level implements Screen{
 
 	public Creature getEnemy(int xRange, int yRange, Creature attacker){
 		for(int i=0; i<enemies.size(); i++){
-			Creature potential = enemies.get(i);
-			if(potential != attacker){
-				if(attacker.getDirection() == "right"){
-					if(potential.getX() - attacker.getX() <= xRange)
-						if(potential.getX() - attacker.getX() >= 0)
-							if(potential.getY() - attacker.getY() <= yRange/2)
-								if(potential.getY() - attacker.getY() >= 0)
-									return potential;
-						
-				}
-				if(attacker.getDirection() == "left"){
-					if(attacker.getX() - potential.getX() <= xRange)
-						if(attacker.getX() - potential.getX() >= 0)
-							if(attacker.getY() - potential.getY() <= yRange/2)
-								if(attacker.getY() - potential.getY() >= 0)
-									return potential;
+			if(enemies.get(i).alive()){
+				Creature potential = enemies.get(i);
+				if(potential != attacker){
+					if(attacker.getDirection() == "right"){
+						if(potential.getX() - attacker.getX() <= xRange)
+							if(potential.getX() - attacker.getX() >= 0)
+								if(potential.getY() - attacker.getY() <= yRange/2)
+									if(potential.getY() - attacker.getY() >= 0)
+										return potential;
 							
-				}
-				if(attacker.getDirection() == "down"){
-					if(attacker.getY() - potential.getY() <= xRange)
-						if(attacker.getY() - potential.getY() >= 0)
-							if(attacker.getX() - potential.getX() <= yRange/2)
-								if(attacker.getX() - potential.getX() >= 0)
-									return potential;
-							
-				}
-				if(attacker.getDirection() == "up"){
-					if(potential.getY() - attacker.getY() <= xRange)
-						if(potential.getY() - attacker.getY() >= 0)
-							if(potential.getX() - attacker.getX() <= yRange/2)
-								if(potential.getX() - attacker.getX() >= 0)
-									return potential;
-							
+					}
+					if(attacker.getDirection() == "left"){
+						if(attacker.getX() - potential.getX() <= xRange)
+							if(attacker.getX() - potential.getX() >= 0)
+								if(attacker.getY() - potential.getY() <= yRange/2)
+									if(attacker.getY() - potential.getY() >= 0)
+										return potential;
+								
+					}
+					if(attacker.getDirection() == "down"){
+						if(attacker.getY() - potential.getY() <= xRange)
+							if(attacker.getY() - potential.getY() >= 0)
+								if(attacker.getX() - potential.getX() <= yRange/2)
+									if(attacker.getX() - potential.getX() >= 0)
+										return potential;
+								
+					}
+					if(attacker.getDirection() == "up"){
+						if(potential.getY() - attacker.getY() <= xRange)
+							if(potential.getY() - attacker.getY() >= 0)
+								if(potential.getX() - attacker.getX() <= yRange/2)
+									if(potential.getX() - attacker.getX() >= 0)
+										return potential;
+								
+					}
 				}
 			}
 		}
@@ -264,19 +268,30 @@ public class Level implements Screen{
 
 		// System.out.println(character.getHealth());
 
+
+
 		for(int i=0;i<enemies.size();i++){
 			if(enemies.get(i).alive()){
-				System.out.println(enemies.get(i).getHealth());
-				for(int j=0;j<projectiles.size(); j++){
-					if(	Math.abs(projectiles.get(j).getX() - enemies.get(i).getX()) <= projectiles.get(j).getSize() && 
-						Math.abs(projectiles.get(j).getY() - enemies.get(i).getY()) <= projectiles.get(j).getSize()) {
-							enemies.get(i).setHealth(enemies.get(i).getHealth() - 100);
-					}
-				}
 				enemies.get(i).playerAttack(this, 10, 25, 25);
 				batch.draw(allertArea,enemies.get(i).getX()-(aWidth-enemies.get(i).getWidth())/2,enemies.get(i).getY()-(aHeight-enemies.get(i).getHeight())/2);
 				batch.draw(enemies.get(i).getSprite(),enemies.get(i).getX(),enemies.get(i).getY());
+
+				Creature currentC = enemies.get(i);
+				for(int j=0; j<projectiles.size(); j++){
+					RangeAttack currentR = projectiles.get(j);
+					if(currentR.getDirection() == "left" || currentR.getDirection() == "right"){
+						if(Math.abs(currentR.getSize() + currentR.getX() - currentC.getX()) <= currentR.getSize()){
+							enemies.get(i).setHealth(enemies.get(i).getHealth() - 100);
+						}
+					}
+					if(currentR.getDirection() == "up" || currentR.getDirection() == "down"){
+						if(Math.abs(currentR.getSize() + currentR.getY() - currentC.getY()) <= currentR.getSize()){
+							enemies.get(i).setHealth(enemies.get(i).getHealth() - 100);
+						}
+					}		
+				}
 			}
+			
 			
 		}
 		character.checkKeysPressed();

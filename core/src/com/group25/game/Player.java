@@ -152,7 +152,7 @@ public class Player extends Creature implements ApplicationListener{
     
     public void rightMousePressed(){
         if(Gdx.input.isButtonPressed(Input.Buttons.LEFT) && !leftPressed){
-            RangeAttack range = new RangeAttack(currentLevel, getDirection(), 300, getX(), getY(), 200);
+            RangeAttack range = new RangeAttack(currentLevel, getDirection(), 300, getX(), getY(), 1000);
             projectiles.add(range);
             leftPressed = true;
 
