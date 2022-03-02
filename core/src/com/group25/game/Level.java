@@ -50,6 +50,11 @@ public class Level implements Screen{
 		batch = new SpriteBatch();
 		img = new Sprite(new Texture("animation.png"));
 
+		EnemyFactory slimeCamp = new SlimeFactory();
+		Sprite camp = new Sprite(new Texture("campfire.png"));
+		slimeSpawner = new EnemySpawner(50,50,100,100,camp,slimeCamp,10);
+
+
 		coinSprite = new Sprite((new Texture("Coin.png")));
 
 		backgroundPicture = new Sprite(new Texture("tempBackground.jpg"));
@@ -58,11 +63,6 @@ public class Level implements Screen{
 		viewport = new FitViewport(480, 360,camera);
 		viewport.apply();
 		camera.position.set(GAME_WORLD_WIDTH/2,GAME_WORLD_HEIGHT/2,0);
-
-		EnemyFactory slimeCamp = new SlimeFactory();
-		Sprite camp = new Sprite(new Texture("campfire.png"));
-		slimeSpawner = new EnemySpawner(50,50,100,100,camp,slimeCamp,100);
-
 
 		loadLevel("TestLevel");
 		// TODO : this needs to be fixed haha
