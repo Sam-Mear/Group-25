@@ -34,6 +34,11 @@ public abstract class Creature extends GameEntity{
         this.speed = entitySpeed;
     }
 
+    public float getSize(){
+        return (width+height)/2;
+    }
+
+
     public void setDirection(String direction){
         this.direction = direction;
     }
@@ -47,8 +52,11 @@ public abstract class Creature extends GameEntity{
     }
 
     //Attack Section
-    public void attack(Level level, int damage, int xRange, int yRange){
+    public void playerAttack(Level level, int damage, int xRange, int yRange){
         Creature target = level.getEnemy(xRange, yRange, this);
+        if(target instanceof Slime){
+            ((Slime)target).setAttacked();
+        }
         if(target == null){
             return;
         }else{
@@ -57,8 +65,9 @@ public abstract class Creature extends GameEntity{
             target.setHealth(target.getHealth()-damage);
 
         }
-  
     }
+
+    
 
     private static Object getposition() {
         return getposition();
