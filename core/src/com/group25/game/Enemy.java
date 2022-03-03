@@ -3,6 +3,7 @@ package com.group25.game;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import java.awt.*;
+import java.util.Random;
 
 public abstract class Enemy extends Creature{
 
@@ -11,10 +12,14 @@ public abstract class Enemy extends Creature{
     private int manaDrop;
     private int heartDrop;
     private boolean alive = true;
+    private double ySpeed;
+    private double xSpeed;
+    private Random r;
 
     public Enemy(float positionX, float positionY, int width, int height, int health, Sprite img, float entitySpeed,Rectangle hitbox, Rectangle alertArea) {
         super(positionX, positionY, width, height, health, img, entitySpeed,hitbox);
         this.alertArea = alertArea;
+        r = new Random();
     }
 
     public Rectangle getAlertArea(){
@@ -75,5 +80,22 @@ public abstract class Enemy extends Creature{
 
     public int getHeartDrop() {
         return heartDrop;
+    }
+
+    public void updateMovement(){
+        double xTemp = xSpeed;
+        double yTemp = ySpeed;
+        double deltaA = changeAngle(100,r.nextDouble()) * 2*Math.PI;
+        ySpeed = xTemp*Math.sin(deltaA)+yTemp*Math.cos(deltaA);
+        xSpeed = xTemp*Math.cos(deltaA)-yTemp*Math.sin(deltaA);
+
+        this.x += xSpeed;
+        this.y += ySpeed;
+    }
+
+    public double changeAngle(double b,double x){
+        double top = 1;
+        double bottom = 1+Math.exp(-b*Math.tan(Math.PI*(x-0.5)));
+        return top/bottom;
     }
 }
