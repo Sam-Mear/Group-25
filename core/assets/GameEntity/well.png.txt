@@ -1,0 +1,9 @@
+DEFAULT
+GAME ENTITY:
+    x: 
+    y: 
+    width: 48
+    height: 57
+    sprite: GameEntity/well.png
+    speed: 0
+

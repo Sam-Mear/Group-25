@@ -1,0 +1,10 @@
+DEFAULT
+GAME ENTITY:
+    x: 
+    y: 
+    width: 32
+    height: 16
+    health: 16
+    sprite: GameEntity/coin_animated.png
+    speed: 0.5
+

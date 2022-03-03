@@ -1,7 +1,7 @@
 MAP SIZE:
     width: 1778
     height: 1334
-BACKGROUND: paper-bag-map.png
+BACKGROUND: Map-1.png
 
 HITBOX:
     x: 567

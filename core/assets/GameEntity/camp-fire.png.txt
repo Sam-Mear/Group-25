@@ -1,0 +1,9 @@
+DEFAULT
+GAME ENTITY:
+    x: 
+    y: 
+    width: 42
+    height: 43
+    sprite: GameEntity/camp-fire.png
+    speed: 0.5
+
