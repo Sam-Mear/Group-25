@@ -114,7 +114,7 @@ public class Level implements Screen{
 		
 
 		EnemyFactory slimeCamp = new SlimeFactory();
-		camp = new EnviromentAnimated(300, 300, 130, 43, new Sprite(new Texture("GameEntity/camp-fire.png")), 4, 3);
+		camp = new EnviromentAnimated(300, 300, 130, 43, new Sprite(new Texture("GameEntity/camp-fire.png")), 4, 7);
 		slimeSpawner = new EnemySpawner(300,300,130,43,camp.getSprite(),slimeCamp,10);
 
 
@@ -139,7 +139,7 @@ public class Level implements Screen{
 		//For a test, this is fine.
 
 		character = new Player(this, (int)GAME_WORLD_WIDTH/2-80,(int)GAME_WORLD_HEIGHT/2-80,42,28,100,img,5);//probably temp, just getting used to libgdx
-		character.setSpeed(5);
+		character.setSpeed(1);
 		targets.add(character);
 
 		allertArea = new Sprite(new Texture(("Slime_Test_Area.png")));

@@ -158,26 +158,14 @@ public class MenuScreen implements Screen{
             batch.draw(playGameButton,177,106);
         }
 
-
-        // Sound toggle
-        if ((mousePos.x > 336 && mousePos.x < (336 + BUTTON_WIDTH))&&((mousePos.y > 106) && (mousePos.y < (106 + BUTTON_HEIGHT)))){
-            System.out.println("test");
-            batch.draw(soundToggleOn,336,106);
-            if(Gdx.input.isTouched()){
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new Level("NewLevel"));
-            }
-        }else{
-            batch.draw(soundToggleOff,336,106);
-        }
-
         // Create Level
-        if ((mousePos.x > 490 && mousePos.x < (490 + BUTTON_WIDTH))&&((mousePos.y > 106) && (mousePos.y < (106 + BUTTON_HEIGHT)))){
-            batch.draw(createLevelButtonHighlighted,490,106);
+        if ((mousePos.x > 336 && mousePos.x < (336 + BUTTON_WIDTH))&&((mousePos.y > 106) && (mousePos.y < (106 + BUTTON_HEIGHT)))){
+            batch.draw(createLevelButtonHighlighted,336,106);
             if(Gdx.input.isTouched()){
                 ((Game)Gdx.app.getApplicationListener()).setScreen(new LevelCreator());
             }
         }else{
-            batch.draw(createLevelButton,490,106);
+            batch.draw(createLevelButton,336,106);
         }
 
 
