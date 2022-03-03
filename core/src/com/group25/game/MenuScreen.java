@@ -87,7 +87,7 @@ public class MenuScreen implements Screen{
 
         levelCompleteButton = new Texture("GUI/Complete.png");
         levelCompleteButtonHighlighted = new Texture("GUI/Complete-highlight.png");
-        levelLockedButton = new Texture("GUI/Locked.png");
+        levelLockedButton = new Texture("GUI/locked.png");
 
         createLevelButton = new Texture("GUI/Create-level.png");
         createLevelButtonHighlighted = new Texture("GUI/Create-level-highlight.png");
