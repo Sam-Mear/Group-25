@@ -19,7 +19,7 @@ public class Player extends Creature implements ApplicationListener{
     Level currentLevel;         
 
     private int coins;
-    private int currentMana;
+    private int currentMana = 100;
     private int manaLimit = 100;
     private int healthLimit = 100;
     private int counter = 0;
@@ -197,7 +197,7 @@ public class Player extends Creature implements ApplicationListener{
 
         counter++;
 
-         System.out.println(this.getHealth());
+        //  System.out.println(this.getHealth());
 
         int currentFrame = animation.getCurrentFrameNumber();
 
@@ -252,7 +252,8 @@ public class Player extends Creature implements ApplicationListener{
         }
 
         if(rightMouseClicked){
-            if(counter%5==0){
+            if(counter%5==0 && currentMana >= 10){
+                spendMana(10);
                 RangeAttack range;
                 if(getDirection() == "up"){
                     range = new RangeAttack(currentLevel, getDirection(), 200, getX(), getY()+30, 10);
@@ -270,9 +271,6 @@ public class Player extends Creature implements ApplicationListener{
                     range = new RangeAttack(currentLevel, getDirection(), 200, getX()+20, getY()+10, 10);
                     projectiles.add(range);
                 }
-                    
-                
-    
             }
         }
 
@@ -282,12 +280,8 @@ public class Player extends Creature implements ApplicationListener{
         }
 
 
-        // System.out.println("Breka");
         this.getHitbox().setLocation((int) this.getX(), (int) this.getY());
-        // System.out.printf("Player hitBox x: %d y: %d\n", (int) this.getX(), (int) this.getY());
-        //System.out.println("Coin amount: "+coins);
         animation.update(1);
-        // animation.getCurrentFrame();
         currentTexture = animation.getCurrentFrame();
     }
 
@@ -370,6 +364,11 @@ public class Player extends Creature implements ApplicationListener{
     public void spendCoins(int coins){
         coins -= coins;
     }
+    public int getHealth(){
+        return this.health;
+    }
+
+    
 
 
     @Override

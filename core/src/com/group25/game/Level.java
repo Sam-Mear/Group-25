@@ -43,6 +43,28 @@ public class Level implements Screen{
 	private EnviromentAnimated coinTest;
 	private EnviromentAnimated heartTest;
 	private EnviromentAnimated waterfallTest3;
+	private Sprite hearts_8;
+	private Sprite hearts_7;
+	private Sprite hearts_6;
+	private Sprite hearts_5;
+	private Sprite hearts_4;
+	private Sprite hearts_3;
+	private Sprite hearts_2;
+	private Sprite hearts_1;
+	private Sprite hearts_0;
+
+	private Sprite mana_10;
+	private Sprite mana_9;	
+	private Sprite mana_8;
+	private Sprite mana_7;
+	private Sprite mana_6;
+	private Sprite mana_5;
+	private Sprite mana_4;
+	private Sprite mana_3;
+	private Sprite mana_2;
+	private Sprite mana_1;
+	private Sprite mana_0;
+	
 
 	private Drop coin;
 	private Sprite coinSprite;
@@ -63,20 +85,42 @@ public class Level implements Screen{
 		batch = new SpriteBatch();
 		UIElements = new SpriteBatch();
 		img = new Sprite(new Texture("Main_character_sprite.png"));
+		hearts_8 = new Sprite(new Texture("health_sprites/hearts-8.png"));
+		hearts_7 = new Sprite( new Texture("health_sprites/hearts-7.png"));
+		hearts_5 = new Sprite( new Texture("health_sprites/hearts-5.png"));
+		hearts_4 = new Sprite( new Texture("health_sprites/hearts-4.png"));
+		hearts_3 = new Sprite( new Texture("health_sprites/hearts-3.png"));
+		hearts_2 = new Sprite( new Texture("health_sprites/hearts-2.png"));
+		hearts_1 = new Sprite( new Texture("health_sprites/hearts-1.png"));
+		hearts_6 = new Sprite(new Texture("health_sprites/hearts-6.png"));
+
+		
+		mana_10 = new Sprite(new Texture("mana_sprites/mana-10.png"));
+		mana_9 = new Sprite( new Texture("mana_sprites/mana-9.png"));
+		mana_8 = new Sprite(new Texture("mana_sprites/mana-8.png"));
+		mana_7 = new Sprite( new Texture("mana_sprites/mana-7.png"));
+		mana_6 = new Sprite(new Texture("mana_sprites/mana-6.png"));
+		mana_5 = new Sprite( new Texture("mana_sprites/mana-5.png"));
+		mana_4 = new Sprite( new Texture("mana_sprites/mana-4.png"));
+		mana_3 = new Sprite( new Texture("mana_sprites/mana-3.png"));
+		mana_2 = new Sprite( new Texture("mana_sprites/mana-2.png"));
+		mana_1 = new Sprite( new Texture("mana_sprites/mana-1.png"));
+		mana_0 = new Sprite( new Texture("mana_sprites/mana.png"));
+		
+
+
+
+		
+
+		
 
 		coinSprite = new Sprite((new Texture("Coin.png")));
 
 		UiBorder = new Sprite(new Texture("GUI/border.png"));
 		UiBorder.setX(0);
 		UiBorder.setY(0);
-		UiStatusBar = new Sprite(new Texture("GUI/status-bar-temp.png"));
-		UiInventory = new Sprite(new Texture("GUI/inventory.png"));
-		UiStatusBar.setX(20);
-		UiStatusBar.setY(20);
 
-		UiInventory.setX(20);
-		UiInventory.setY(150);
-
+		
 		heartTest = new EnviromentAnimated(500, 1003, 22, 24, new Sprite(new Texture("GameEntity/heart_animated.png")), 10, 3);
 		waterfallTest3 = new EnviromentAnimated(835, 225, 16, 46, new Sprite(new Texture("GameEntity/waterfall_animated.png")), 9, 5);
 		
@@ -320,11 +364,10 @@ public class Level implements Screen{
 		}
 		character.checkKeysPressed();
 
-		// batch.draw(spawner.getSprite().getTexture(),spawner.getX(),spawner.getY());
-
-//		spawner.spawn();
-
-
+/*		health x: 116	y: 83
+*/
+		
+	
 		batch.draw(waterfallTest3.getTexture(),352,1003);
 		batch.draw(waterfallTest3.getTexture(),352+16,1003);
 		batch.draw(waterfallTest3.getTexture(),waterfallTest3.getX(),waterfallTest3.getY());
@@ -368,6 +411,12 @@ public class Level implements Screen{
 
 		character.update();
 
+
+
+		// if(healthProcentage>90){
+		// 	batch.draw(heart_8, 120, 83);
+		// }
+
 		//Would be changed into an array of all the coins
 		//Coins removed would not be checked this is for testing purposes
 		if(!coin.isPickedUp()){
@@ -387,11 +436,83 @@ public class Level implements Screen{
 		UIElements.begin();
 
 		UiBorder.draw(UIElements);
-		UiStatusBar.draw(UIElements);
-		UiInventory.draw(UIElements);
 
 		// UI StatusBar, 
 
+		Sprite heart;
+		Sprite mana;
+
+		int manaProcentage = character.getMana() * 100 / character.getHealthLimit();
+		int healthProcentage = character.getHealth() * 100 / character.getHealthLimit();
+
+		if(manaProcentage == 100){
+			mana = mana_10;			
+		}
+		else if(manaProcentage > 90){
+			mana = mana_9;			
+		}
+		else if(manaProcentage > 80){
+			mana = mana_8;
+		}
+		else if(manaProcentage > 70){
+			mana = mana_7;		
+		}	
+		else if(manaProcentage > 60){
+			mana = mana_6;		
+		}	
+		else if(manaProcentage > 50){
+			mana = mana_5;		
+		}	
+		else if(manaProcentage > 40){
+			mana = mana_4;		
+		}	
+		else if(manaProcentage > 30){
+			mana = mana_3;		
+		}	
+		else if(manaProcentage >  20){
+			mana = mana_2;		
+		}	
+		else if(manaProcentage >  10){
+			mana = mana_1;		
+		}else{
+			mana = mana_0;
+		}	
+		
+		UIElements.draw(mana, 20, 30);
+		
+
+
+		
+		if(healthProcentage > 90){
+			heart = hearts_8;
+		}	
+		else if(healthProcentage > 80){
+			heart = hearts_7;
+		}	
+		else if(healthProcentage > 70){
+			heart = hearts_6;
+		}	
+		else if(healthProcentage > 60){
+			heart = hearts_5;
+		}	
+		else if(healthProcentage > 45){
+			heart = hearts_4;
+		}	
+		else if(healthProcentage > 30){
+			heart = hearts_3;
+		}	
+		else if(healthProcentage >  15){
+			heart = hearts_2;
+		}	
+		else if(healthProcentage > 0){
+			heart = hearts_1;
+		}	
+		else{
+			heart = null;
+		}
+
+		if(heart!=null)
+			UIElements.draw(heart, 110, 50);
 
 		UIElements.end();
 	}
