@@ -302,6 +302,7 @@ public class Player extends Creature implements ApplicationListener{
     }
     public void spendCoins(int coins){
         coins -= coins;
+        //Some changes
     }
 
 

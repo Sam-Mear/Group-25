@@ -41,12 +41,13 @@ public class Level implements Screen{
 	private Sprite allertArea;
 	private EnviromentAnimated coinTest;
 	private EnviromentAnimated heartTest;
+	//private EnemySpawner slimeSpawner;
 
 	private Drop coin;
 	private Sprite coinSprite;
 
 	//To be deleted
-	private EnemySpawner spawner;
+	private EnemySpawner slimeSpawner;
 
 	ArrayList<Enviroment> trees = new ArrayList<Enviroment>(); // Create an ArrayList object
 	ArrayList<EnviromentAnimated> animatedEnviroment = new ArrayList<EnviromentAnimated>();
@@ -64,7 +65,10 @@ public class Level implements Screen{
 		UIElements = new SpriteBatch();
 		img = new Sprite(new Texture("animation.png"));
 
-		//coinSprite = new Sprite((new Texture("Coin.png")));
+		EnemyFactory slimeCamp = new SlimeFactory();
+		Sprite camp = new Sprite(new Texture("campfire.png"));
+		slimeSpawner = new EnemySpawner(50,50,100,100,camp,slimeCamp,10);
+
 
 		UiBorder = new Sprite(new Texture("GUI/border.png"));
 		UiBorder.setX(0);
@@ -85,7 +89,7 @@ public class Level implements Screen{
 		viewport.apply();
 		camera.position.set(GAME_WORLD_WIDTH/2,GAME_WORLD_HEIGHT/2,0);
 
-		loadLevel("NewLevel");
+		loadLevel("TestLevel");
 		// TODO : this needs to be fixed haha
 		//"testlevel" would actually be anything that is parsed into the level constructor.
 		//so if "level1" was given to Level.java, then it would attempt to find the txt file containing level details 
@@ -389,10 +393,12 @@ public class Level implements Screen{
 		int aHeight = 200;		
 	
 
+		int aHeight = 200;
+		batch.draw(allertArea,slime.getX()-(aWidth-slime.getWidth())/2,slime.getY()-(aHeight-slime.getHeight())/2);
+		//batch.draw(slimeSpawner.getSprite(),slimeSpawner.getX(),slimeSpawner.getY());
 		if(!coin.isPickedUp()){
 			batch.draw(coin.getTexture(), coin.getX(),coin.getY());
 		}
-
 		for(int i=0;i<trees.size();i++){
 			batch.draw(trees.get(i).getSprite(),trees.get(i).getX(),trees.get(i).getY());
 		}
@@ -408,7 +414,7 @@ public class Level implements Screen{
 
 	
 		batch.draw(character.getTexture(), character.getX(), character.getY());
-		// batch.draw(spawner.getSprite().getTexture(),spawner.getX(),spawner.getY());
+		batch.draw(slimeSpawner.getSprite().getTexture(),slimeSpawner.getX(),slimeSpawner.getY());
 
 //		spawner.spawn();
 
@@ -429,26 +435,34 @@ public class Level implements Screen{
 		/**
 		 * have camera always follow the player.
 		 */
-		if(camera.position.x-(character.getWidth()/2) > character.getX()){
-			camera.translate(-((camera.position.x-(character.getWidth()/2) - character.getX())/25),0);
-		}else if(camera.position.x-(character.getWidth()/2) < character.getX()){
-			camera.translate(-((camera.position.x-(character.getWidth()/2) - character.getX())/25),0);
+		if(character.getX() + 430 < GAME_WORLD_WIDTH && character.getX() - 410 > 0){
+			if(camera.position.x-(character.getWidth()/2) > character.getX()){
+				camera.translate(-((camera.position.x-(character.getWidth()/2) - character.getX())/25),0);
+			}else if(camera.position.x-(character.getWidth()/2) < character.getX()){
+				camera.translate(-((camera.position.x-(character.getWidth()/2) - character.getX())/25),0);
+			}
 		}
-		if(camera.position.y-(character.getHeight()/2) > character.getY()){
-			camera.translate(0,-((camera.position.y-(character.getHeight()/2) - character.getY())/25));
-		}else if(camera.position.y-(character.getHeight()/2) < character.getY()){
-			camera.translate(0,-((camera.position.y-(character.getHeight()/2) - character.getY())/25));
+		if(character.getY() + 256 < GAME_WORLD_HEIGHT && character.getY() -256 > 0){
+			if(camera.position.y-(character.getHeight()/2) > character.getY()){
+				camera.translate(0,-((camera.position.y-(character.getHeight()/2) - character.getY())/25));
+			}else if(camera.position.y-(character.getHeight()/2) < character.getY()){
+				camera.translate(0,-((camera.position.y-(character.getHeight()/2) - character.getY())/25));
+			}
 		}
+
 
 		character.update();
-
+		slimeSpawner.spawnNewMonster(enemies,(int)slimeSpawner.getX()+100,(int)slimeSpawner.getY()+100,100,100,50,slime.getSprite(),1);
 		//Would be changed into an array of all the coins
 		//Coins removed would not be checked this is for testing purposes
 		if(!coin.isPickedUp()){
 			character.pickUp(coin);
 		}
-
-		slime.explore(character);
+		//FOLLOW PLAYER CODE
+		for(Enemy e:enemies){
+			e.explore(character);
+		}
+		//slime.explore(character);
 		//If person enters slimes territory
 		//If the entire person has entered the slime territory
 

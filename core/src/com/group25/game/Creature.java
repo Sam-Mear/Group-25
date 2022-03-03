@@ -90,4 +90,11 @@ public abstract class Creature extends GameEntity{
             alive = false;
         }
     }
+    public void moveX(float x){
+        this.setX(this.getX()+x);
+    }
+
+    public void moveY(float y){
+        this.setY(this.getY()+y);
+    }
 }
