@@ -12,9 +12,9 @@ import javax.swing.text.html.parser.Entity;
 
 public class Slime extends Enemy{
 
-    private int healt ;
+    private int health ;
     private int damage, range;
-    private int attackSpeed; 
+    private int attackSpeed;
     private EnitiyAnimation animation;
     private TextureRegion current;
 
@@ -28,11 +28,9 @@ public class Slime extends Enemy{
                 this.damage = damage;
                 this.range = range;
                 this.attackSpeed = attackSpeed;
-
                 level.addEnemy(this);
 
                 Sprite slimes = new Sprite(new Texture(("slimes.png")));
-
 
                 animation = new EnitiyAnimation(slimes, 3, 15, 0, 1);
                 
@@ -81,15 +79,16 @@ public class Slime extends Enemy{
        // System.out.printf("Slime alertArea left x: %d bottom y: %d\n", (int) (this.getX() - (200 - this.getWidth()) / 2), (int) (this.getY() - (200 - this.getHeight()) / 2));
        // System.out.printf("Slime alertArea right x: %d top y: %d\n", (int) (this.getX() - (200 - this.getWidth()) / 2) + 200, (int) (this.getY() - (200 - this.getHeight()) / 2) + 200);
        // System.out.printf("Slime alertArea: width: %d height: %d\n", 200, 200);
-       this.chasePlayer(player, 30, 5, 15, this);
-       this.updateMovement();
+       if(!this.chasePlayer(player, 30, 5, 15, this)) {
+           this.updateMovement();
+       }
     }
 
-    public double changeAngle(double b,double x){
-        double top = 1;
-        double bottom = 1+Math.exp(-b*Math.tan(Math.PI*(x-0.5)));
-        return top/bottom;
-    }
+//    public double changeAngle(double b,double x){
+//        double top = 1;
+//        double bottom = 1+Math.exp(-b*Math.tan(Math.PI*(x-0.5)));
+//        return top/bottom;
+//    }
 
    
 

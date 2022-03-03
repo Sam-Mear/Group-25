@@ -111,13 +111,6 @@ public class Level implements Screen{
 		mana_2 = new Sprite( new Texture("mana_sprites/mana-2.png"));
 		mana_1 = new Sprite( new Texture("mana_sprites/mana-1.png"));
 		mana_0 = new Sprite( new Texture("mana_sprites/mana.png"));
-		
-
-
-
-		
-
-		
 
 		EnemyFactory slimeCamp = new SlimeFactory();
 		Sprite camp = new Sprite(new Texture("campfire.png"));
@@ -552,7 +545,7 @@ public class Level implements Screen{
 
 
 		character.update();
-		slimeSpawner.spawnNewMonster(this, enemies,(int)slimeSpawner.getX()+100,(int)slimeSpawner.getY()+100,100,100,50,slime.getSprite(),1);
+		slimeSpawner.spawnNewMonster(this, enemies,(int)slimeSpawner.getX()+100,(int)slimeSpawner.getY()+100,20,18,50,slime.getSprite(),(float)0.4);
 
 
 		// if(healthProcentage>90){
