@@ -46,4 +46,5 @@ public class Slime extends Enemy{
     public void turn() {
 
     }
+
 }

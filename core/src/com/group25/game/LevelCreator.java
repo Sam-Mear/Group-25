@@ -88,6 +88,7 @@ public class LevelCreator extends JFrame implements Screen{
 	private JCheckBox gridTool;
 	private JTextField gridNumber;
 	private JCheckBox hitboxTool;
+	private JCheckBox teleportTool;
 	//the below is -1 for not selected.
 	//after moving an etity, it goes back to -1.
 	private int selectedEntity = -1;
@@ -323,6 +324,8 @@ public class LevelCreator extends JFrame implements Screen{
 		f.add(gridNumber);
 		hitboxTool = new JCheckBox("Hitbox Tool");
 		f.add(hitboxTool);
+		teleportTool = new JCheckBox("Teleport Tool");
+		f.add(teleportTool);
 
 
     f.setSize(200,500);
@@ -490,17 +493,32 @@ public class LevelCreator extends JFrame implements Screen{
 		}
 		int width = secondX - firstX;
 		int height = secondY-firstY;
-		hitbox.add(new Sprite(new Texture("Dev/rectangle.png")));
-		hitbox.get(hitbox.size()-1).setX(firstX);
-		hitbox.get(hitbox.size()-1).setY(firstY);
-		hitbox.get(hitbox.size()-1).setSize(width, height);
-		ArrayList<String> hitboxString = new ArrayList<String>();
-		hitboxString.add("HITBOX:");
-		hitboxString.add("    x: "+firstX);
-		hitboxString.add("    y: "+firstY);
-		hitboxString.add("    width: "+width);
-		hitboxString.add("    height: "+height);
-		hitboxOutput.add(hitboxString);
+		if(teleportTool.isSelected()){
+			hitbox.add(new Sprite(new Texture("Dev/rectangle2.png")));
+			hitbox.get(hitbox.size()-1).setX(firstX);
+			hitbox.get(hitbox.size()-1).setY(firstY);
+			hitbox.get(hitbox.size()-1).setSize(width, height);
+			ArrayList<String> hitboxString = new ArrayList<String>();
+			hitboxString.add("HITBOX SPECIAL:");
+			hitboxString.add("    x: "+firstX);
+			hitboxString.add("    y: "+firstY);
+			hitboxString.add("    width: "+width);
+			hitboxString.add("    height: "+height);
+			hitboxString.add("    level name: ENTERLEVELNAMEwithoutthetxt");
+			hitboxOutput.add(hitboxString);
+		}else{
+			hitbox.add(new Sprite(new Texture("Dev/rectangle.png")));
+			hitbox.get(hitbox.size()-1).setX(firstX);
+			hitbox.get(hitbox.size()-1).setY(firstY);
+			hitbox.get(hitbox.size()-1).setSize(width, height);
+			ArrayList<String> hitboxString = new ArrayList<String>();
+			hitboxString.add("HITBOX:");
+			hitboxString.add("    x: "+firstX);
+			hitboxString.add("    y: "+firstY);
+			hitboxString.add("    width: "+width);
+			hitboxString.add("    height: "+height);
+			hitboxOutput.add(hitboxString);
+		}
 	}
 	
 	@Override
