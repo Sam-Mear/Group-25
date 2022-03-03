@@ -54,10 +54,7 @@ public class EnitiyAnimation{
     public void setCurrentFrameNumber(int x){
         this.currentFrame = x;
     }
-
-
-
-
+    
     
     public void end(){
         this.endFrame = this.startFrame;
@@ -65,7 +62,7 @@ public class EnitiyAnimation{
 
 
 
-    public void update(float dt){
+    public void update(double dt){
         currentFrameTime += dt;
         if(currentFrameTime>frameTime){
             currentFrameTime = 0;

@@ -11,15 +11,20 @@ public abstract class Enemy extends Creature{
     private int coinDrop;
     private int manaDrop;
     private int heartDrop;
+    private float range;
+    private float damage;
     private boolean alive = true;
     private double ySpeed;
     private double xSpeed;
     private Random r;
+    private String direction;
+    private boolean isMoving = false;
 
     public Enemy(float positionX, float positionY, int width, int height, int health, Sprite img, float entitySpeed,Rectangle hitbox, Rectangle alertArea) {
         super(positionX, positionY, width, height, health, img, entitySpeed,hitbox);
         this.alertArea = alertArea;
         r = new Random();
+
     }
 
     public Rectangle getAlertArea(){
@@ -34,31 +39,90 @@ public abstract class Enemy extends Creature{
      */
     public abstract void explore(Player player);
 
-    public abstract void turn();
+    private int counter = 0;
 
-    public void chasePlayer(Player player){
-        if (this.getAlertArea().contains(player.getHitbox())) {
-            if (this.getY() < player.getY()) {
-                //go down
-                this.setY(this.getY() + this.getSpeed());
+    public void chasePlayer(Player player, int range, int damage, int  attackCounter, Creature attacker){
+        System.out.println(attacker.getHealth());
+
+
+        System.out.println(attacker.alive());
+
+
+        if(attacker.alive()){
+            counter++;
+            if(this instanceof Slime && counter%attackCounter==0 && player.alive()){
+                
+               suroundAttack(player, range, damage);
             }
-
-            if (this.getY() > player.getY()) {
-                //go down
-                this.setY(this.getY() - this.getSpeed());
-            }
-
-            if (this.getX() < player.getX()) {
-                //go down
-                this.setX(this.getX() + this.getSpeed());
-            }
-
-            if (this.getX() > player.getX()) {
-                //go down
-                this.setX(this.getX() - this.getSpeed());
+            
+            if (this.getAlertArea().contains(player.getHitbox())) {
+                isMoving = true;
+                if (this.getY() < player.getY()) {
+                    this.setY(this.getY() + this.getSpeed());
+                    if(counter% (attackCounter*10) ==0)
+                        rangeAttack(player, range, damage, "up", getX() ,getY()+30);
+                        this.direction = "up";
+                        directedShortAttack(player, range, damage/5, direction, getX(), getY());
+                }
+    
+                if (this.getY() > player.getY()) {
+                    this.setY(this.getY() - this.getSpeed());
+                    if(counter% (attackCounter*10)==0)
+                        rangeAttack(player, range, damage, "down", getX() ,getY()-30);
+                         this.direction = "down";
+                         directedShortAttack(player, range, damage/5, direction, getX(), getY());
+                }
+    
+                if (this.getX() < player.getX()) {
+                    this.setX(this.getX() + this.getSpeed());
+                    if(counter% (attackCounter*10)==0)
+                        rangeAttack(player, range, damage, "right", getX()+30 ,getY());
+                        this.direction = "right";
+                        directedShortAttack(player, range, damage/5, direction, getX(), getY());
+                }
+    
+                if (this.getX() > player.getX()) {
+                    this.setX(this.getX() - this.getSpeed());
+                    if(counter% (attackCounter*10)==0)
+                       rangeAttack(player, range, damage, "left", getX()-30 ,getY());
+                        this.direction = "left";
+                        directedShortAttack(player, range, damage/5, direction, getX(), getY());
+                }
+            }else{
+                isMoving = false;
             }
         }
     }
+
+    protected boolean getMoving(){
+        return isMoving;
+    }
+
+    public String getDirection(){
+        return direction;
+    }
+
+    private void rangeAttack(Player player, float range, int damage, String direction, float xStart, float yStart){
+        RangeAttack rangeAttack = new RangeAttack(player.getLevel(), direction, 200, xStart, yStart, 3);
+        player.getLevel().addProjectile(rangeAttack);
+    }
+
+
+    private void directedShortAttack(Player player, float range, int damage, String direction, float xStart, float yStart){
+        playerAttack(player.getLevel(), (int)damage, (int)range, (int)range*2);
+    }
+
+
+
+
+    private void suroundAttack(Player player,int  range,int damage){
+           
+            if(Math.abs(player.getX() - this.getX()) <= range)
+            if(Math.abs(player.getY() - this.getY()) <= range){
+                player.setHealth(player.getHealth()-damage);
+             }
+    }
+
     public void takeDamage(int damage){
         if(getHealth()-damage<0){
             //Then we want to drop all of the things
