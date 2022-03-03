@@ -162,6 +162,7 @@ public class Player extends Creature implements ApplicationListener{
             rightMouseClicked = false;
         }
     }
+    
 
 
     public ArrayList<RangeAttack> getProjectiles(){

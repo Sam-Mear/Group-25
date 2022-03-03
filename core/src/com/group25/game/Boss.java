@@ -35,27 +35,41 @@ public class Boss extends Enemy{
     private boolean attacked = false;
     int counter = 0;
 
-    
+    private boolean started = false;
+    private int startFrame, endFrame;
+    private int frameCounter = 0;
 
     public void update(){
         String direction = getDirection();
         if(this.getMoving()){
+
             if(direction == "up"){
-                animation = new EnitiyAnimation(new Sprite(new Texture(("mummy.png"))), 12, 20, 0, 2);
+                endFrame = 2;
+                startFrame = 0;
+                // startFrame = (counter++) % endFrame;
             }else if(direction == "down"){
-                animation = new EnitiyAnimation(new Sprite(new Texture(("mummy.png"))), 12, 20, 3, 5);
-            }
-            else if(direction == "left"){
-                animation = new EnitiyAnimation(new Sprite(new Texture(("mummy.png"))), 12, 20, 6, 8);
+                endFrame = 5;
+                startFrame = 3;
+                // startFrame =( 3+ counter++) % endFrame;
             }
             else if(direction == "right"){
-                animation = new EnitiyAnimation(new Sprite(new Texture(("mummy.png"))), 12, 20, 9, 11);
+                endFrame = 9;
+                startFrame = 6;
+                // startFrame = (6+ counter++) % endFrame;
             }
-            
+            else if(direction == "left"){
+                endFrame = 11;
+                // startFrame =( 9 + counter++) % endFrame;
+
+            }
+            animation = new EnitiyAnimation(new Sprite(new Texture(("mummy.png"))), 12, 60, startFrame, endFrame);
+
         }
        
         current = animation.getCurrentFrame();
     }
+
+
 
     public void setAttacked(){
         attacked = true;
