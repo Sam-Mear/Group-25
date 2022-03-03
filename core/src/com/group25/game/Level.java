@@ -59,7 +59,7 @@ public class Level implements Screen{
 	int GAME_WORLD_WIDTH = 1778;
 	int GAME_WORLD_HEIGHT = 1334;
 	
-	public Level() {
+	public Level(String levelName) {
 		batch = new SpriteBatch();
 		UIElements = new SpriteBatch();
 		img = new Sprite(new Texture("animation.png"));
