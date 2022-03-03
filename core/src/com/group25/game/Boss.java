@@ -16,8 +16,7 @@ public class Boss extends Enemy{
     private TextureRegion current;
 
     
-    public Boss(Level level, float positionX, float positionY, int width, int height, int health, Sprite img, float entitySpeed,
-            Rectangle hitbox, Rectangle alertArea) {
+    public Boss(Level level, float positionX, float positionY, int width, int height, int health, Sprite img, float entitySpeed) {
                 super(positionX, positionY, width, height, health, img, entitySpeed,
                 new Rectangle((int)positionX,(int)positionY,width,height),  //Hitbox
                 new Rectangle((int)positionX,(int)positionY,200,200)); //AlertArearea
@@ -30,27 +29,29 @@ public class Boss extends Enemy{
 
         level.addEnemy(this);
 
-        animation = new EnitiyAnimation(new Sprite(new Texture(("mummy.png"))), 12, 20, 0, 0);
+        animation = new EnitiyAnimation(new Sprite(new Texture(("mummy.png"))), 12, 20, 3, 3);
     }
 
     private boolean attacked = false;
     int counter = 0;
 
-    public void update(){
-        if(getMoving()){
-            animation.update(1);
-            current = animation.getCurrentFrame();
-        }else{
-            animation.setCurrentFrameNumber(0);
-        }
+    
 
-        if(attacked && counter > 0){
-            counter++;
-            if(counter == 15){
-                attacked = false;
-                counter = 0;
+    public void update(){
+        String direction = getDirection();
+        if(this.getMoving()){
+            if(direction == "up"){
+                animation = new EnitiyAnimation(new Sprite(new Texture(("mummy.png"))), 12, 20, 0, 2);
+            }else if(direction == "down"){
+                animation = new EnitiyAnimation(new Sprite(new Texture(("mummy.png"))), 12, 20, 3, 5);
             }
-            animation.setCurrentFrameNumber(2);    
+            else if(direction == "left"){
+                animation = new EnitiyAnimation(new Sprite(new Texture(("mummy.png"))), 12, 20, 6, 8);
+            }
+            else if(direction == "right"){
+                animation = new EnitiyAnimation(new Sprite(new Texture(("mummy.png"))), 12, 20, 9, 11);
+            }
+            
         }
        
         current = animation.getCurrentFrame();
@@ -62,14 +63,15 @@ public class Boss extends Enemy{
     }
 
     public TextureRegion getTexture(){
-        return current;
+
+        return animation.getCurrentFrame();
     }
 
     @Override
     public void explore(Player player) {
         this.getHitbox().setLocation((int) this.getX(), (int) this.getY());
         this.getAlertArea().setLocation((int) (this.getX() - (200 - this.getWidth()) / 2), (int) (this.getY() - (200 - this.getHeight()) / 2));
-        this.chasePlayer(player, 30, 5, 15, this);
+        this.chasePlayer(player, 30, 5, 15, this, 50, 50);
         this.updateMovement();
     }
 

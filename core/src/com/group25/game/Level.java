@@ -436,6 +436,7 @@ public class Level implements Screen{
 		return null;
 	}
 
+	Boss boss = new Boss(this, 500, 500, 100, 50, 10, null, 1);
 
 
 	@Override
@@ -454,8 +455,10 @@ public class Level implements Screen{
 			batch.draw(projectiles.get(i).getTexture(), projectiles.get(i).getX(), projectiles.get(i).getY());
 		}
 
+		boss.update();
 
-
+		boss.explore(character);
+		
 
 		int aWidth = 200;
 		int aHeight = 200;		
@@ -472,14 +475,15 @@ public class Level implements Screen{
 		for(int i=0;i<targets.size();i++){
 
 			if(targets.get(i).alive()){
+
 				if(targets.get(i) == character){
 					batch.draw(character.getTexture(), character.getX(), character.getY());
 				}else{
 					if(targets.get(i) instanceof Slime){
 						targets.get(i).update();
 						batch.draw(((Slime) targets.get(i)).getTexture(), targets.get(i).getX(), targets.get(i).getY());
-					}else{
-						batch.draw(targets.get(i).getSprite(),targets.get(i).getX(),targets.get(i).getY());
+					}else if(targets.get(i) instanceof Boss){
+						batch.draw(((Boss)targets.get(i)).getTexture(),targets.get(i).getX(),targets.get(i).getY());
 					}
 					
 				}
