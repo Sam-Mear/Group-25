@@ -23,6 +23,8 @@ import org.w3c.dom.ranges.Range;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Random;
 import java.util.Scanner;
 
 
@@ -80,12 +82,11 @@ public class Level implements Screen{
 	ArrayList<Teleport> teleports = new ArrayList<Teleport>();
 	ArrayList<Creature> targets = new ArrayList<>(); // arrayList where all possible targets are stored (including enemies and main character and/or object if there will be any)
 	ArrayList<RangeAttack> projectiles;
+	private ArrayList<Drop> allDrops = new ArrayList<Drop>();
 
 
-
-	int GAME_WORLD_WIDTH = 1778;
-	int GAME_WORLD_HEIGHT = 1334;
-	
+	static int GAME_WORLD_WIDTH = 1778;
+	static int GAME_WORLD_HEIGHT = 1334;
 	public Level(String levelName) {
 		batch = new SpriteBatch();
 		UIElements = new SpriteBatch();
@@ -137,7 +138,7 @@ public class Level implements Screen{
 		//for level 1.
 		//For a test, this is fine.
 
-		character = new Player(this, (int)GAME_WORLD_WIDTH/2-80,(int)GAME_WORLD_HEIGHT/2-80,42,28,100,img,5);//probably temp, just getting used to libgdx
+		character = new Player(this, (int)GAME_WORLD_WIDTH/2-80,(int)GAME_WORLD_HEIGHT/2-80,42,28,100000,img,5);//probably temp, just getting used to libgdx
 		character.setSpeed(1);
 		targets.add(character);
 
@@ -455,9 +456,10 @@ public class Level implements Screen{
 	
 		batch.draw(allertArea,slime.getX()-(aWidth-slime.getWidth())/2,slime.getY()-(aHeight-slime.getHeight())/2);
 		//batch.draw(slimeSpawner.getSprite(),slimeSpawner.getX(),slimeSpawner.getY());
-		if(!coin.isPickedUp()){
-			batch.draw(coin.getTexture(), coin.getX(),coin.getY());
-		}
+
+//		if(!coin.isPickedUp()){
+//			batch.draw(coin.getTexture(), coin.getX(),coin.getY());
+//		}
 		for(int i=0;i<trees.size();i++){
 			batch.draw(trees.get(i).getSprite(),trees.get(i).getX(),trees.get(i).getY());
 		}
@@ -465,6 +467,7 @@ public class Level implements Screen{
 		for(int i=0;i<targets.size();i++){
 
 			if(targets.get(i).alive()){
+
 				if(targets.get(i) == character){
 					batch.draw(character.getTexture(), character.getX(), character.getY());
 				}else{
@@ -493,8 +496,46 @@ public class Level implements Screen{
 				// System.out.println(targets.get(i).getHealth());
 				// batch.draw(allertArea,enemies.get(i).getX()-(aWidth-enemies.get(i).getWidth())/2,enemies.get(i).getY()-(aHeight-enemies.get(i).getHeight())/2);
 			}
-			
-			
+			//If they are dead and its an enemy
+			else{
+				if(targets.get(i) instanceof Enemy){
+					if(!((Enemy) targets.get(i)).isLooted()) {
+						System.out.println("DEAD ENEMY");
+						Enemy deadEnemy = (Enemy) targets.get(i);
+						((Enemy) targets.get(i)).setLooted(true);
+						int coins = ((Enemy) targets.get(i)).getCoinDrop();
+						int mana = ((Enemy) targets.get(i)).getManaDrop();
+						int health = ((Enemy) targets.get(i)).getHeartDrop();
+						Random r = new Random();
+						Drop coinDrop = new Drop(deadEnemy.getX(), deadEnemy.getY(), 16, 16, new Sprite(new Texture("GameEntity/coin_animated.png")), 5, 5,1,DropType.COIN);
+						Drop heartDrop = new Drop(deadEnemy.getX()+30, deadEnemy.getY()+30, 22, 24, new Sprite(new Texture("GameEntity/heart_animated.png")), 10, 3,1,DropType.HEART);
+						//Drop manaDrop = new Drop(deadEnemy.getX(), deadEnemy.getY(), 16, 16, new Sprite(new Texture("GameEntity/coin_animated.png")), 5, 5,1,DropType.MANA);
+						allDrops.add(heartDrop);
+						allDrops.add(coinDrop);
+					}
+				}
+			}
+
+
+		}
+		Iterator<Drop> cycleDrops = allDrops.iterator();
+		while(cycleDrops.hasNext()) {
+			Drop pickable = cycleDrops.next();
+			//System.out.println("THINGS IN CYCLE DROPS: "+pickable.getType());
+			//		if(!coin.isPickedUp()){
+//			character.pickUp(coin);
+//		}
+			if(!pickable.isPickedUp()){
+				character.pickUp(pickable);
+				batch.draw(pickable.getTexture(), pickable.getX(),pickable.getY());
+			}
+			else{
+				//System.out.println("Picked up: "+"Drop type: "+pickable.getType());
+				if(pickable.getType().equals(DropType.HEART)){
+					System.out.println(character.health);
+				}
+				cycleDrops.remove();
+			}
 		}
 		character.checkKeysPressed();
 
@@ -554,9 +595,9 @@ public class Level implements Screen{
 
 		//Would be changed into an array of all the coins
 		//Coins removed would not be checked this is for testing purposes
-		if(!coin.isPickedUp()){
-			character.pickUp(coin);
-		}
+//		if(!coin.isPickedUp()){
+//			character.pickUp(coin);
+//		}
 		//FOLLOW PLAYER CODE
 		for(Enemy e:enemies){
 			e.explore(character);

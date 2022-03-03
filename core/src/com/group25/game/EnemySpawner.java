@@ -15,7 +15,7 @@ public class EnemySpawner extends GameEntity {
 
     private int spawnTime;          //How often we want enemies to spawn
     private int repeatedFrames;     //How many times have the frames been cycled
-    private EnemyFactory factory;   //Factory design pattern to spawn enemies
+    private final EnemyFactory factory;   //Factory design pattern to spawn enemies
     private Sprite img;             //Image of what the spawner looks like
 
     private Enemy[] associatedEnemies;
