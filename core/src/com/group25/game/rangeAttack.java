@@ -10,7 +10,7 @@ public class RangeAttack{
 
     private float x, y;
     private boolean end;
-    Batch batch;
+    private Batch batch;
     private Sprite attack;
     private boolean alive;
     private Level level;
@@ -42,19 +42,19 @@ public class RangeAttack{
         }else{
             distance++;
             if(direction == "up" && found){
-                this.setY(y + 1);
+                this.setY(y + 2);
                 found = false;
              }
              if(direction == "down" && found){
-                 this.setY(y - 1);
+                 this.setY(y - 2);
                  found = false;
              }
              if(direction == "right" && found){
-                 this.setX(x + 1);
+                 this.setX(x + 2);
                  found = false;
              }
              if(direction == "left" && found){
-                this.setX(x - 1);
+                this.setX(x - 2);
                 found = false;
              }
         }
