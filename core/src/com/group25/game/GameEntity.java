@@ -12,7 +12,7 @@ public abstract class GameEntity {
 
     protected Sprite sprite;
     protected float speed;
-    protected boolean collidable = true;
+    protected boolean collidable = false;
 	protected Rectangle hitbox;
 
     public GameEntity(float positionX, float positionY, int width, int height, Sprite img){
