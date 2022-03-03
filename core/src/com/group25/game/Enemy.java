@@ -43,7 +43,7 @@ public abstract class Enemy extends Creature{
 
     private int counter = 0;
 
-    public boolean chasePlayer(Player player, int range, int damage, int  attackCounter, Creature attacker){
+    public boolean chasePlayer(Player player, int range, int damage, int  attackCounter, Creature attacker, int safetyX, int safetyY){
         System.out.println(attacker.getHealth());
 
 
@@ -61,7 +61,7 @@ public abstract class Enemy extends Creature{
                 if (this.getY() < player.getY()) {
                     this.setY(this.getY() + this.getSpeed());
                     if(counter% (attackCounter*10) ==0){
-                        rangeAttack(player, range, damage, "up", getX() ,getY()+50);
+                        rangeAttack(player, range, damage, "up", getX() ,getY()+safetyY);
                         this.direction = "up";
                         directedShortAttack(player, range, damage/5, direction, getX(), getY());
                     }
@@ -71,39 +71,39 @@ public abstract class Enemy extends Creature{
                 if (this.getY() > player.getY()) {
                     this.setY(this.getY() - this.getSpeed());
                     if(counter% (attackCounter*10)==0){
-                        rangeAttack(player, range, damage, "down", getX() ,getY()-50);
-                        this.direction = "down";
-                        directedShortAttack(player, range, damage/5, direction, getX(), getY());
-                    }    
+                        rangeAttack(player, range, damage, "down", getX() ,getY()-safetyY);
+                         this.direction = "down";
+                         directedShortAttack(player, range, damage/5, direction, getX(), getY());
+                    }
                     return true;
                 }
     
                 if (this.getX() < player.getX()) {
                     this.setX(this.getX() + this.getSpeed());
                     if(counter% (attackCounter*10)==0){
-                        rangeAttack(player, range, damage, "right", getX()+50 ,getY());
+                        rangeAttack(player, range, damage, "right", getX()+safetyX ,getY());
                         this.direction = "right";
                         directedShortAttack(player, range, damage/5, direction, getX(), getY());
                     }
                     return true;
                 }
-    
+
                 if (this.getX() > player.getX()) {
                     this.setX(this.getX() - this.getSpeed());
                     if(counter% (attackCounter*10)==0){
-                        rangeAttack(player, range, damage, "left", getX()-50 ,getY());
+                        rangeAttack(player, range, damage, "left", getX()-safetyX ,getY());
                         this.direction = "left";
                         directedShortAttack(player, range, damage/5, direction, getX(), getY());
                     }
                     return true;
                 }
-
             }else{
                 isMoving = false;
             }
         }
         return false;
     }
+
 
     protected boolean getMoving(){
         return isMoving;

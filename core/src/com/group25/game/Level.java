@@ -143,6 +143,9 @@ public class Level implements Screen{
 		//For a test, this is fine.
 
 
+		// character = new Player(this, (int)GAME_WORLD_WIDTH/2-80,(int)GAME_WORLD_HEIGHT/2-80,42,28,1000,img,5);//probably temp, just getting used to libgdx
+		// character.setSpeed(1);
+		// targets.add(character);
 
 		allertArea = new Sprite(new Texture(("Slime_Test_Area.png")));
 
@@ -389,48 +392,48 @@ public class Level implements Screen{
 	}
 
 	public Creature getEnemy(int xRange, int yRange, Creature attacker){
-		for(int i=0; i<enemies.size(); i++){
+		for(int i=0; i<targets.size(); i++){
 		Creature potential;
 		if(attacker instanceof Enemy){
 			potential = character;
 		}else{
-			if(enemies.get(i).alive()){
-				potential = enemies.get(i);
+			if(targets.get(i).alive()){
+				potential = targets.get(i);
 			}
 			else{
-				break;
+				potential = attacker;
 			}
 		}
 				if(potential != attacker){
 					if(attacker.getDirection() == "right"){
-						if(potential.getX() - attacker.getX() <= xRange)
-							if(potential.getX() - attacker.getX() >= 0)
-								if(potential.getY() - attacker.getY() <= yRange/2)
-									if(potential.getY() - attacker.getY() >= 0)
+						if(potential.getX()+potential.getSize()/2 - attacker.getX() <= xRange/2)
+							if(potential.getX()+potential.getSize()/2 - attacker.getX() >= 0)
+								if(potential.getY()+potential.getSize()/2 - attacker.getY() <= yRange)
+									if(potential.getY()+potential.getSize()/2 - attacker.getY() >= 0)
 										return potential;
 							
 					}
 					if(attacker.getDirection() == "left"){
-						if(attacker.getX() - potential.getX() <= xRange)
-							if(attacker.getX() - potential.getX() >= 0)
-								if(attacker.getY() - potential.getY() <= yRange/2)
-									if(attacker.getY() - potential.getY() >= 0)
+						if(attacker.getX()+potential.getSize()/2 - potential.getX() <= xRange/2)
+							if(attacker.getX()+potential.getSize()/2 - potential.getX() >= 0)
+								if(attacker.getY()+potential.getSize()/2 - potential.getY() <= yRange)
+									if(attacker.getY()+potential.getSize()/2 - potential.getY() >= 0)
 										return potential;
 								
 					}
 					if(attacker.getDirection() == "down"){
-						if(attacker.getY() - potential.getY() <= xRange)
-							if(attacker.getY() - potential.getY() >= 0)
-								if(attacker.getX() - potential.getX() <= yRange/2)
-									if(attacker.getX() - potential.getX() >= 0)
+						if(attacker.getY()+potential.getSize()/2 - potential.getY() <= xRange)
+							if(attacker.getY()+potential.getSize()/2 - potential.getY() >= 0)
+								if(attacker.getX()+potential.getSize()/2 - potential.getX() <= yRange/2)
+									if(attacker.getX()+potential.getSize()/2 - potential.getX() >= 0)
 										return potential;
 								
 					}
 					if(attacker.getDirection() == "up"){
-						if(potential.getY() - attacker.getY() <= xRange)
-							if(potential.getY() - attacker.getY() >= 0)
-								if(potential.getX() - attacker.getX() <= yRange/2)
-									if(potential.getX() - attacker.getX() >= 0)
+						if(potential.getY()+potential.getSize()/2 - attacker.getY() <= xRange)
+							if(potential.getY()+potential.getSize()/2 - attacker.getY() >= 0)
+								if(potential.getX()+potential.getSize()/2 - attacker.getX() <= yRange/2)
+									if(potential.getX()+potential.getSize()/2 - attacker.getX() >= 0)
 										return potential;
 								
 					}
@@ -440,6 +443,7 @@ public class Level implements Screen{
 		return null;
 	}
 
+	Boss boss = new Boss(this, 500, 500, 100, 50, 10, null, 1);
 
 
 	@Override
@@ -458,8 +462,10 @@ public class Level implements Screen{
 			batch.draw(projectiles.get(i).getTexture(), projectiles.get(i).getX(), projectiles.get(i).getY());
 		}
 
+		boss.update();
 
-
+		boss.explore(character);
+		
 
 		int aWidth = 200;
 		int aHeight = 200;		
@@ -476,14 +482,15 @@ public class Level implements Screen{
 		for(int i=0;i<targets.size();i++){
 
 			if(targets.get(i).alive()){
+
 				if(targets.get(i) == character){
 					batch.draw(character.getTexture(), character.getX(), character.getY());
 				}else{
 					if(targets.get(i) instanceof Slime){
 						targets.get(i).update();
 						batch.draw(((Slime) targets.get(i)).getTexture(), targets.get(i).getX(), targets.get(i).getY());
-					}else{
-						batch.draw(targets.get(i).getSprite(),targets.get(i).getX(),targets.get(i).getY());
+					}else if(targets.get(i) instanceof Boss){
+						batch.draw(((Boss)targets.get(i)).getTexture(),targets.get(i).getX(),targets.get(i).getY());
 					}
 					
 				}

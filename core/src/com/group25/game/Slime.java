@@ -12,14 +12,14 @@ import javax.swing.text.html.parser.Entity;
 
 public class Slime extends Enemy{
 
-    private int healt ;
+    private int health ;
     private int damage, range;
     private int attackSpeed; 
     private EnitiyAnimation animation;
     private TextureRegion current;
 
 
-    public Slime(Level level,  float positionX, float positionY,int width, int height,int health, Sprite img, float entitySpeed, int range, int damage,int  attackSpeed){
+    public Slime(Level level, float positionX, float positionY,int width, int height,int health, Sprite img, float entitySpeed, int range, int damage,int  attackSpeed){
         super(positionX, positionY, width, height, health, img, entitySpeed,
                 new Rectangle((int)positionX,(int)positionY,width,height),  //Hitbox
                 new Rectangle((int)positionX,(int)positionY,200,200)); //AlertArea
@@ -81,7 +81,7 @@ public class Slime extends Enemy{
        // System.out.printf("Slime alertArea left x: %d bottom y: %d\n", (int) (this.getX() - (200 - this.getWidth()) / 2), (int) (this.getY() - (200 - this.getHeight()) / 2));
        // System.out.printf("Slime alertArea right x: %d top y: %d\n", (int) (this.getX() - (200 - this.getWidth()) / 2) + 200, (int) (this.getY() - (200 - this.getHeight()) / 2) + 200);
        // System.out.printf("Slime alertArea: width: %d height: %d\n", 200, 200);
-       if(!this.chasePlayer(player, 30, 5, 15, this)){
+       if(!this.chasePlayer(player, 30, 5, 15, this, 30, 30)){
         this.updateMovement();
        }
        
@@ -92,7 +92,5 @@ public class Slime extends Enemy{
         double bottom = 1+Math.exp(-b*Math.tan(Math.PI*(x-0.5)));
         return top/bottom;
     }
-
-   
 
 }

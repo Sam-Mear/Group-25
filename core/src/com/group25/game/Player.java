@@ -7,6 +7,7 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -36,6 +37,9 @@ public class Player extends Creature implements ApplicationListener{
     private boolean moveDownAnimation;
     private boolean moveRightAnimation;
     private boolean moveLeftAnimation;
+
+    private boolean attackSprite = false;
+    private int attackCounter = 0;
 
     boolean downStarted, upStarted, leftStarted, rightStarted = false;
 
@@ -152,8 +156,7 @@ public class Player extends Creature implements ApplicationListener{
         }
     }
 
-    private boolean leftPressed = false;
-    
+
     public void rightMousePressed(){
         if(Gdx.input.isButtonPressed(Input.Buttons.RIGHT)){
             rightMouseClicked = true;
@@ -162,6 +165,7 @@ public class Player extends Creature implements ApplicationListener{
             rightMouseClicked = false;
         }
     }
+    
 
 
     public ArrayList<RangeAttack> getProjectiles(){
@@ -197,58 +201,58 @@ public class Player extends Creature implements ApplicationListener{
 
         counter++;
 
-        //  System.out.println(this.getHealth());
-
         int currentFrame = animation.getCurrentFrameNumber();
 
-        if(currentFrame > 0 && currentFrame < 5 && !moveDownAnimation){
-            animation.setCurrentFrameNumber(0);
-            setStartAndEndFrame(0, 0);
-            animatePlayer(startFrame, endFrame);
-            downStarted = upStarted = leftStarted = rightStarted = false;
-        }
-        if(currentFrame > 5 && currentFrame < 10 && !moveUpAnimation){
-            animation.setCurrentFrameNumber(5);
-            setStartAndEndFrame(5, 5);
-            animatePlayer(startFrame, endFrame);
-            downStarted = upStarted = leftStarted = rightStarted = false;
-        }
-        if(currentFrame > 10 && currentFrame < 15 && !moveRightAnimation){
-            animation.setCurrentFrameNumber(10);
-            setStartAndEndFrame(10, 10);
-            animatePlayer(startFrame, endFrame);
-            downStarted = upStarted = leftStarted = rightStarted = false;
-        }
-        if(currentFrame > 15 && currentFrame < 20 && !moveLeftAnimation){
-            animation.setCurrentFrameNumber(15);
-            setStartAndEndFrame(15, 15);
-            animatePlayer(startFrame, endFrame);
-            downStarted = upStarted = leftStarted = rightStarted = false;
-        }
+        if(!attackSprite){
+            if(currentFrame > 0 && currentFrame < 5 && !moveDownAnimation){
+                animation.setCurrentFrameNumber(0);
+                setStartAndEndFrame(0, 0);
+                animatePlayer(startFrame, endFrame);
+                downStarted = upStarted = leftStarted = rightStarted = false;
+            }
+            if(currentFrame > 5 && currentFrame < 10 && !moveUpAnimation){
+                animation.setCurrentFrameNumber(5);
+                setStartAndEndFrame(5, 5);
+                animatePlayer(startFrame, endFrame);
+                downStarted = upStarted = leftStarted = rightStarted = false;
+            }
+            if(currentFrame > 10 && currentFrame < 15 && !moveRightAnimation){
+                animation.setCurrentFrameNumber(10);
+                setStartAndEndFrame(10, 10);
+                animatePlayer(startFrame, endFrame);
+                downStarted = upStarted = leftStarted = rightStarted = false;
+            }
+            if(currentFrame > 15 && currentFrame < 20 && !moveLeftAnimation){
+                animation.setCurrentFrameNumber(15);
+                setStartAndEndFrame(15, 15);
+                animatePlayer(startFrame, endFrame);
+                downStarted = upStarted = leftStarted = rightStarted = false;
+            }
 
-        if(moveDownAnimation && !downStarted){
-            upStarted = leftStarted = rightStarted = false;
-            moveLeftAnimation = moveRightAnimation = moveUpAnimation = false;
-            downStarted = true;
-            animatePlayer(1, 4);
-        }
-        if(moveUpAnimation && !upStarted){
-            upStarted = true;
-            downStarted = leftStarted = rightStarted = false;
-            moveLeftAnimation = moveRightAnimation = moveDownAnimation = false;
-            animatePlayer(6, 9);
-        }
-        if(moveLeftAnimation && !leftStarted){
-            leftStarted = true;
-            downStarted = upStarted = rightStarted = false;
-            moveRightAnimation = moveUpAnimation = moveDownAnimation = false;
-            animatePlayer(16, 19);
-        }
-        if(moveRightAnimation && !rightStarted){
-            downStarted = upStarted = leftStarted = false;
-            moveLeftAnimation= moveUpAnimation = moveDownAnimation = false;
-            rightStarted = true;
-            animatePlayer(11, 14);
+            if(moveDownAnimation && !downStarted){
+                upStarted = leftStarted = rightStarted = false;
+                moveLeftAnimation = moveRightAnimation = moveUpAnimation = false;
+                downStarted = true;
+                animatePlayer(1, 4);
+            }
+            if(moveUpAnimation && !upStarted){
+                upStarted = true;
+                downStarted = leftStarted = rightStarted = false;
+                moveLeftAnimation = moveRightAnimation = moveDownAnimation = false;
+                animatePlayer(6, 9);
+            }
+            if(moveLeftAnimation && !leftStarted){
+                leftStarted = true;
+                downStarted = upStarted = rightStarted = false;
+                moveRightAnimation = moveUpAnimation = moveDownAnimation = false;
+                animatePlayer(16, 19);
+            }
+            if(moveRightAnimation && !rightStarted){
+                downStarted = upStarted = leftStarted = false;
+                moveLeftAnimation= moveUpAnimation = moveDownAnimation = false;
+                rightStarted = true;
+                animatePlayer(11, 14);
+            }
         }
 
         if(rightMouseClicked){
@@ -275,12 +279,13 @@ public class Player extends Creature implements ApplicationListener{
         }
 
         if(leftMouseClicked){
-            if(counter%5==0)
-                playerAttack(currentLevel, 10, 50, 50);
+            if(counter%5==0){
+                playerAttack(currentLevel, 10, 150, 75);
+            }
+                
         }
 
-
-       // System.out.println("Breka");
+    
         this.updateHitbox();
        // System.out.printf("Player hitBox x: %d y: %d\n", (int) this.getX(), (int) this.getY());
         //System.out.println("Coin amount: "+coins);
