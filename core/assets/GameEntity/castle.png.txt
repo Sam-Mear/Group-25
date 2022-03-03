@@ -1,0 +1,8 @@
+DEFAULT
+GAME ENTITY:
+    x: 
+    y: 
+    width: 426
+    height: 176
+    sprite: GameEntity/castle.png
+

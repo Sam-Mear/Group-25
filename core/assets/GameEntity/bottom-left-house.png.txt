@@ -1,0 +1,9 @@
+DEFAULT
+GAME ENTITY:
+    x: 
+    y: 
+    width: 128
+    height: 198
+    sprite: GameEntity/bottom-left-house.png
+    speed: 0.5
+

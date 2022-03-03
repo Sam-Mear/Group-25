@@ -65,7 +65,7 @@ public class Loading implements Screen{
         backgroundImage.draw(batch);
 
         if(Gdx.input.isTouched()){
-            ((Game)Gdx.app.getApplicationListener()).setScreen(new Level("NewLevel"));
+            ((Game)Gdx.app.getApplicationListener()).setScreen(new MenuScreen());
         }
 
         batch.end();

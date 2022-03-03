@@ -2,8 +2,8 @@ DEFAULT
 GAME ENTITY:
     x: 
     y: 
-    width: 38
-    height: 80
+    width: 96
+    height: 112
     sprite: GameEntity/tree.png
     speed: 0
 
