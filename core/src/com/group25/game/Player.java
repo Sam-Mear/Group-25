@@ -58,7 +58,7 @@ public class Player extends Creature implements ApplicationListener{
         SPressed();
         DPressed();
         leftMousePressed();
-        rightMousePressed();
+        //rightMousePressed();
     }
 
     private void setStartAndEndFrame(int startFrame, int endFrame){
@@ -142,13 +142,13 @@ public class Player extends Creature implements ApplicationListener{
     }
 
     
-    public void rightMousePressed(){
+    /*public void rightMousePressed(){
         if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
           RangeAttack range = new RangeAttack(currentLevel, this, 300, 10, 10);
             System.out.println("right");
             
         }
-    }
+    }*/
 
     
 

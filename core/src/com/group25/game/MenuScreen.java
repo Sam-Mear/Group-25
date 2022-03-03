@@ -105,7 +105,7 @@ public class MenuScreen implements Screen{
         if ((Gdx.input.getX()< centerX + BUTTON_WIDTH && Gdx.input.getX()>centerX) && (GAME_WORLD_HEIGHT - Gdx.input.getY()< 500 + BUTTON_HEIGHT && GAME_WORLD_HEIGHT - Gdx.input.getY()>500)){
             batch.draw(playButtonHighlight,centerX,500);
             if(Gdx.input.isTouched()){
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new Level());
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new Level("NewLevel"));
             }
         }else{
             batch.draw(playButton,centerX,500);

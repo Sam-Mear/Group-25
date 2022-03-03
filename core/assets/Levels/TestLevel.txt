@@ -1,6 +1,6 @@
 MAP SIZE:
-    width: 1778
-    height: 1334
+    width: 200
+    height: 200
 BACKGROUND: tempBackground.jpg
 GAME ENTITY:
     x: 106
