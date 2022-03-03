@@ -114,7 +114,7 @@ public class Level implements Screen{
 		
 
 		EnemyFactory slimeCamp = new SlimeFactory();
-		camp = new EnviromentAnimated(300, 300, 130, 43, new Sprite(new Texture("GameEntity/camp-fire.png")), 4, 3);
+		camp = new EnviromentAnimated(300, 300, 130, 43, new Sprite(new Texture("GameEntity/camp-fire.png")), 4, 7);
 		slimeSpawner = new EnemySpawner(300,300,130,43,camp.getSprite(),slimeCamp,10);
 
 
@@ -330,7 +330,6 @@ public class Level implements Screen{
 			loadLevel(checkForTeleport());
 		}
 		//check for map boundaries
-		//game world is square
 		if(axis == 'x'){
 			if(coordinate < GAME_WORLD_WIDTH-character.width && coordinate > 0){
 				for(int i = 0;i<enviromentHitboxes.size();i++){
@@ -349,6 +348,26 @@ public class Level implements Screen{
 					//bottom right
 					if(enviromentHitboxes.get(i).contains(coordinate+character.getWidth(), character.getY())){
 						return false;
+					}
+				}
+				for(int i =0; i<trees.size();i++){
+					if (!(trees.get(i).isCollidable())){
+						//bottom left
+						if(trees.get(i).getHitbox().contains(coordinate, character.getY())){
+							return false;
+						}
+						//top right
+						if(trees.get(i).getHitbox().contains(coordinate+character.getWidth(), character.getY()+(character.getHeight()/2))){
+							return false;
+						}
+						//top left
+						if(trees.get(i).getHitbox().contains(coordinate, character.getY()+(character.getHeight()/2))){
+							return false;
+						}
+						//bottom right
+						if(trees.get(i).getHitbox().contains(coordinate+character.getWidth(), character.getY())){
+							return false;
+						}
 					}
 				}
 				return true;
@@ -371,6 +390,26 @@ public class Level implements Screen{
 					//bottom right
 					if(enviromentHitboxes.get(i).contains(character.getX()+character.getWidth(), coordinate)){
 						return false;
+					}
+				}
+				for(int i =0; i<trees.size();i++){
+					if (!(trees.get(i).isCollidable())){
+						//bottom left
+						if(trees.get(i).getHitbox().contains(character.getX(), coordinate)){
+							return false;
+						}
+						//top right
+						if(trees.get(i).getHitbox().contains(character.getX()+character.getWidth(), coordinate+(character.getHeight()/2))){
+							return false;
+						}
+						//top left
+						if(trees.get(i).getHitbox().contains(character.getX(), coordinate+(character.getHeight()/2))){
+							return false;
+						}
+						//bottom right
+						if(trees.get(i).getHitbox().contains(character.getX()+character.getWidth(), coordinate)){
+							return false;
+						}
 					}
 				}
 				return true;
