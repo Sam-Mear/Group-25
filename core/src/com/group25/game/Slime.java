@@ -12,7 +12,7 @@ public class Slime extends Enemy{
     private double ySpeed = 1;
     private Random r;
 
-    public Slime(float positionX, float positionY,int width, int height,int health, Sprite img, float entitySpeed){
+    public Slime(Level level, float positionX, float positionY,int width, int height,int health, Sprite img, float entitySpeed){
         super(positionX, positionY, width, height, health, img, entitySpeed,
                 new Rectangle((int)positionX,(int)positionY,width,height),  //Hitbox
                 new Rectangle((int)positionX,(int)positionY,200,200)); //AlertArea

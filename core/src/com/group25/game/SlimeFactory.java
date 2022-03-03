@@ -20,7 +20,8 @@ public class SlimeFactory implements EnemyFactory{
      */
 
     @Override
-    public Enemy getNewMonster(int x,int y,int width, int height, int health, Sprite img, float entitySpeed) {
-        return new Slime(x,y,width,height,health,img,entitySpeed);
+    public Enemy getNewMonster(Level level, int x,int y,int width, int height, int health, Sprite img, float entitySpeed) {
+        return new Slime(level, x,y,width,height,health,img,entitySpeed);
     }
+
 }

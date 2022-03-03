@@ -189,7 +189,7 @@ public class Level implements Screen{
 					slime = (Slime) enemies.get(0);
 					addEnemy(slime);
 					EnemyFactory slimeCamp = new SlimeFactory();
-					slimeCamp.getNewMonster(50,50,100,slime.getSprite(),1);
+					enemies.add(slimeCamp.getNewMonster(this, 500, 500,  50, 50,100,slime.getSprite(),1));
 
 				}else if(line.equals("GAME ENTITY ANIMATED:")){
 					//list of arguments needed to make the GameEntity
@@ -385,8 +385,6 @@ public class Level implements Screen{
 		int aWidth = 200;
 		int aHeight = 200;		
 	
-
-		int aHeight = 200;
 		batch.draw(allertArea,slime.getX()-(aWidth-slime.getWidth())/2,slime.getY()-(aHeight-slime.getHeight())/2);
 		//batch.draw(slimeSpawner.getSprite(),slimeSpawner.getX(),slimeSpawner.getY());
 		if(!coin.isPickedUp()){
@@ -445,7 +443,7 @@ public class Level implements Screen{
 
 
 		character.update();
-		slimeSpawner.spawnNewMonster(enemies,(int)slimeSpawner.getX()+100,(int)slimeSpawner.getY()+100,100,100,50,slime.getSprite(),1);
+		slimeSpawner.spawnNewMonster(this, enemies,(int)slimeSpawner.getX()+100,(int)slimeSpawner.getY()+100,100,100,50,slime.getSprite(),1);
 		//Would be changed into an array of all the coins
 		//Coins removed would not be checked this is for testing purposes
 		if(!coin.isPickedUp()){
