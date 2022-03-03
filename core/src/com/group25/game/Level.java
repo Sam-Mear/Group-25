@@ -131,6 +131,10 @@ public class Level implements Screen{
 		viewport.apply();
 		camera.position.set(GAME_WORLD_WIDTH/2,GAME_WORLD_HEIGHT/2,0);
 
+		character = new Player(this, (int)GAME_WORLD_WIDTH/2-80,(int)GAME_WORLD_HEIGHT/2-80,42,42,100,img,5);//probably temp, just getting used to libgdx
+		character.setSpeed(1);
+		targets.add(character);
+
 		loadLevel(levelName);
 		// TODO : this needs to be fixed haha
 		//"testlevel" would actually be anything that is parsed into the level constructor.
@@ -138,9 +142,7 @@ public class Level implements Screen{
 		//for level 1.
 		//For a test, this is fine.
 
-		character = new Player(this, (int)GAME_WORLD_WIDTH/2-80,(int)GAME_WORLD_HEIGHT/2-80,42,28,100,img,5);//probably temp, just getting used to libgdx
-		character.setSpeed(5);
-		targets.add(character);
+
 
 		allertArea = new Sprite(new Texture(("Slime_Test_Area.png")));
 
@@ -185,6 +187,14 @@ public class Level implements Screen{
 					if(line.contains("height: ")){
 						GAME_WORLD_HEIGHT = Integer.parseInt(line.split(": ")[1]);
 					}
+				}else if(line.contains("DEFAULT PLAYER POSITIONS")){
+					line = levelInfo.nextLine();
+					int x = Integer.parseInt(line.split(": ")[1]);
+					line = levelInfo.nextLine();
+					int y = Integer.parseInt(line.split(": ")[1]);
+					character.setX(x);
+					character.setY(y);
+					camera.position.set(x,y,0);
 				}else if(line.contains("BACKGROUND:")){
 					backgroundPicture = new Sprite(new Texture("Backgrounds/"+line.split(": ")[1]));
 					backgroundPicture.setSize(GAME_WORLD_WIDTH,GAME_WORLD_HEIGHT);
