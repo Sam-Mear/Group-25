@@ -270,6 +270,8 @@ public class Level implements Screen{
 		}
 
 
+
+
 		int aWidth = 200;
 		int aHeight = 200;		
 	
@@ -283,11 +285,18 @@ public class Level implements Screen{
 		}
 
 		for(int i=0;i<targets.size();i++){
+
 			if(targets.get(i).alive()){
 				if(targets.get(i) == character){
 					batch.draw(character.getTexture(), character.getX(), character.getY());
 				}else{
-					batch.draw(targets.get(i).getSprite(),targets.get(i).getX(),targets.get(i).getY());
+					if(targets.get(i) instanceof Slime){
+						targets.get(i).update();
+						batch.draw(((Slime) targets.get(i)).getTexture(), targets.get(i).getX(), targets.get(i).getY());
+					}else{
+						batch.draw(targets.get(i).getSprite(),targets.get(i).getX(),targets.get(i).getY());
+					}
+					
 				}
 
 				Creature currentC = targets.get(i);
@@ -297,6 +306,9 @@ public class Level implements Screen{
 					if(Math.abs(currentR.getSize()/2 + currentR.getY() - currentC.getY()) <= currentC.getSize()/2)
 						if(Math.abs(currentR.getSize()/2 + currentR.getX() - currentC.getX()) <= currentC.getSize()/2){
 							targets.get(i).setHealth(targets.get(i).getHealth() - 10);
+							if(currentC instanceof Slime){
+								((Slime)currentC).setAttacked();
+							}
 							projectiles.get(j).setAlive(false);
 						}		
 				}

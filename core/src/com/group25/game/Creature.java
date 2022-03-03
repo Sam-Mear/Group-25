@@ -54,6 +54,9 @@ public abstract class Creature extends GameEntity{
     //Attack Section
     public void playerAttack(Level level, int damage, int xRange, int yRange){
         Creature target = level.getEnemy(xRange, yRange, this);
+        if(target instanceof Slime){
+            ((Slime)target).setAttacked();
+        }
         if(target == null){
             return;
         }else{

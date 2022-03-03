@@ -14,6 +14,7 @@ public abstract class Enemy extends Creature{
     private float damage;
     private boolean alive = true;
     private String direction;
+    private boolean isMoving = false;
 
     public Enemy(float positionX, float positionY, int width, int height, int health, Sprite img, float entitySpeed,Rectangle hitbox, Rectangle alertArea) {
         super(positionX, positionY, width, height, health, img, entitySpeed,hitbox);
@@ -50,6 +51,7 @@ public abstract class Enemy extends Creature{
             }
             
             if (this.getAlertArea().contains(player.getHitbox())) {
+                isMoving = true;
                 if (this.getY() < player.getY()) {
                     this.setY(this.getY() + this.getSpeed());
                     if(counter% (attackCounter*10) ==0)
@@ -81,10 +83,15 @@ public abstract class Enemy extends Creature{
                         this.direction = "left";
                         directedShortAttack(player, range, damage/5, direction, getX(), getY());
                 }
+            }else{
+                isMoving = false;
             }
         }
     }
 
+    protected boolean getMoving(){
+        return isMoving;
+    }
 
     public String getDirection(){
         return direction;
@@ -99,9 +106,8 @@ public abstract class Enemy extends Creature{
     private void directedShortAttack(Player player, float range, int damage, String direction, float xStart, float yStart){
         playerAttack(player.getLevel(), (int)damage, (int)range, (int)range*2);
     }
-    
 
-    
+
 
 
     private void suroundAttack(Player player,int  range,int damage){
