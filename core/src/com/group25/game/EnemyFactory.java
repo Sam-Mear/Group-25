@@ -18,5 +18,5 @@ public interface EnemyFactory {
      * @param entitySpeed   - How quickly the monster wil travel across the map
      * @return
      */
-    public Enemy getNewMonster(int x, int y,int width, int height, int health, Sprite img, float entitySpeed);
+    public Enemy getNewMonster(Level level, int x, int y,int width, int height, int health, Sprite img, float entitySpeed);
 }
