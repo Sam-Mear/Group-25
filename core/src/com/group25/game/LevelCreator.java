@@ -533,7 +533,7 @@ public class LevelCreator extends JFrame implements Screen{
 	
 	@Override
 	public void render (float delta) {
-		ScreenUtils.clear(1, 0, 0, 1);//red background
+		ScreenUtils.clear(0, 0, 0, 0);//red background
 
 		camera.update();
 		batch.setProjectionMatrix(camera.combined);
@@ -543,7 +543,7 @@ public class LevelCreator extends JFrame implements Screen{
 		
 		if(Gdx.input.justTouched()){
 			Vector3 mousePos = new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
-			camera.unproject(mousePos); // mousePos is now in world coordinates
+			viewport.unproject(mousePos); // mousePos is now in world coordinates
 			System.out.println(mousePos);
 			if(hitboxValue == 1){
 				newHitbox((int)mousePos.x,(int)mousePos.y);

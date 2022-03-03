@@ -18,7 +18,21 @@ public class StoreScreen implements Screen{
     private Sprite backgroundImage;
     private SpriteBatch UIElements;
 
-    private Texture purchaseButton;
+    private Texture purchase10Coins;
+    private Texture purchase10CoinsHighlight;
+
+    private Texture purchase30Coins;
+    private Texture purchase30CoinsHighlight;
+
+    private Texture purchase50Coins;
+    private Texture purchase50CoinsHighlight;
+
+    private Texture purchase80Coins;
+    private Texture purchase80CoinsHighlight;
+
+    private Texture purchase100Coins;
+    private Texture purchase100CoinsHighlight;
+
     private Texture purchaseButtonHighlight;
     private Texture purchasedButton;
 
@@ -51,12 +65,22 @@ public class StoreScreen implements Screen{
 		backgroundImage.setY(0);
         batch = new SpriteBatch();
 
-        purchaseButton = new Texture("GUI/Complete.png");
-        purchaseButtonHighlight = new Texture("GUI/Complete-highlight.png");
-        purchasedButton = new Texture("GUI/Locked.png");
+        purchase10Coins = new Texture("GUI/Store/10-coins.png");
+        purchase10CoinsHighlight = new Texture("GUI/Store/10-coins-highlight.png");
 
-        exitButton = new Texture("GUI/Create-level.png");
-        exitButtonHighlight = new Texture("GUI/Create-level-highlight.png");
+        purchase30Coins = new Texture("GUI/Store/30-coins.png");
+        purchase30CoinsHighlight = new Texture("GUI/Store/30-coins-highlight.png");
+
+        purchase50Coins = new Texture("GUI/Store/50-coins.png");
+        purchase50CoinsHighlight = new Texture("GUI/Store/50-coins-highlight.png");
+
+        purchase80Coins = new Texture("GUI/Store/80-coins.png");
+        purchase80CoinsHighlight = new Texture("GUI/Store/80-coins-highlight.png");
+
+        purchase100Coins = new Texture("GUI/Store/100-coins.png");
+        purchase100CoinsHighlight = new Texture("GUI/Store/100-coins-highlight.png");
+
+        purchasedButton = new Texture("GUI/Purchased.png");
 
         playButton = new Texture("GUI/Play-game.png");
         playButtonHighlight = new Texture("GUI/Play-game-highlight.png");
@@ -104,7 +128,7 @@ public class StoreScreen implements Screen{
                 ((Game)Gdx.app.getApplicationListener()).setScreen(new Level("NewLevel"));
             }
         }else{
-            batch.draw(playButton,177,106);
+            batch.draw(playButton,177,130);
         }
 
 
@@ -122,12 +146,12 @@ public class StoreScreen implements Screen{
         // Item 1
         if (item1Purcahsed == false){
             if ((Gdx.input.getX() < 43 + BUTTON_WIDTH && Gdx.input.getX()>centerX) && (GAME_WORLD_HEIGHT - Gdx.input.getY()< 149 + BUTTON_HEIGHT && GAME_WORLD_HEIGHT - Gdx.input.getY()>149)){
-                batch.draw(purchaseButtonHighlight,629,470);
+                batch.draw(purchase10CoinsHighlight,570,470);
                 if(Gdx.input.isTouched()){
                     ((Game)Gdx.app.getApplicationListener()).setScreen(new LevelCreator());
                 }
             }else{
-                batch.draw(purchaseButton,629,473);
+                batch.draw(purchase10Coins,570,464);
             }
         }
 
@@ -135,24 +159,24 @@ public class StoreScreen implements Screen{
         // Item 2
         if (item2Purcahsed == false){
             if ((Gdx.input.getX() < 43 + BUTTON_WIDTH && Gdx.input.getX()>centerX) && (GAME_WORLD_HEIGHT - Gdx.input.getY()< 149 + BUTTON_HEIGHT && GAME_WORLD_HEIGHT - Gdx.input.getY()>149)){
-                batch.draw(purchaseButtonHighlight,629,470);
+                batch.draw(purchase30CoinsHighlight,629,470);
                 if(Gdx.input.isTouched()){
                     ((Game)Gdx.app.getApplicationListener()).setScreen(new LevelCreator());
                 }
             }else{
-                batch.draw(purchaseButton,629,409);
+                batch.draw(purchase30Coins,570,406);
             }
         }
 
         // Item 3
         if (item3Purcahsed == false){
             if ((Gdx.input.getX() < 43 + BUTTON_WIDTH && Gdx.input.getX()>centerX) && (GAME_WORLD_HEIGHT - Gdx.input.getY()< 149 + BUTTON_HEIGHT && GAME_WORLD_HEIGHT - Gdx.input.getY()>149)){
-                batch.draw(purchaseButtonHighlight,629,470);
+                batch.draw(purchase50CoinsHighlight,629,470);
                 if(Gdx.input.isTouched()){
                     ((Game)Gdx.app.getApplicationListener()).setScreen(new LevelCreator());
                 }
             }else{
-                batch.draw(purchaseButton,629,342);
+                batch.draw(purchase50Coins,570,350);
             }
         }
 
@@ -162,12 +186,12 @@ public class StoreScreen implements Screen{
         if (item4Purcahsed == false){
             if ((Gdx.input.getX() < 43 + BUTTON_WIDTH && Gdx.input.getX()>centerX) && (GAME_WORLD_HEIGHT - Gdx.input.getY()< 149 + BUTTON_HEIGHT && GAME_WORLD_HEIGHT - Gdx.input.getY()>149)){
                 System.out.println("test");
-                batch.draw(purchaseButtonHighlight,629,470);
+                batch.draw(purchase80CoinsHighlight,629,470);
                 if(Gdx.input.isTouched()){
                     ((Game)Gdx.app.getApplicationListener()).setScreen(new LevelCreator());
                 }
             }else{
-                batch.draw(purchaseButton,629,276);
+                batch.draw(purchase80Coins,570,294);
             }
         }
 
@@ -177,12 +201,12 @@ public class StoreScreen implements Screen{
         if (item5Purcahsed == false){
             if ((Gdx.input.getX() < 43 + BUTTON_WIDTH && Gdx.input.getX()>centerX) && (GAME_WORLD_HEIGHT - Gdx.input.getY()< 149 + BUTTON_HEIGHT && GAME_WORLD_HEIGHT - Gdx.input.getY()>149)){
                 System.out.println("test");
-                batch.draw(purchaseButtonHighlight,629,470);
+                batch.draw(purchase100CoinsHighlight,629,490);
                 if(Gdx.input.isTouched()){
                     ((Game)Gdx.app.getApplicationListener()).setScreen(new LevelCreator());
                 }
             }else{
-                batch.draw(purchaseButton,629,212);
+                batch.draw(purchase100Coins,570,235);
             }
         }
 

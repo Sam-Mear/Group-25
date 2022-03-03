@@ -2,53 +2,98 @@ package com.group25.game;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.ApplicationListener;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+
 
 public class RangeAttack{
 
-    private int x, y;
+    private float x, y;
     private boolean end;
-    Batch batch;
+    private Batch batch;
     private Sprite attack;
+    private boolean alive;
+    private Level level;
+    private int distance = 0;
+    private int range;
+    private String direction;
+    private Creature creature;
+    private float xStart;
+    private float yStart;
+    private int size;
     
-    public RangeAttack(Level level, Creature creature, int range, int xSize, int ySize){
+    public RangeAttack(Level level, String direction, int range, float xStart, float yStart, int size){
 
-        attack = new Sprite(new Texture("heart.png"));
+        attack = new Sprite(new Texture("projectile.png"));;
+        this.range = range;
+        this.x = xStart;
+        this.y = yStart;
+        this.level = level;
+        this.direction = direction;
+        this.creature = creature;
+        this.alive = true;
+    }
 
+    
+
+    public void update(){
+        boolean found = true;
+        if(distance >= range){
+            alive = false;
+        }else{
+            distance++;
+            if(direction == "up" && found){
+                this.setY(y + 2);
+                found = false;
+             }
+             if(direction == "down" && found){
+                 this.setY(y - 2);
+                 found = false;
+             }
+             if(direction == "right" && found){
+                 this.setX(x + 2);
+                 found = false;
+             }
+             if(direction == "left" && found){
+                this.setX(x - 2);
+                found = false;
+             }
+        }
+    }
+
+    public String getDirection(){
+        return direction;
+    }
+
+    public int getSize(){
+        return size;
     }
 
     public TextureRegion getTexture(){
-        return attack;
+        return this.attack;
     }
 
+    public boolean getAlive(){
+        return alive;
+    }
 
-    public int getX(){
+    public void setAlive(boolean alive){
+        this.alive = alive;
+    }
+
+    public float getX(){
         return x;
     }
 
-    public void getY(){
-
+    public float getY(){
+        return y;
     }
 
-    public void setX(int x){
+    public void setX(float x){
         this.x = x;
     }
 
-    public void getY(int y){
+    public void setY(float y){
         this.y = y;
     }
-    
-
-
-
 }

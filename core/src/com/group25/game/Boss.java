@@ -1,16 +1,13 @@
 package com.group25.game;
 
+import java.awt.Rectangle;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-import java.awt.*;
-import java.util.Random;
+public class Boss extends Enemy{
 
-import javax.swing.text.html.parser.Entity;
-
-public class Slime extends Enemy{
 
     private int healt ;
     private int damage, range;
@@ -18,29 +15,26 @@ public class Slime extends Enemy{
     private EnitiyAnimation animation;
     private TextureRegion current;
 
-
-    public Slime(Level level,  float positionX, float positionY,int width, int height,int health, Sprite img, float entitySpeed, int range, int damage,int  attackSpeed){
-        super(positionX, positionY, width, height, health, img, entitySpeed,
+    
+    public Boss(Level level, float positionX, float positionY, int width, int height, int health, Sprite img, float entitySpeed,
+            Rectangle hitbox, Rectangle alertArea) {
+                super(positionX, positionY, width, height, health, img, entitySpeed,
                 new Rectangle((int)positionX,(int)positionY,width,height),  //Hitbox
-                new Rectangle((int)positionX,(int)positionY,200,200)); //AlertArea
+                new Rectangle((int)positionX,(int)positionY,200,200)); //AlertArearea
+        //TODO Auto-generated constructor stub
 
-                this.health = health;
-                this.damage = damage;
-                this.range = range;
-                this.attackSpeed = attackSpeed;
+        this.health = health;
+        this.damage = damage;
+        this.range = range;
+        this.attackSpeed = attackSpeed;
 
-                level.addEnemy(this);
+        level.addEnemy(this);
 
-                Sprite slimes = new Sprite(new Texture(("slimes.png")));
-
-
-                animation = new EnitiyAnimation(slimes, 3, 15, 0, 1);
-                
+        animation = new EnitiyAnimation(new Sprite(new Texture(("mummy.png"))), 12, 20, 0, 0);
     }
 
     private boolean attacked = false;
     int counter = 0;
-
 
     public void update(){
         if(getMoving()){
@@ -67,24 +61,16 @@ public class Slime extends Enemy{
         counter = 1;
     }
 
-
     public TextureRegion getTexture(){
         return current;
     }
-
-
 
     @Override
     public void explore(Player player) {
         this.getHitbox().setLocation((int) this.getX(), (int) this.getY());
         this.getAlertArea().setLocation((int) (this.getX() - (200 - this.getWidth()) / 2), (int) (this.getY() - (200 - this.getHeight()) / 2));
-       // System.out.printf("Slime alertArea left x: %d bottom y: %d\n", (int) (this.getX() - (200 - this.getWidth()) / 2), (int) (this.getY() - (200 - this.getHeight()) / 2));
-       // System.out.printf("Slime alertArea right x: %d top y: %d\n", (int) (this.getX() - (200 - this.getWidth()) / 2) + 200, (int) (this.getY() - (200 - this.getHeight()) / 2) + 200);
-       // System.out.printf("Slime alertArea: width: %d height: %d\n", 200, 200);
-       if(!this.chasePlayer(player, 30, 5, 15, this)){
+        this.chasePlayer(player, 30, 5, 15, this);
         this.updateMovement();
-       }
-       
     }
 
     public double changeAngle(double b,double x){
@@ -93,6 +79,5 @@ public class Slime extends Enemy{
         return top/bottom;
     }
 
-   
-
+    
 }
