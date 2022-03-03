@@ -60,10 +60,10 @@ public class Boss extends Enemy{
             else if(direction == "left"){
                 endFrame = 3;
                 startFrame = 3;
-                // startFrame =( 9 + counter++) % endFrame;
+               
 
             }
-            animation = new EnitiyAnimation(new Sprite(new Texture(("mummy.png"))), 4, 60, startFrame, endFrame);
+            animation = new EnitiyAnimation(new Sprite(new Texture(("mummy.png"))), 4, 15, startFrame, endFrame);
 
         }
        
@@ -87,7 +87,7 @@ public class Boss extends Enemy{
         this.getHitbox().setLocation((int) this.getX(), (int) this.getY());
         this.getAlertArea().setLocation((int) (this.getX() - (200 - this.getWidth()) / 2), (int) (this.getY() - (200 - this.getHeight()) / 2));
         this.chasePlayer(player, 30, 5, 15, this, 50, 50);
-        this.updateMovement();
+       
     }
 
     public double changeAngle(double b,double x){
