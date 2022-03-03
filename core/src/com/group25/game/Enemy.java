@@ -8,9 +8,9 @@ import java.util.Random;
 public abstract class Enemy extends Creature{
 
     private Rectangle alertArea;
-    private int coinDrop;
-    private int manaDrop;
-    private int heartDrop;
+    private int coinDrop = 5;
+    private int manaDrop  = 5;
+    private int heartDrop = 5;
     private float range;
     private float damage;
     private boolean alive = true;
@@ -19,16 +19,18 @@ public abstract class Enemy extends Creature{
     private Random r;
     private String direction;
     private boolean isMoving = false;
+    private boolean looted = false;
 
     public Enemy(float positionX, float positionY, int width, int height, int health, Sprite img, float entitySpeed,Rectangle hitbox, Rectangle alertArea) {
         super(positionX, positionY, width, height, health, img, entitySpeed,hitbox);
         this.alertArea = alertArea;
         r = new Random();
+        this.xSpeed = entitySpeed;
+        this.ySpeed = entitySpeed;
 
         this.xSpeed = 1;
         this.ySpeed = 1;
     }
-
     public Rectangle getAlertArea(){
         return alertArea;
     }
@@ -47,7 +49,7 @@ public abstract class Enemy extends Creature{
         System.out.println(attacker.getHealth());
 
 
-        System.out.println(attacker.alive());
+       // System.out.println(attacker.alive());
 
 
         if(attacker.alive()){
@@ -97,6 +99,8 @@ public abstract class Enemy extends Creature{
                     }
                     return true;
                 }
+                //System.out.println("Enemy detected!");
+                return true;
             }else{
                 isMoving = false;
             }
@@ -123,10 +127,15 @@ public abstract class Enemy extends Creature{
         playerAttack(player.getLevel(), (int)damage, (int)range, (int)range*2);
     }
 
+    public boolean isLooted() {
+        return looted;
+    }
 
+    public void setLooted(boolean looted) {
+        this.looted = looted;
+    }
 
-
-    private void suroundAttack(Player player,int  range,int damage){
+    private void suroundAttack(Player player, int  range, int damage){
            
             if(Math.abs(player.getX() - this.getX()) <= range)
             if(Math.abs(player.getY() - this.getY()) <= range){
@@ -163,14 +172,35 @@ public abstract class Enemy extends Creature{
         double deltaA = changeAngle(100,r.nextDouble()) * 2*Math.PI;
         ySpeed = xTemp*Math.sin(deltaA)+yTemp*Math.cos(deltaA);
         xSpeed = xTemp*Math.cos(deltaA)-yTemp*Math.sin(deltaA);
-
-        this.x += xSpeed;
-        this.y += ySpeed;
+        if(this.x>this.width && this.x<Level.GAME_WORLD_WIDTH-this.width){
+            this.x += xSpeed;
+        }
+        if(this.y>this.height && this.y<Level.GAME_WORLD_HEIGHT-this.height){
+            this.y += ySpeed;
+        }
     }
 
     public double changeAngle(double b,double x){
         double top = 1;
         double bottom = 1+Math.exp(-b*Math.tan(Math.PI*(x-0.5)));
         return top/bottom;
+    }
+
+
+
+    public double getySpeed() {
+        return ySpeed;
+    }
+
+    public void setySpeed(double ySpeed) {
+        this.ySpeed = ySpeed;
+    }
+
+    public double getxSpeed() {
+        return xSpeed;
+    }
+
+    public void setxSpeed(double xSpeed) {
+        this.xSpeed = xSpeed;
     }
 }

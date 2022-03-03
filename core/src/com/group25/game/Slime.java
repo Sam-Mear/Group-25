@@ -14,7 +14,7 @@ public class Slime extends Enemy{
 
     private int health ;
     private int damage, range;
-    private int attackSpeed; 
+    private int attackSpeed;
     private EnitiyAnimation animation;
     private TextureRegion current;
 
@@ -22,17 +22,15 @@ public class Slime extends Enemy{
     public Slime(Level level, float positionX, float positionY,int width, int height,int health, Sprite img, float entitySpeed, int range, int damage,int  attackSpeed){
         super(positionX, positionY, width, height, health, img, entitySpeed,
                 new Rectangle((int)positionX,(int)positionY,width,height),  //Hitbox
-                new Rectangle((int)positionX,(int)positionY,200,200)); //AlertArea
+                new Rectangle((int)positionX,(int)positionY,400,400)); //AlertArea
 
                 this.health = health;
                 this.damage = damage;
                 this.range = range;
                 this.attackSpeed = attackSpeed;
-
                 level.addEnemy(this);
 
                 Sprite slimes = new Sprite(new Texture(("slimes.png")));
-
 
                 animation = new EnitiyAnimation(slimes, 3, 15, 0, 1);
                 
@@ -67,12 +65,9 @@ public class Slime extends Enemy{
         counter = 1;
     }
 
-
     public TextureRegion getTexture(){
         return current;
     }
-
-
 
     @Override
     public void explore(Player player) {
