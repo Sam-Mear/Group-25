@@ -34,6 +34,8 @@ public abstract class Enemy extends Creature{
      */
     public abstract void explore(Player player);
 
+    public abstract void turn();
+
     public void chasePlayer(Player player){
         if (this.getAlertArea().contains(player.getHitbox())) {
             if (this.getY() < player.getY()) {
@@ -57,7 +59,6 @@ public abstract class Enemy extends Creature{
             }
         }
     }
-
     public void takeDamage(int damage){
         if(getHealth()-damage<0){
             //Then we want to drop all of the things

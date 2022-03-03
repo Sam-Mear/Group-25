@@ -1,0 +1,5 @@
+MAP SIZE:
+    width: 900
+    height: 900
+BACKGROUND: tempBackground.jpg
+

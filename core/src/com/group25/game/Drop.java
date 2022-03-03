@@ -13,14 +13,14 @@ public class Drop extends Item{
     private final int amount;
     private final DropType type;
 
-    public Drop(float positionX, float positionY, int width, int height, Sprite img,int amount,DropType type) {
-        super(positionX, positionY, width, height, img);
+    public Drop(float positionX, float positionY, int width, int height, Sprite img, int frames, int animationSpeed, int amount,DropType type) {
+        super(positionX, positionY, width, height, img, frames, animationSpeed);
         this.amount = amount;
         this.type = type;
     }
 
-    public Drop(float positionX, float positionY, int width, int height, Sprite img, Rectangle hitbox,int amount,DropType type) {
-        super(positionX, positionY, width, height, img, hitbox);
+    public Drop(float positionX, float positionY, int width, int height, Sprite img, int frames, int animationSpeed, Rectangle hitbox,int amount,DropType type) {
+        super(positionX, positionY, width, height, img, frames, animationSpeed, hitbox);
         this.amount = amount;
         this.type = type;
     }

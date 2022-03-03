@@ -1,6 +1,7 @@
 package com.group25.game;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.MathUtils;
 
 import java.awt.*;
 import java.util.Random;
@@ -18,6 +19,11 @@ public class Slime extends Enemy{
 //        r = new Random();
     }
 
+    /*On exploration we want the enemy to:
+    Move randomly
+    Appraoch player if within in range
+
+    */
     @Override
     public void explore(Player player) {
         this.getHitbox().setLocation((int) this.getX(), (int) this.getY());
@@ -29,10 +35,16 @@ public class Slime extends Enemy{
        this.updateMovement();
     }
 
-//    public double changeAngle(double b,double x){
-//        double top = 1;
-//        double bottom = 1+Math.exp(-b*Math.tan(Math.PI*(x-0.5)));
-//        return top/bottom;
-//    }
+    public double changeAngle(double b,double x){
+        double top = 1;
+        double bottom = 1+Math.exp(-b*Math.tan(Math.PI*(x-0.5)));
+        return top/bottom;
+    }
+
+    //This will be used to perform turns so the enemy can move in one direction and ever so oftent they can cahnge direction
+    @Override
+    public void turn() {
+
+    }
 
 }

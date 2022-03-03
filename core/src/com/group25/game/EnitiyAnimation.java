@@ -26,21 +26,44 @@ public class EnitiyAnimation{
     private int currentFrameTime;
     private int numberOfFrames;
 
-    public EnitiyAnimation(TextureRegion animationSegment,int numberOfFrames,int frameTime){
+
+    private int startFrame, endFrame;
+
+    public EnitiyAnimation(TextureRegion animationSegment,int numberOfFrames,int frameTime, int startFrame, int endFrame){
         int frameWidth = animationSegment.getRegionWidth()/numberOfFrames;
-        int framdeHeight = animationSegment.getTexture().getHeight();
+        int frameHeight = animationSegment.getTexture().getHeight();
 
         this.numberOfFrames = numberOfFrames;
         this.frameTime = frameTime;
 
+        this.startFrame = startFrame;
+        this.endFrame = endFrame;
+
         frames = new Array<TextureRegion>();
 
         for(int i=0;i<numberOfFrames;i++){
-            frames.add(new TextureRegion(animationSegment,i*frameWidth,0,frameWidth,framdeHeight));
+            frames.add(new TextureRegion(animationSegment,i*frameWidth,0,frameWidth,frameHeight));
         }
-        currentFrame = 0;
-
+        currentFrame = startFrame;
     }
+
+    public int getCurrentFrameNumber(){
+        return currentFrame;
+    }
+
+    public void setCurrentFrameNumber(int x){
+        this.currentFrame = x;
+    }
+
+
+
+
+    
+    public void end(){
+        this.endFrame = this.startFrame;
+    }
+
+
 
     public void update(float dt){
         currentFrameTime += dt;
@@ -49,12 +72,17 @@ public class EnitiyAnimation{
             currentFrame++;
         }
 
-        if(currentFrame >= numberOfFrames){
-            currentFrame = 0;
+        if(currentFrame >= numberOfFrames || currentFrame > endFrame){
+            if(startFrame-endFrame > 2)
+                startFrame = startFrame+1;
+            else{
+                currentFrame = startFrame;
+            }
         }
     }
 
     public TextureRegion getCurrentFrame(){
-        return frames.get(currentFrame);
+     //   return frames.get(currentFrame);
+     return frames.get(currentFrame);
     }
 }
