@@ -61,7 +61,7 @@ public abstract class Enemy extends Creature{
                 if (this.getY() < player.getY()) {
                     this.setY(this.getY() + this.getSpeed());
                     if(counter% (attackCounter*10) ==0){
-                        rangeAttack(player, range, damage, "up", getX() ,getY()+30);
+                        rangeAttack(player, range, damage, "up", getX() ,getY()+50);
                         this.direction = "up";
                         directedShortAttack(player, range, damage/5, direction, getX(), getY());
                     }
@@ -71,7 +71,7 @@ public abstract class Enemy extends Creature{
                 if (this.getY() > player.getY()) {
                     this.setY(this.getY() - this.getSpeed());
                     if(counter% (attackCounter*10)==0){
-                        rangeAttack(player, range, damage, "down", getX() ,getY()-30);
+                        rangeAttack(player, range, damage, "down", getX() ,getY()-50);
                         this.direction = "down";
                         directedShortAttack(player, range, damage/5, direction, getX(), getY());
                     }    
@@ -81,7 +81,7 @@ public abstract class Enemy extends Creature{
                 if (this.getX() < player.getX()) {
                     this.setX(this.getX() + this.getSpeed());
                     if(counter% (attackCounter*10)==0){
-                        rangeAttack(player, range, damage, "right", getX()+30 ,getY());
+                        rangeAttack(player, range, damage, "right", getX()+50 ,getY());
                         this.direction = "right";
                         directedShortAttack(player, range, damage/5, direction, getX(), getY());
                     }
@@ -91,7 +91,7 @@ public abstract class Enemy extends Creature{
                 if (this.getX() > player.getX()) {
                     this.setX(this.getX() - this.getSpeed());
                     if(counter% (attackCounter*10)==0){
-                        rangeAttack(player, range, damage, "left", getX()-30 ,getY());
+                        rangeAttack(player, range, damage, "left", getX()-50 ,getY());
                         this.direction = "left";
                         directedShortAttack(player, range, damage/5, direction, getX(), getY());
                     }
