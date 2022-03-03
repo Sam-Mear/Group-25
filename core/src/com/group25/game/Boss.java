@@ -29,7 +29,7 @@ public class Boss extends Enemy{
 
         level.addEnemy(this);
 
-        animation = new EnitiyAnimation(new Sprite(new Texture(("mummy.png"))), 12, 20, 3, 3);
+        animation = new EnitiyAnimation(new Sprite(new Texture(("mummy.png"))), 4, 20, 1, 1);
     }
 
     private boolean attacked = false;
@@ -44,25 +44,26 @@ public class Boss extends Enemy{
         if(this.getMoving()){
 
             if(direction == "up"){
-                endFrame = 2;
+                endFrame = 0;
                 startFrame = 0;
                 // startFrame = (counter++) % endFrame;
             }else if(direction == "down"){
-                endFrame = 5;
-                startFrame = 3;
+                endFrame = 1;
+                startFrame = 1;
                 // startFrame =( 3+ counter++) % endFrame;
             }
             else if(direction == "right"){
-                endFrame = 9;
-                startFrame = 6;
+                endFrame = 2;
+                startFrame = 2;
                 // startFrame = (6+ counter++) % endFrame;
             }
             else if(direction == "left"){
-                endFrame = 11;
+                endFrame = 3;
+                startFrame = 3;
                 // startFrame =( 9 + counter++) % endFrame;
 
             }
-            animation = new EnitiyAnimation(new Sprite(new Texture(("mummy.png"))), 12, 60, startFrame, endFrame);
+            animation = new EnitiyAnimation(new Sprite(new Texture(("mummy.png"))), 4, 60, startFrame, endFrame);
 
         }
        

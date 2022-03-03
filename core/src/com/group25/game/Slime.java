@@ -12,7 +12,7 @@ import javax.swing.text.html.parser.Entity;
 
 public class Slime extends Enemy{
 
-    private int healt ;
+    private int health ;
     private int damage, range;
     private int attackSpeed; 
     private EnitiyAnimation animation;

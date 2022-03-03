@@ -385,48 +385,48 @@ public class Level implements Screen{
 	}
 
 	public Creature getEnemy(int xRange, int yRange, Creature attacker){
-		for(int i=0; i<enemies.size(); i++){
+		for(int i=0; i<targets.size(); i++){
 		Creature potential;
 		if(attacker instanceof Enemy){
 			potential = character;
 		}else{
-			if(enemies.get(i).alive()){
-				potential = enemies.get(i);
+			if(targets.get(i).alive()){
+				potential = targets.get(i);
 			}
 			else{
-				break;
+				potential = attacker;
 			}
 		}
 				if(potential != attacker){
 					if(attacker.getDirection() == "right"){
-						if(potential.getX() - attacker.getX() <= xRange)
-							if(potential.getX() - attacker.getX() >= 0)
-								if(potential.getY() - attacker.getY() <= yRange/2)
-									if(potential.getY() - attacker.getY() >= 0)
+						if(potential.getX()+potential.getSize()/2 - attacker.getX() <= xRange/2)
+							if(potential.getX()+potential.getSize()/2 - attacker.getX() >= 0)
+								if(potential.getY()+potential.getSize()/2 - attacker.getY() <= yRange)
+									if(potential.getY()+potential.getSize()/2 - attacker.getY() >= 0)
 										return potential;
 							
 					}
 					if(attacker.getDirection() == "left"){
-						if(attacker.getX() - potential.getX() <= xRange)
-							if(attacker.getX() - potential.getX() >= 0)
-								if(attacker.getY() - potential.getY() <= yRange/2)
-									if(attacker.getY() - potential.getY() >= 0)
+						if(attacker.getX()+potential.getSize()/2 - potential.getX() <= xRange/2)
+							if(attacker.getX()+potential.getSize()/2 - potential.getX() >= 0)
+								if(attacker.getY()+potential.getSize()/2 - potential.getY() <= yRange)
+									if(attacker.getY()+potential.getSize()/2 - potential.getY() >= 0)
 										return potential;
 								
 					}
 					if(attacker.getDirection() == "down"){
-						if(attacker.getY() - potential.getY() <= xRange)
-							if(attacker.getY() - potential.getY() >= 0)
-								if(attacker.getX() - potential.getX() <= yRange/2)
-									if(attacker.getX() - potential.getX() >= 0)
+						if(attacker.getY()+potential.getSize()/2 - potential.getY() <= xRange)
+							if(attacker.getY()+potential.getSize()/2 - potential.getY() >= 0)
+								if(attacker.getX()+potential.getSize()/2 - potential.getX() <= yRange/2)
+									if(attacker.getX()+potential.getSize()/2 - potential.getX() >= 0)
 										return potential;
 								
 					}
 					if(attacker.getDirection() == "up"){
-						if(potential.getY() - attacker.getY() <= xRange)
-							if(potential.getY() - attacker.getY() >= 0)
-								if(potential.getX() - attacker.getX() <= yRange/2)
-									if(potential.getX() - attacker.getX() >= 0)
+						if(potential.getY()+potential.getSize()/2 - attacker.getY() <= xRange)
+							if(potential.getY()+potential.getSize()/2 - attacker.getY() >= 0)
+								if(potential.getX()+potential.getSize()/2 - attacker.getX() <= yRange/2)
+									if(potential.getX()+potential.getSize()/2 - attacker.getX() >= 0)
 										return potential;
 								
 					}
