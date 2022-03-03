@@ -76,5 +76,4 @@ public class EnemySpawner extends GameEntity {
             repeatedFrames++;
         }
     }
-
 }

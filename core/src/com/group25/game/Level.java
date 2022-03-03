@@ -68,9 +68,9 @@ public class Level implements Screen{
 	
 
 	private Drop coin;
-	private Sprite coinSprite;
 
-	//To be deleted
+	//To be deleated? 
+	private EnviromentAnimated camp;
 	private EnemySpawner slimeSpawner;
 
 	ArrayList<Enviroment> trees = new ArrayList<Enviroment>(); // Create an ArrayList object
@@ -113,15 +113,9 @@ public class Level implements Screen{
 		mana_0 = new Sprite( new Texture("mana_sprites/mana.png"));
 		
 
-
-
-		
-
-		
-
 		EnemyFactory slimeCamp = new SlimeFactory();
-		Sprite camp = new Sprite(new Texture("campfire.png"));
-		slimeSpawner = new EnemySpawner(50,50,100,100,camp,slimeCamp,10);
+		camp = new EnviromentAnimated(300, 300, 130, 43, new Sprite(new Texture("GameEntity/camp-fire.png")), 4, 3);
+		slimeSpawner = new EnemySpawner(300,300,130,43,camp.getSprite(),slimeCamp,10);
 
 
 		UiBorder = new Sprite(new Texture("GUI/border.png"));
@@ -145,7 +139,7 @@ public class Level implements Screen{
 		//For a test, this is fine.
 
 		character = new Player(this, (int)GAME_WORLD_WIDTH/2-80,(int)GAME_WORLD_HEIGHT/2-80,42,28,100,img,5);//probably temp, just getting used to libgdx
-		character.setSpeed(1);
+		character.setSpeed(5);
 		targets.add(character);
 
 		allertArea = new Sprite(new Texture(("Slime_Test_Area.png")));
@@ -510,7 +504,7 @@ public class Level implements Screen{
 		
 	
 	//	batch.draw(character.getTexture(), character.getX(), character.getY());
-		batch.draw(slimeSpawner.getSprite().getTexture(),slimeSpawner.getX(),slimeSpawner.getY());
+		//batch.draw(slimeSpawner.getSprite().getTexture(),slimeSpawner.getX(),slimeSpawner.getY());
 
 //		spawner.spawn();
 
@@ -523,6 +517,19 @@ public class Level implements Screen{
 		coin.update();
 		heartTest.update();
 
+		batch.draw(camp.getTexture(),camp.getX(),camp.getY());
+		camp.update();
+		//slimeSpawner.spawnNewMonster(level, enemies, positionX, positionY, width, height, health, img, speed);
+
+		// EnemyFactory slimeCamp = new SlimeFactory();
+		// camp = new EnviromentAnimated(117, 697, 130, 43, new Sprite(new Texture("GameEntity/camp-fire.png")), 4, 3);
+		// slimeSpawner = new EnemySpawner(50,50,100,100,camp.getSprite(),slimeCamp,10);
+
+
+		//EnemyFactory slimeCamp = new SlimeFactory();
+		//camp = new EnviromentAnimated(117, 697, 130, 43, new Sprite(new Texture("GameEntity/camp-fire.png")), 4, 3);
+		//float positionX, float positionY, int width, int height, Sprite img,EnemyFactory factory, int spawnTime
+		//slimeSpawner = new EnemySpawner((float)50,(float)50,100,100,5,camp.getSprite(),slimeCamp,10);
 		
 		//Testing purposes
 		//We want to kill a monster and then respawn them
@@ -552,7 +559,7 @@ public class Level implements Screen{
 
 
 		character.update();
-		slimeSpawner.spawnNewMonster(this, enemies,(int)slimeSpawner.getX()+100,(int)slimeSpawner.getY()+100,100,100,50,slime.getSprite(),1);
+		slimeSpawner.spawnNewMonster(this, enemies,(int)slimeSpawner.getX(),(int)slimeSpawner.getY(),100,100,50,slime.getSprite(),1);
 
 
 		// if(healthProcentage>90){
