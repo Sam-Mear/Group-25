@@ -50,7 +50,7 @@ public class Slime extends Enemy{
 
         if(attacked && counter > 0){
             counter++;
-            if(counter == 10){
+            if(counter == 15){
                 attacked = false;
                 counter = 0;
             }
