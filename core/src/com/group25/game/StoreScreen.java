@@ -101,7 +101,7 @@ public class StoreScreen implements Screen{
             System.out.println("test");
             batch.draw(playButtonHighlight,177,106);
             if(Gdx.input.isTouched()){
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new Level());
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new Level("NewLevel"));
             }
         }else{
             batch.draw(playButton,177,106);
@@ -113,7 +113,7 @@ public class StoreScreen implements Screen{
             System.out.println("test");
             batch.draw(exitButtonHighlight,336,106);
             if(Gdx.input.isTouched()){
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new Level());
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new Level("NewLevel"));
             }
         }else{
             batch.draw(exitButton,336,106);
