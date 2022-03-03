@@ -39,7 +39,7 @@ public class EnemySpawner extends GameEntity {
         associatedEnemies = new Enemy[spawnLimit];
        // spawnLimit = 1;
        // this.spawnType = spawnType;
-        enemies = new ArrayList<Enemy>();
+        //enemies = new ArrayList<Enemy>();
        // System.out.println(((Object) spawnType).getClass().getName());
     }
 
@@ -52,7 +52,7 @@ public class EnemySpawner extends GameEntity {
         associatedEnemies = new Enemy[spawnLimit];
         //spawnLimit = 1;
         //this.spawnType = spawnType;
-        enemies = new ArrayList<Enemy>();
+        //enemies = new ArrayList<Enemy>();
         //System.out.println(((Object) spawnType).getClass().getName());
     }
 

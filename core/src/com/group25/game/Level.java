@@ -89,7 +89,7 @@ public class Level implements Screen{
 		viewport.apply();
 		camera.position.set(GAME_WORLD_WIDTH/2,GAME_WORLD_HEIGHT/2,0);
 
-		loadLevel("TestLevel");
+		loadLevel(levelName);
 		// TODO : this needs to be fixed haha
 		//"testlevel" would actually be anything that is parsed into the level constructor.
 		//so if "level1" was given to Level.java, then it would attempt to find the txt file containing level details 
@@ -184,7 +184,7 @@ public class Level implements Screen{
 						args.add(s.substring(s.indexOf(":")+2));
 					}
 
-					enemies.add(new Slime(	this, 
+					enemies.add(new Slime( 
 											Float.parseFloat(args.get(0)),
 											Float.parseFloat(args.get(1)),
 											Integer.parseInt(args.get(2)),
@@ -196,7 +196,7 @@ public class Level implements Screen{
 					slime = (Slime) enemies.get(0);
 					addEnemy(slime);
 					EnemyFactory slimeCamp = new SlimeFactory();
-					slimeCamp.getNewMonster(50,50,100,slime.getSprite(),1);
+					slimeCamp.getNewMonster(50,50,100,100,50,slime.getSprite(),1);
 
 				}else if(line.equals("GAME ENTITY ANIMATED:")){
 					//list of arguments needed to make the GameEntity
@@ -392,8 +392,6 @@ public class Level implements Screen{
 		int aWidth = 200;
 		int aHeight = 200;		
 	
-
-		int aHeight = 200;
 		batch.draw(allertArea,slime.getX()-(aWidth-slime.getWidth())/2,slime.getY()-(aHeight-slime.getHeight())/2);
 		//batch.draw(slimeSpawner.getSprite(),slimeSpawner.getX(),slimeSpawner.getY());
 		if(!coin.isPickedUp()){
