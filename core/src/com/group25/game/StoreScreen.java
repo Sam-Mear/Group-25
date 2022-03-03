@@ -132,6 +132,16 @@ public class StoreScreen implements Screen{
         }
 
 
+        // Exit toggle
+        if ((Gdx.input.getX() < 43 + BUTTON_WIDTH && Gdx.input.getX()>centerX) && (GAME_WORLD_HEIGHT - Gdx.input.getY()< 149 + BUTTON_HEIGHT && GAME_WORLD_HEIGHT - Gdx.input.getY()>149)){
+            System.out.println("test");
+            batch.draw(exitButtonHighlight,336,106);
+            if(Gdx.input.isTouched()){
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new Level("NewLevel"));
+            }
+        }else{
+            batch.draw(exitButton,336,106);
+        }
 
         // Item 1
         if (item1Purcahsed == false){
