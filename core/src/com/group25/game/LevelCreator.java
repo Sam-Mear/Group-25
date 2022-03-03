@@ -87,6 +87,7 @@ public class LevelCreator extends JFrame implements Screen{
 	private JCheckBox deleteTool;
 	private JCheckBox gridTool;
 	private JTextField gridNumber;
+	private JCheckBox playerPosTool;
 	private JCheckBox hitboxTool;
 	private JCheckBox teleportTool;
 	//the below is -1 for not selected.
@@ -101,6 +102,7 @@ public class LevelCreator extends JFrame implements Screen{
 
 	ArrayList<GameEntity> trees = new ArrayList<GameEntity>(); // Create an ArrayList object
 	ArrayList<Sprite> hitbox = new ArrayList<Sprite>();
+	ArrayList<String> playerPosition = new ArrayList<String>();
 	ArrayList<ArrayList<String>> hitboxOutput = new ArrayList<ArrayList<String>>();
 	ArrayList<ArrayList<String>> preTextFileOutput = new ArrayList<ArrayList<String>>(); //pre game entity data like bakcground image.
 	ArrayList<ArrayList<String>> textFileOutput = new ArrayList<ArrayList<String>>(); // GameEntity data to be written to file
@@ -113,7 +115,9 @@ public class LevelCreator extends JFrame implements Screen{
     loadLevel();
 
 		batch = new SpriteBatch();
-		img = new Sprite(new Texture("GameEntity/character.png"));
+		img = new Sprite(new Texture("Dev/character.png"));
+		img.setX(0);
+		img.setY(0);
 		backgroundPicture = new Sprite(new Texture("Backgrounds/tempBackground.jpg"));
 		backgroundPicture.setSize(GAME_WORLD_WIDTH,GAME_WORLD_HEIGHT);
 		camera = new OrthographicCamera();
@@ -141,6 +145,10 @@ public class LevelCreator extends JFrame implements Screen{
 					bw.write(preTextFileOutput.get(i).get(j));
 					bw.newLine();
 				}
+			}
+			for(int i=0;i<playerPosition.size();i++){
+				bw.write(playerPosition.get(i));
+				bw.newLine();
 			}
 			for(int i=0;i<hitboxOutput.size();i++){
 				for (int j=0;j<hitboxOutput.get(i).size();j++){
@@ -322,6 +330,8 @@ public class LevelCreator extends JFrame implements Screen{
 		f.add(gridTool);
 		gridNumber = new JTextField(10);
 		f.add(gridNumber);
+		playerPosTool = new JCheckBox("Set Default Player Positions");
+		f.add(playerPosTool);
 		hitboxTool = new JCheckBox("Hitbox Tool");
 		f.add(hitboxTool);
 		teleportTool = new JCheckBox("Teleport Tool");
@@ -538,6 +548,15 @@ public class LevelCreator extends JFrame implements Screen{
 			if(hitboxValue == 1){
 				newHitbox((int)mousePos.x,(int)mousePos.y);
 				hitboxValue = 0;
+			}else if(playerPosTool.isSelected()){
+				for(int i = playerPosition.size(); i>0;i--){
+					playerPosition.remove(i-1);
+				}
+				playerPosition.add("DEFAULT PLAYER POSITIONS");
+				playerPosition.add("    x: "+(int)mousePos.x);
+				playerPosition.add("    y: "+(int)mousePos.y);
+				img.setX(mousePos.x);
+				img.setY(mousePos.y);
 			}else if(deleteTool.isSelected()){
 				if(hitboxTool.isSelected()){
 					for(int i=0; i<hitbox.size();i++){
@@ -612,6 +631,7 @@ public class LevelCreator extends JFrame implements Screen{
 		for(int i=0; i<hitbox.size();i++){
 			hitbox.get(i).draw(batch);
 		}
+		img.draw(batch);
 
 		//batch.draw(character.getSprite(), character.x, character.y);
 
