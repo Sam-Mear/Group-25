@@ -533,7 +533,7 @@ public class LevelCreator extends JFrame implements Screen{
 	
 	@Override
 	public void render (float delta) {
-		ScreenUtils.clear(0, 0, 0, 0);//red background
+		ScreenUtils.clear(0, 0, 1, 0);//red background
 
 		camera.update();
 		batch.setProjectionMatrix(camera.combined);

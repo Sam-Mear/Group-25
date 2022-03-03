@@ -142,10 +142,6 @@ public class Level implements Screen{
 		//for level 1.
 		//For a test, this is fine.
 
-		character = new Player(this, (int)GAME_WORLD_WIDTH/2-80,(int)GAME_WORLD_HEIGHT/2-80,42,28,100,img,5);//probably temp, just getting used to libgdx
-		character.setSpeed(1);
-		targets.add(character);
-
 		allertArea = new Sprite(new Texture(("Slime_Test_Area.png")));
 
 		//System.out.println("Speeddddd: "+character.getSpeed());
