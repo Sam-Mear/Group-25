@@ -8,9 +8,9 @@ import java.util.Random;
 public abstract class Enemy extends Creature{
 
     private Rectangle alertArea;
-    private int coinDrop = 5;
-    private int manaDrop  = 5;
-    private int heartDrop = 5;
+    private int coinDrop = 100;
+    private int manaDrop  = 100;
+    private int heartDrop = 100;
     private float range;
     private float damage;
     private boolean alive = true;
