@@ -58,7 +58,7 @@ BOSS:
     height: 38
     health: 200
     sprite: GameEntity/Enemy/boss.png
-    speed: 0.8
+    speed: 0.4
 
 MUMMY:
     x: 27
