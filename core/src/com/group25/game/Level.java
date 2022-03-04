@@ -81,6 +81,7 @@ public class Level implements Screen{
 	final private int HUD_ELEMENT_HEIGHT = 198;
 	final private int HUD_ELEMENT_WIDTH = 658;
 	private Sprite gameOver = new Sprite(new Texture("HUD/game-over.png"));
+	private Sprite win = new Sprite(new Texture("HUD/well-done.png"));
 
 	//To be deleated? 
 	private EnviromentAnimated camp;
@@ -380,6 +381,23 @@ public class Level implements Screen{
 				viewport.setWorldWidth(840);
 				viewport.apply();
 			}
+
+			if(GAME_WORLD_HEIGHT < 563 || GAME_WORLD_WIDTH < 840){
+				win.setSize(HUD_ELEMENT_WIDTH/2,HUD_ELEMENT_HEIGHT/2);
+				win.setX(420);
+				win.setY(218);
+				viewport.setWorldHeight(281);
+				viewport.setWorldWidth(420);
+				viewport.apply();
+			}else{
+				win.setSize(HUD_ELEMENT_WIDTH,HUD_ELEMENT_HEIGHT);
+				win.setX(420-(HUD_ELEMENT_WIDTH/2));
+				win.setY(218);
+				viewport.setWorldHeight(563);
+				viewport.setWorldWidth(840);
+				viewport.apply();
+			}
+
 		} catch(FileNotFoundException fileNotFoundException){
 			System.out.println("file "+Gdx.files.internal("Levels/"+levelName+"/level.txt")+ " not found!");
 		}
@@ -699,9 +717,13 @@ public class Level implements Screen{
 					}	
 				}
 			}
-				
 			//If they are dead and its an enemy
+			//FILIP
 			else{
+				if(targets.get(i) instanceof Boss){
+					win.draw(UIElements);
+				}
+
 				if(targets.get(i) instanceof Enemy){
 					if(!((Enemy) targets.get(i)).isLooted()) {
 					//	System.out.println("DEAD ENEMY");
