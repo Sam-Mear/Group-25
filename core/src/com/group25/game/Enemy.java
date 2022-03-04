@@ -98,7 +98,6 @@ public abstract class Enemy extends Creature{
                             directedShortAttack(player, range, damage/5, direction, getX(), getY());
                     }
                 }
-                //System.out.println("Enemy detected!");
             }else{
                 isMoving = false;
             }
