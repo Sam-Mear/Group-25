@@ -422,7 +422,9 @@ public class Level implements Screen{
 	}
 
 	public void addEnemy(Enemy enemy){
-		System.out.println("enemy added");
+		
+		if(enemy instanceof Bat)
+			System.out.println("enemy added");
 		targets.add(enemy);
 	}
 
@@ -484,7 +486,7 @@ public class Level implements Screen{
 	}
 
 	Boss boss = new Boss(this, 500, 500, 100, 50, 10, null, 1);
-
+	Bat bat =new Bat(this, 600, 600, 30, 20, 50, null, 1, 10, 5, 20);
 
 	@Override
 	public void render (float delta) {
@@ -503,8 +505,10 @@ public class Level implements Screen{
 		}
 
 		boss.update();
-
 		boss.explore(character);
+
+		bat.update();
+		bat.explore(character);
 		
 
 		int aWidth = 200;
@@ -521,17 +525,17 @@ public class Level implements Screen{
 		}
 
 		for(int i=0;i<targets.size();i++){
-
 			if(targets.get(i).alive()){
-
 				if(targets.get(i) == character){
 					batch.draw(character.getTexture(), character.getX(), character.getY());
 				}else{
 					if(targets.get(i) instanceof Slime){
 						targets.get(i).update();
-						batch.draw(((Slime) targets.get(i)).getTexture(), targets.get(i).getX(), targets.get(i).getY());
+						batch.draw(((Slime)targets.get(i)).getTexture(), targets.get(i).getX(), targets.get(i).getY());
 					}else if(targets.get(i) instanceof Boss){
 						batch.draw(((Boss)targets.get(i)).getTexture(),targets.get(i).getX(),targets.get(i).getY());
+					}else if(targets.get(i) instanceof Bat){
+						batch.draw(((Bat)targets.get(i)).getTexture(), targets.get(i).getX(), targets.get(i).getY());
 					}
 					
 				}
@@ -540,15 +544,16 @@ public class Level implements Screen{
 				for(int j=0; j<projectiles.size(); j++){
 					RangeAttack currentR = projectiles.get(j);
 
-					if(Math.abs(currentR.getSize()/2 + currentR.getY() - currentC.getY()) <= currentC.getSize()/2)
-						if(Math.abs(currentR.getSize()/2 + currentR.getX() - currentC.getX()) <= currentC.getSize()/2){
-							targets.get(i).setHealth(targets.get(i).getHealth() - 10);
-							if(currentC instanceof Slime){
-								((Slime)currentC).setAttacked();
-							}
-							projectiles.get(j).setAlive(false);
-						}		
-				}
+					if(!(currentC instanceof Boss))
+						if(Math.abs(currentR.getSize()/2 + currentR.getY() - currentC.getY()) <= currentC.getSize()/2)
+							if(Math.abs(currentR.getSize()/2 + currentR.getX() - currentC.getX()) <= currentC.getSize()/2){
+								targets.get(i).setHealth(targets.get(i).getHealth() - 10);
+								if(currentC instanceof Slime){
+									((Slime)currentC).setAttacked();
+								}
+								projectiles.get(j).setAlive(false);
+							}		
+					}
 				// System.out.println(targets.get(i).getHealth());
 				// batch.draw(allertArea,enemies.get(i).getX()-(aWidth-enemies.get(i).getWidth())/2,enemies.get(i).getY()-(aHeight-enemies.get(i).getHeight())/2);
 			}
