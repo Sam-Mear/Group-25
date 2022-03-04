@@ -3,18 +3,9 @@ MAP SIZE:
     height: 1334
 BACKGROUND: Map-1.png
 
-MUMMY:
-    x: 414
-    y: 685
-    width: 100
-    height: 50
-    health: 10
-    sprite: GameEntity/Enemy/mummy.png
-    speed: 1
-
 BAT:
-    x: 576
-    y: 723
+    x: 721
+    y: 706
     width: 30
     height: 20
     health: 50
@@ -23,12 +14,21 @@ BAT:
     damage: 5
     attackSpeed: 20
 
-SLIME:
-    x: 401
-    y: 750
-    width: 32
-    height: 32
-    health: 25
-    sprite: GameEntity/Green_Slime.png
-    speed: 0.5
+MUMMY:
+    x: 527
+    y: 728
+    width: 100
+    height: 50
+    health: 10
+    sprite: GameEntity/Enemy/mummy.png
+    speed: 1
+
+BOSS:
+    x: 613
+    y: 706
+    width: 27
+    height: 38
+    health: 200
+    sprite: GameEntity/Enemy/boss.png
+    speed: 1
 

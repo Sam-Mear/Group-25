@@ -309,6 +309,22 @@ public class Level implements Screen{
 											null,
 											Float.parseFloat(args.get(6))));
 
+				}else if(line.equals("BOSS:")){
+					ArrayList<String> args = new ArrayList<String>();
+					for(int i=0;i<7;i++){
+						//populate the arguments arraylist.
+						String s = levelInfo.nextLine();
+						args.add(s.substring(s.indexOf(":")+2));
+					}
+					enemies.add(new Boss(	this, 
+											Float.parseFloat(args.get(0)),
+											Float.parseFloat(args.get(1)),
+											Integer.parseInt(args.get(2)),
+											Integer.parseInt(args.get(3)),
+											Integer.parseInt(args.get(4)),
+											null,
+											Float.parseFloat(args.get(6))));
+
 				}else if(line.equals("GAME ENTITY ANIMATED:")){
 					//list of arguments needed to make the GameEntity
 					ArrayList<String> args = new ArrayList<String>();
