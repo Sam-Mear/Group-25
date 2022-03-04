@@ -59,6 +59,10 @@ public class Player extends Creature implements ApplicationListener{
         this.img = img;
         this.currentLevel = currentLevel;
 
+        animation = new EnitiyAnimation(new Sprite(new Texture(("mummy.png"))), 4, 15, startFrame, endFrame);
+
+       
+
         animatePlayer(startFrame, endFrame);
     }
 

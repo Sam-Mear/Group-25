@@ -15,7 +15,7 @@ public class EnemySpawner extends GameEntity {
 
     private int spawnTime;          //How often we want enemies to spawn
     private int repeatedFrames;     //How many times have the frames been cycled
-    private EnemyFactory factory;   //Factory design pattern to spawn enemies
+    private final EnemyFactory factory;   //Factory design pattern to spawn enemies
     private Sprite img;             //Image of what the spawner looks like
 
     private Enemy[] associatedEnemies;
@@ -67,7 +67,7 @@ public class EnemySpawner extends GameEntity {
      * @param img       - image of how the monster will look like
      * @param speed     - how quickly the monster travels
      */
-    public void spawnNewMonster(Level level, ArrayList<Enemy> enemies, int positionX, int positionY, int width,int height,int health, Sprite img,int speed){
+    public void spawnNewMonster(Level level, ArrayList<Enemy> enemies, int positionX, int positionY, int width,int height,int health, Sprite img,float speed){
         if(enemies.size()<spawnLimit){
             if(repeatedFrames == spawnTime){
                 repeatedFrames = 0;

@@ -23,6 +23,8 @@ import org.w3c.dom.ranges.Range;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Random;
 import java.util.Scanner;
 
 
@@ -80,12 +82,17 @@ public class Level implements Screen{
 	ArrayList<Teleport> teleports = new ArrayList<Teleport>();
 	ArrayList<Creature> targets = new ArrayList<>(); // arrayList where all possible targets are stored (including enemies and main character and/or object if there will be any)
 	ArrayList<RangeAttack> projectiles;
+	private ArrayList<Drop> allDrops = new ArrayList<Drop>();
+
+	private EnitiyAnimation attack = new EnitiyAnimation(new Sprite(new Texture(("punch.png"))), 4, 20, 0, 0);
+	private int attackCounter;
 
 
+	private boolean startAttack = false;
 
-	int GAME_WORLD_WIDTH = 1778;
-	int GAME_WORLD_HEIGHT = 1334;
-	
+
+	static int GAME_WORLD_WIDTH = 1778;
+	static int GAME_WORLD_HEIGHT = 1334;
 	public Level(String levelName) {
 		batch = new SpriteBatch();
 		UIElements = new SpriteBatch();
@@ -144,7 +151,7 @@ public class Level implements Screen{
 
 
 		// character = new Player(this, (int)GAME_WORLD_WIDTH/2-80,(int)GAME_WORLD_HEIGHT/2-80,42,28,1000,img,5);//probably temp, just getting used to libgdx
-		// character.setSpeed(1);
+		character.setSpeed(2);
 		// targets.add(character);
 
 		allertArea = new Sprite(new Texture(("Slime_Test_Area.png")));
@@ -421,7 +428,9 @@ public class Level implements Screen{
 	}
 
 	public void addEnemy(Enemy enemy){
-		System.out.println("enemy added");
+		
+		if(enemy instanceof Bat)
+			System.out.println("enemy added");
 		targets.add(enemy);
 	}
 
@@ -436,6 +445,8 @@ public class Level implements Screen{
 		if(attacker instanceof Enemy){
 			potential = character;
 		}else{
+			startAttack = true;
+			attackCounter = 0;
 			if(targets.get(i).alive()){
 				potential = targets.get(i);
 			}
@@ -448,32 +459,42 @@ public class Level implements Screen{
 						if(potential.getX()+potential.getSize()/2 - attacker.getX() <= xRange/2)
 							if(potential.getX()+potential.getSize()/2 - attacker.getX() >= 0)
 								if(potential.getY()+potential.getSize()/2 - attacker.getY() <= yRange)
-									if(potential.getY()+potential.getSize()/2 - attacker.getY() >= 0)
+									if(potential.getY()+potential.getSize()/2 - attacker.getY() >= 0){
+										
 										return potential;
+									}
+										
 							
 					}
 					if(attacker.getDirection() == "left"){
 						if(attacker.getX()+potential.getSize()/2 - potential.getX() <= xRange/2)
 							if(attacker.getX()+potential.getSize()/2 - potential.getX() >= 0)
 								if(attacker.getY()+potential.getSize()/2 - potential.getY() <= yRange)
-									if(attacker.getY()+potential.getSize()/2 - potential.getY() >= 0)
+									if(attacker.getY()+potential.getSize()/2 - potential.getY() >= 0){
+										
 										return potential;
+									}
+										
 								
 					}
 					if(attacker.getDirection() == "down"){
 						if(attacker.getY()+potential.getSize()/2 - potential.getY() <= xRange)
 							if(attacker.getY()+potential.getSize()/2 - potential.getY() >= 0)
 								if(attacker.getX()+potential.getSize()/2 - potential.getX() <= yRange/2)
-									if(attacker.getX()+potential.getSize()/2 - potential.getX() >= 0)
+									if(attacker.getX()+potential.getSize()/2 - potential.getX() >= 0){
+									
 										return potential;
-								
+									}
+										
 					}
 					if(attacker.getDirection() == "up"){
 						if(potential.getY()+potential.getSize()/2 - attacker.getY() <= xRange)
 							if(potential.getY()+potential.getSize()/2 - attacker.getY() >= 0)
 								if(potential.getX()+potential.getSize()/2 - attacker.getX() <= yRange/2)
-									if(potential.getX()+potential.getSize()/2 - attacker.getX() >= 0)
+									if(potential.getX()+potential.getSize()/2 - attacker.getX() >= 0){
+										
 										return potential;
+								}
 								
 					}
 				}
@@ -482,8 +503,8 @@ public class Level implements Screen{
 		return null;
 	}
 
-	Boss boss = new Boss(this, 500, 500, 100, 50, 10, null, 1);
-
+	Mummy boss = new Mummy(this, 500, 500, 100, 50, 10, null, 1);
+	Bat bat =new Bat(this, 600, 600, 30, 20, 50, null, 1, 10, 5, 20);
 
 	@Override
 	public void render (float delta) {
@@ -501,9 +522,30 @@ public class Level implements Screen{
 			batch.draw(projectiles.get(i).getTexture(), projectiles.get(i).getX(), projectiles.get(i).getY());
 		}
 
-		boss.update();
+		attackCounter++;
+		if(startAttack){
+			if(attackCounter <= 20){
+				if(character.getDirection() == "up")
+					batch.draw(attack.getCurrentFrame(), character.getX(), character.getY() + character.getSize()/2);
+				if(character.getDirection() == "down")
+					batch.draw(attack.getCurrentFrame(), character.getX(), character.getY()-character.getSize()/2);
+				if(character.getDirection() == "left")
+					batch.draw(attack.getCurrentFrame(), character.getX() - character.getSize() + 10, character.getY() + character.getSize()/4);
+				if(character.getDirection() == "right")
+					batch.draw(attack.getCurrentFrame(), character.getX() + character.getSize() - 20 , character.getY() + character.getSize()/4);
+				attack.setCurrentFrameNumber(attackCounter%3);
+				
+			}else{
+				startAttack = false;
+			}
+			
+		}
 
+		boss.update();
 		boss.explore(character);
+
+		bat.update();
+		bat.explore(character);
 		
 
 		int aWidth = 200;
@@ -511,25 +553,26 @@ public class Level implements Screen{
 	
 		batch.draw(allertArea,slime.getX()-(aWidth-slime.getWidth())/2,slime.getY()-(aHeight-slime.getHeight())/2);
 		//batch.draw(slimeSpawner.getSprite(),slimeSpawner.getX(),slimeSpawner.getY());
-		if(!coin.isPickedUp()){
-			batch.draw(coin.getTexture(), coin.getX(),coin.getY());
-		}
+
+//		if(!coin.isPickedUp()){
+//			batch.draw(coin.getTexture(), coin.getX(),coin.getY());
+//		}
 		for(int i=0;i<trees.size();i++){
 			batch.draw(trees.get(i).getSprite(),trees.get(i).getX(),trees.get(i).getY());
 		}
 
 		for(int i=0;i<targets.size();i++){
-
 			if(targets.get(i).alive()){
-
 				if(targets.get(i) == character){
 					batch.draw(character.getTexture(), character.getX(), character.getY());
 				}else{
 					if(targets.get(i) instanceof Slime){
 						targets.get(i).update();
-						batch.draw(((Slime) targets.get(i)).getTexture(), targets.get(i).getX(), targets.get(i).getY());
-					}else if(targets.get(i) instanceof Boss){
-						batch.draw(((Boss)targets.get(i)).getTexture(),targets.get(i).getX(),targets.get(i).getY());
+						batch.draw(((Slime)targets.get(i)).getTexture(), targets.get(i).getX(), targets.get(i).getY());
+					}else if(targets.get(i) instanceof Mummy){
+						batch.draw(((Mummy)targets.get(i)).getTexture(),targets.get(i).getX(),targets.get(i).getY());
+					}else if(targets.get(i) instanceof Bat){
+						batch.draw(((Bat)targets.get(i)).getTexture(), targets.get(i).getX(), targets.get(i).getY());
 					}
 					
 				}
@@ -538,31 +581,59 @@ public class Level implements Screen{
 				for(int j=0; j<projectiles.size(); j++){
 					RangeAttack currentR = projectiles.get(j);
 
-					if(Math.abs(currentR.getSize()/2 + currentR.getY() - currentC.getY()) <= currentC.getSize()/2)
-						if(Math.abs(currentR.getSize()/2 + currentR.getX() - currentC.getX()) <= currentC.getSize()/2){
-							targets.get(i).setHealth(targets.get(i).getHealth() - 10);
-							if(currentC instanceof Slime){
-								((Slime)currentC).setAttacked();
-							}
-							projectiles.get(j).setAlive(false);
-						}		
+					if(!(currentC instanceof Mummy))
+						if(Math.abs(currentR.getSize()/2 + currentR.getY() - currentC.getY()) <= currentC.getSize()/2)
+							if(Math.abs(currentR.getSize()/2 + currentR.getX() - currentC.getX()) <= currentC.getSize()/2){
+								targets.get(i).setHealth(targets.get(i).getHealth() - 10);
+								if(currentC instanceof Slime){
+									((Slime)currentC).setAttacked();
+								}
+								projectiles.get(j).setAlive(false);
+							}		
+					}
 				}
-				// System.out.println(targets.get(i).getHealth());
-				// batch.draw(allertArea,enemies.get(i).getX()-(aWidth-enemies.get(i).getWidth())/2,enemies.get(i).getY()-(aHeight-enemies.get(i).getHeight())/2);
+				
+			//If they are dead and its an enemy
+			else{
+				if(targets.get(i) instanceof Enemy){
+					if(!((Enemy) targets.get(i)).isLooted()) {
+						System.out.println("DEAD ENEMY");
+						Enemy deadEnemy = (Enemy) targets.get(i);
+						((Enemy) targets.get(i)).setLooted(true);
+						int coins = ((Enemy) targets.get(i)).getCoinDrop();
+						int mana = ((Enemy) targets.get(i)).getManaDrop();
+						int health = ((Enemy) targets.get(i)).getHeartDrop();
+						Random r = new Random();
+						Drop coinDrop = new Drop(deadEnemy.getX(), deadEnemy.getY(), 16, 16, new Sprite(new Texture("GameEntity/coin_animated.png")), 5, 5,100,DropType.COIN);
+						Drop heartDrop = new Drop(deadEnemy.getX()+30, deadEnemy.getY()+30, 22, 24, new Sprite(new Texture("GameEntity/heart_animated.png")), 10, 3,100,DropType.HEART);
+						Drop manaDrop = new Drop(deadEnemy.getX()-30, deadEnemy.getY()-30, 16, 16, new Sprite(new Texture("GameEntity/coin_animated.png")), 5, 5,100,DropType.MANA);
+						allDrops.add(heartDrop);
+						allDrops.add(coinDrop);
+						allDrops.add(manaDrop);
+					}
+				}
 			}
-			
-			
+
+
+		}
+		Iterator<Drop> cycleDrops = allDrops.iterator();
+		while(cycleDrops.hasNext()) {
+			Drop pickable = cycleDrops.next();
+		
+			if(!pickable.isPickedUp()){
+				character.pickUp(pickable);
+				batch.draw(pickable.getTexture(), pickable.getX(),pickable.getY());
+			}
+			else{
+				if(pickable.getType().equals(DropType.HEART)){
+					System.out.println(character.health);
+				}
+				cycleDrops.remove();
+			}
 		}
 		character.checkKeysPressed();
 
-/*		health x: 116	y: 83
-*/
-		
-	
-	//	batch.draw(character.getTexture(), character.getX(), character.getY());
-		//batch.draw(slimeSpawner.getSprite().getTexture(),slimeSpawner.getX(),slimeSpawner.getY());
 
-//		spawner.spawn();
 
 		for(int i=0;i<animatedEnviroment.size();i++){
 			batch.draw(animatedEnviroment.get(i).getTexture(),animatedEnviroment.get(i).getX(),animatedEnviroment.get(i).getY());
@@ -575,21 +646,7 @@ public class Level implements Screen{
 
 		batch.draw(camp.getTexture(),camp.getX(),camp.getY());
 		camp.update();
-		//slimeSpawner.spawnNewMonster(level, enemies, positionX, positionY, width, height, health, img, speed);
-
-		// EnemyFactory slimeCamp = new SlimeFactory();
-		// camp = new EnviromentAnimated(117, 697, 130, 43, new Sprite(new Texture("GameEntity/camp-fire.png")), 4, 3);
-		// slimeSpawner = new EnemySpawner(50,50,100,100,camp.getSprite(),slimeCamp,10);
-
-
-		//EnemyFactory slimeCamp = new SlimeFactory();
-		//camp = new EnviromentAnimated(117, 697, 130, 43, new Sprite(new Texture("GameEntity/camp-fire.png")), 4, 3);
-		//float positionX, float positionY, int width, int height, Sprite img,EnemyFactory factory, int spawnTime
-		//slimeSpawner = new EnemySpawner((float)50,(float)50,100,100,5,camp.getSprite(),slimeCamp,10);
 		
-		//Testing purposes
-		//We want to kill a monster and then respawn them
-
 		
 		/**
 		 * have camera always follow the player.
@@ -615,7 +672,7 @@ public class Level implements Screen{
 
 
 		character.update();
-		slimeSpawner.spawnNewMonster(this, enemies,(int)slimeSpawner.getX(),(int)slimeSpawner.getY(),100,100,50,slime.getSprite(),1);
+		slimeSpawner.spawnNewMonster(this, enemies,(int)slimeSpawner.getX()+100,(int)slimeSpawner.getY()+100,20,18,50,slime.getSprite(),(float)0.4);
 
 
 		// if(healthProcentage>90){
@@ -624,9 +681,9 @@ public class Level implements Screen{
 
 		//Would be changed into an array of all the coins
 		//Coins removed would not be checked this is for testing purposes
-		if(!coin.isPickedUp()){
-			character.pickUp(coin);
-		}
+//		if(!coin.isPickedUp()){
+//			character.pickUp(coin);
+//		}
 		//FOLLOW PLAYER CODE
 		for(Enemy e:enemies){
 			e.explore(character);

@@ -8,9 +8,9 @@ import java.util.Random;
 public abstract class Enemy extends Creature{
 
     private Rectangle alertArea;
-    private int coinDrop;
-    private int manaDrop;
-    private int heartDrop;
+    private int coinDrop = 100;
+    private int manaDrop  = 100;
+    private int heartDrop = 100;
     private float range;
     private float damage;
     private boolean alive = true;
@@ -19,16 +19,18 @@ public abstract class Enemy extends Creature{
     private Random r;
     private String direction;
     private boolean isMoving = false;
+    private boolean looted = false;
 
     public Enemy(float positionX, float positionY, int width, int height, int health, Sprite img, float entitySpeed,Rectangle hitbox, Rectangle alertArea) {
         super(positionX, positionY, width, height, health, img, entitySpeed,hitbox);
         this.alertArea = alertArea;
         r = new Random();
+        this.xSpeed = entitySpeed;
+        this.ySpeed = entitySpeed;
 
         this.xSpeed = 1;
         this.ySpeed = 1;
     }
-
     public Rectangle getAlertArea(){
         return alertArea;
     }
@@ -43,65 +45,64 @@ public abstract class Enemy extends Creature{
 
     private int counter = 0;
 
-    public boolean chasePlayer(Player player, int range, int damage, int  attackCounter, Creature attacker, int safetyX, int safetyY){
-        System.out.println(attacker.getHealth());
-
-
-        System.out.println(attacker.alive());
-
+    public void chasePlayer(Player player, int range, int damage, int  attackCounter, Creature attacker, int safetyX, int safetyY){
 
         if(attacker.alive()){
             counter++;
-            if(this instanceof Slime && counter%attackCounter==0 && player.alive()){
+            if((this instanceof Slime || this instanceof Bat || this instanceof Boss) && counter%attackCounter==0 && player.alive()){
                suroundAttack(player, range, damage);
             }
             
             if (this.getAlertArea().contains(player.getHitbox())) {
                 isMoving = true;
                 if (this.getY() < player.getY()) {
+                    this.direction = "up";
                     this.setY(this.getY() + this.getSpeed());
                     if(counter% (attackCounter*10) ==0){
-                        rangeAttack(player, range, damage, "up", getX() ,getY()+safetyY);
-                        this.direction = "up";
-                        directedShortAttack(player, range, damage/5, direction, getX(), getY());
+                        if(this instanceof Mummy || this instanceof Boss)
+                            rangeAttack(player, range, damage, "up", getX() ,getY()+safetyY);
+                        if(!(this instanceof Slime))
+                            directedShortAttack(player, range, damage/5, direction, getX(), getY());
                     }
-                    return true;
                 }
     
                 if (this.getY() > player.getY()) {
+                    this.direction = "down";
                     this.setY(this.getY() - this.getSpeed());
                     if(counter% (attackCounter*10)==0){
-                        rangeAttack(player, range, damage, "down", getX() ,getY()-safetyY);
-                         this.direction = "down";
-                         directedShortAttack(player, range, damage/5, direction, getX(), getY());
+                        if(this instanceof Mummy || this instanceof Boss)
+                            rangeAttack(player, range, damage, "down", getX() ,getY()-safetyY);
+                        if(!(this instanceof Slime))
+                            directedShortAttack(player, range, damage/5, direction, getX(), getY());
                     }
-                    return true;
                 }
     
                 if (this.getX() < player.getX()) {
+                    this.direction = "right";
                     this.setX(this.getX() + this.getSpeed());
                     if(counter% (attackCounter*10)==0){
-                        rangeAttack(player, range, damage, "right", getX()+safetyX ,getY());
-                        this.direction = "right";
-                        directedShortAttack(player, range, damage/5, direction, getX(), getY());
+                        if(this instanceof Mummy || this instanceof Boss)
+                            rangeAttack(player, range, damage, "right", getX()+safetyX ,getY());
+                        if(!(this instanceof Slime))
+                            directedShortAttack(player, range, damage/5, direction, getX(), getY());
                     }
-                    return true;
                 }
 
                 if (this.getX() > player.getX()) {
+                    this.direction = "left";
                     this.setX(this.getX() - this.getSpeed());
                     if(counter% (attackCounter*10)==0){
-                        rangeAttack(player, range, damage, "left", getX()-safetyX ,getY());
-                        this.direction = "left";
-                        directedShortAttack(player, range, damage/5, direction, getX(), getY());
+                        if(this instanceof Mummy || this instanceof Boss)
+                            rangeAttack(player, range, damage, "left", getX()-safetyX ,getY());
+                        if(!(this instanceof Slime))
+                            directedShortAttack(player, range, damage/5, direction, getX(), getY());
                     }
-                    return true;
                 }
+                //System.out.println("Enemy detected!");
             }else{
                 isMoving = false;
             }
         }
-        return false;
     }
 
 
@@ -123,10 +124,15 @@ public abstract class Enemy extends Creature{
         playerAttack(player.getLevel(), (int)damage, (int)range, (int)range*2);
     }
 
+    public boolean isLooted() {
+        return looted;
+    }
 
+    public void setLooted(boolean looted) {
+        this.looted = looted;
+    }
 
-
-    private void suroundAttack(Player player,int  range,int damage){
+    private void suroundAttack(Player player, int  range, int damage){
            
             if(Math.abs(player.getX() - this.getX()) <= range)
             if(Math.abs(player.getY() - this.getY()) <= range){
@@ -163,14 +169,37 @@ public abstract class Enemy extends Creature{
         double deltaA = changeAngle(100,r.nextDouble()) * 2*Math.PI;
         ySpeed = xTemp*Math.sin(deltaA)+yTemp*Math.cos(deltaA);
         xSpeed = xTemp*Math.cos(deltaA)-yTemp*Math.sin(deltaA);
+        if(this.x>this.width && this.x<Level.GAME_WORLD_WIDTH-this.width){
+            this.x += xSpeed;
 
-        this.x += xSpeed;
-        this.y += ySpeed;
+        }
+        if(this.y>this.height && this.y<Level.GAME_WORLD_HEIGHT-this.height){
+            this.y += ySpeed;
+            
+        }
     }
 
     public double changeAngle(double b,double x){
         double top = 1;
         double bottom = 1+Math.exp(-b*Math.tan(Math.PI*(x-0.5)));
         return top/bottom;
+    }
+
+
+
+    public double getySpeed() {
+        return ySpeed;
+    }
+
+    public void setySpeed(double ySpeed) {
+        this.ySpeed = ySpeed;
+    }
+
+    public double getxSpeed() {
+        return xSpeed;
+    }
+
+    public void setxSpeed(double xSpeed) {
+        this.xSpeed = xSpeed;
     }
 }

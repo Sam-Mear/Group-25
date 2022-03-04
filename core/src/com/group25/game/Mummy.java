@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-public class Boss extends Enemy{
+public class Mummy extends Enemy{
 
 
     private int healt ;
@@ -16,7 +16,7 @@ public class Boss extends Enemy{
     private TextureRegion current;
 
     
-    public Boss(Level level, float positionX, float positionY, int width, int height, int health, Sprite img, float entitySpeed) {
+    public Mummy(Level level, float positionX, float positionY, int width, int height, int health, Sprite img, float entitySpeed) {
                 super(positionX, positionY, width, height, health, img, entitySpeed,
                 new Rectangle((int)positionX,(int)positionY,width,height),  //Hitbox
                 new Rectangle((int)positionX,(int)positionY,200,200)); //AlertArearea
@@ -87,7 +87,6 @@ public class Boss extends Enemy{
         this.getHitbox().setLocation((int) this.getX(), (int) this.getY());
         this.getAlertArea().setLocation((int) (this.getX() - (200 - this.getWidth()) / 2), (int) (this.getY() - (200 - this.getHeight()) / 2));
         this.chasePlayer(player, 30, 5, 15, this, 50, 50);
-       
     }
 
     public double changeAngle(double b,double x){
