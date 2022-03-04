@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class Mummy extends Enemy{
 
 
-    private int healt ;
+    private int health ;
     private int damage, range;
     private int attackSpeed; 
     private EnitiyAnimation animation;

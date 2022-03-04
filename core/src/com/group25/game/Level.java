@@ -293,6 +293,22 @@ public class Level implements Screen{
 											Integer.parseInt(args.get(7)),
 											Integer.parseInt(args.get(8))));
 
+				}else if(line.equals("MUMMY:")){
+					ArrayList<String> args = new ArrayList<String>();
+					for(int i=0;i<7;i++){
+						//populate the arguments arraylist.
+						String s = levelInfo.nextLine();
+						args.add(s.substring(s.indexOf(":")+2));
+					}
+					enemies.add(new Mummy(	this, 
+											Float.parseFloat(args.get(0)),
+											Float.parseFloat(args.get(1)),
+											Integer.parseInt(args.get(2)),
+											Integer.parseInt(args.get(3)),
+											Integer.parseInt(args.get(4)),
+											null,
+											Float.parseFloat(args.get(6))));
+
 				}else if(line.equals("GAME ENTITY ANIMATED:")){
 					//list of arguments needed to make the GameEntity
 					ArrayList<String> args = new ArrayList<String>();
@@ -549,7 +565,6 @@ public class Level implements Screen{
 		return null;
 	}
 
-	// Mummy mummy = new Mummy(this, 500, 500, 100, 50, 10, null, 1);
 	// Boss boss = new Boss(this, 600, 600, 27, 38, 200, null, 1);
 
 
@@ -565,9 +580,6 @@ public class Level implements Screen{
 		batch.begin();
 		backgroundPicture.draw(batch);
 
-
-		// mummy.update();
-		// mummy.explore(character);
 		// boss.update();
 		// boss.explore(character);
 
@@ -599,6 +611,7 @@ public class Level implements Screen{
 		}
 		for (Enemy enemy : enemies){
 			enemy.update();
+			enemy.explore(character);
 		}
 		;
 

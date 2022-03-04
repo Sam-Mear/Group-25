@@ -599,6 +599,14 @@ HITBOX:
     y: 331
     width: 3
     height: 0
+MUMMY:
+    x: 100
+    y: 100
+    width: 100
+    height: 50
+    health: 10
+    sprite: Enemy/mummy.png
+    speed: 1
 GAME ENTITY:
     x: 302
     y: 380

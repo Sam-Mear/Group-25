@@ -1,0 +1,10 @@
+DEFAULT
+MUMMY:
+    x: 
+    y: 
+    width: 100
+    height: 50
+    health: 10
+    sprite: GameEntity/Enemy/mummy.png
+    speed: 1
+
