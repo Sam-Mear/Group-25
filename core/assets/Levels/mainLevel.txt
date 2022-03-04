@@ -541,19 +541,19 @@ HITBOX SPECIAL:
     y: 441
     width: 48
     height: 29
-    level name: ENTERLEVELNAMEwithoutthetxt
+    level name: int3
 HITBOX SPECIAL:
     x: 1217
     y: 499
     width: 56
     height: 23
-    level name: ENTERLEVELNAMEwithoutthetxt
+    level name: int2
 HITBOX SPECIAL:
     x: 1479
     y: 959
     width: 51
     height: 32
-    level name: ENTERLEVELNAMEwithoutthetxt
+    level name: boss
 HITBOX:
     x: 199
     y: 1110
@@ -599,22 +599,7 @@ HITBOX:
     y: 331
     width: 3
     height: 0
-BOSS:
-    x: 300
-    y: 300
-    width: 27
-    height: 38
-    health: 200
-    sprite: GameEntity/Enemy/boss.png
-    speed: 1
-MUMMY:
-    x: 100
-    y: 100
-    width: 100
-    height: 50
-    health: 10
-    sprite: GameEntity/Enemy/mummy.png
-    speed: 1
+
 GAME ENTITY:
     x: 302
     y: 380
