@@ -11,10 +11,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.utils.Logger;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public class MenuScreen implements Screen{
+
+    private Logger log = new Logger("MenuScreen logger");
 
     private boolean level1complete = false;
     private boolean level2complete = false;
@@ -147,12 +150,12 @@ public class MenuScreen implements Screen{
 
 
         //Play button
-        //System.out.println(GAME_WORLD_HEIGHT-Gdx.input.getY)
+        //log.info(GAME_WORLD_HEIGHT-Gdx.input.getY)
         if ((mousePos.x > 177 && mousePos.x < (177 + BUTTON_WIDTH))&&((mousePos.y > 106) && (mousePos.y < (106 + BUTTON_HEIGHT)))){
-            //System.out.println("test");
+            //log.info("test");
             batch.draw(playGameButtonHighlighted,177,106);
             if(Gdx.input.isTouched()){
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new Level("int1"));
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new Level("mainLevel"));
             }
         }else{
             batch.draw(playGameButton,177,106);
@@ -216,7 +219,7 @@ public class MenuScreen implements Screen{
         // Level 4
         if (level4complete == false){
             if ((Gdx.input.getX() < 43 + BUTTON_WIDTH && Gdx.input.getX()>centerX) && (GAME_WORLD_HEIGHT - Gdx.input.getY()< 149 + BUTTON_HEIGHT && GAME_WORLD_HEIGHT - Gdx.input.getY()>149)){
-                System.out.println("test");
+                log.info("test");
                 batch.draw(levelCompleteButtonHighlighted,629,470);
                 if(Gdx.input.isTouched()){
                     ((Game)Gdx.app.getApplicationListener()).setScreen(new LevelCreator());
@@ -231,7 +234,7 @@ public class MenuScreen implements Screen{
         // Level 5
         if (level5complete == false){
             if ((Gdx.input.getX() < 43 + BUTTON_WIDTH && Gdx.input.getX()>centerX) && (GAME_WORLD_HEIGHT - Gdx.input.getY()< 149 + BUTTON_HEIGHT && GAME_WORLD_HEIGHT - Gdx.input.getY()>149)){
-                System.out.println("test");
+                log.info("test");
                 batch.draw(levelCompleteButtonHighlighted,629,470);
                 if(Gdx.input.isTouched()){
                     ((Game)Gdx.app.getApplicationListener()).setScreen(new LevelCreator());

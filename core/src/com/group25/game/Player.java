@@ -292,7 +292,7 @@ public class Player extends Creature implements ApplicationListener{
     
         this.updateHitbox();
        // System.out.printf("Player hitBox x: %d y: %d\n", (int) this.getX(), (int) this.getY());
-        //System.out.println("Coin amount: "+coins);
+        //log.info("Coin amount: "+coins);
         animation.update(1);
         currentTexture = animation.getCurrentFrame();
     }

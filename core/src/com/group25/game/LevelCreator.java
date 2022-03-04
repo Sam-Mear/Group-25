@@ -43,6 +43,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Logger;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
@@ -72,8 +73,8 @@ import java.util.Scanner;
  * both seperate arraylists.
  */
 public class LevelCreator extends JFrame implements Screen{
-    
 
+	private Logger log = new Logger("LevelCreator logger");
   private SpriteBatch batch;
 	private Sprite img;
 	private Sprite backgroundPicture;
@@ -134,9 +135,9 @@ public class LevelCreator extends JFrame implements Screen{
 		try{
 			File newFile = new File(Gdx.files.internal("Levels/NewLevel.txt")+"");
 			if(newFile.createNewFile()){
-				System.out.println("New file is created!");
+				log.info("New file is created!");
 			}else{
-				System.out.println("File already exists...");
+				log.info("File already exists...");
 			}
 
 			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(newFile)));
@@ -166,26 +167,22 @@ public class LevelCreator extends JFrame implements Screen{
 
 
 		} catch(IOException e){
-			System.out.println("ERROR writing file.");
+			log.info("ERROR writing file.");
 		}
 	}
 
 	public ArrayList<JRadioButton> listFilesForFolder(final File folder,int folderflag) {
-		System.out.println(folder);
 		ArrayList<JRadioButton> buttons = new ArrayList<JRadioButton>();
 		for (final File fileEntry : folder.listFiles()) {
 			if (fileEntry.isDirectory()) {
-				ArrayList<JRadioButton> temp = listFilesForFolder(fileEntry,folderflag);
-				for(JRadioButton item : temp){
-					buttons.add(item);
-				}
+				listFilesForFolder(fileEntry,folderflag);
 			} else {
 				String temp = fileEntry.getName();
 				if(!temp.contains(".txt")){
 					if(folderflag == 1){
 						buttons.add(new JRadioButton(temp,new ImageIcon(new ImageIcon(Gdx.files.internal("Backgrounds/"+temp) + "").getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT))));
 					}else{
-						buttons.add(new JRadioButton(folder+"/"+temp,new ImageIcon(new ImageIcon(Gdx.files.internal(folder+"/"+temp) + "").getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT))));
+						buttons.add(new JRadioButton(temp,new ImageIcon(new ImageIcon(Gdx.files.internal("GameEntity/"+temp) + "").getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT))));
 					}
 				}
 			}
@@ -218,21 +215,21 @@ public class LevelCreator extends JFrame implements Screen{
 
 				backgroundInfo.add(line);
 			}
-			System.out.println(backgroundInfo);
+			log.info(String.valueOf(backgroundInfo));
 			if(preTextFileOutput.size()>0){
 				preTextFileOutput.remove(0);
 			}
 			preTextFileOutput.add(backgroundInfo);
 		} catch(FileNotFoundException fileNotFoundException){
-			System.out.println("file "+Gdx.files.internal(backgroundName)+ " not found!");
-			//System.out.println("running default game entity info");
+			log.info("file "+Gdx.files.internal(backgroundName)+ " not found!");
+			//log.info("running default game entity info");
 			//run this function again but with gameEntityDefaults.txt
 			//return readDefaultValues("GameEntity/GameEntity.txt", x, y);
 			//remember i need to change the sprite....
 		}
 
 
-		System.out.println("CHANGING BACKGROUND!!");
+		log.info("CHANGING BACKGROUND!!");
 		//this mess cause swing in different thread?
 		Gdx.app.postRunnable(new Runnable()  {
 			@Override
@@ -416,11 +413,11 @@ public class LevelCreator extends JFrame implements Screen{
 
 				gameEntity.add(line);
 			}
-			System.out.println(gameEntity);
+			log.info(String.valueOf(gameEntity));
 			return gameEntity;
 		} catch(FileNotFoundException fileNotFoundException){
-			System.out.println("file "+Gdx.files.internal(dir)+ " not found!");
-			System.out.println("running default game entity info");
+			log.info("file "+Gdx.files.internal(dir)+ " not found!");
+			log.info("running default game entity info");
 			//run this function again but with gameEntityDefaults.txt
 			return readDefaultValues("GameEntity/GameEntity.txt", x, y);
 			//remember i need to change the sprite....
@@ -463,11 +460,11 @@ public class LevelCreator extends JFrame implements Screen{
 
 				gameEntity.add(line);
 			}
-			System.out.println(gameEntity);
+			log.info(String.valueOf(gameEntity));
 			return gameEntity;
 		} catch(FileNotFoundException fileNotFoundException){
-			System.out.println("file "+Gdx.files.internal(dir)+ " not found!");
-			System.out.println("running default game entity info");
+			log.info("file "+Gdx.files.internal(dir)+ " not found!");
+			log.info("running default game entity info");
 			//run this function again but with gameEntityDefaults.txt
 			return defaultGameEntityValues("GameEntity/GameEntity.txt", x, y,dir);
 			//remember i need to change the sprite....
@@ -482,7 +479,7 @@ public class LevelCreator extends JFrame implements Screen{
 		//now gotta change the txt file output 
 		ArrayList<String> temp = textFileOutput.get(selectedEntity);
 		for(int i=0;i<temp.size();i++){
-			System.out.println(temp.get(i));
+			log.info(temp.get(i));
 			if(temp.get(i).contains("x:")){
 				temp.set(i,("    x: "+ x));
 			}else if(temp.get(i).contains("y:")){
@@ -548,7 +545,7 @@ public class LevelCreator extends JFrame implements Screen{
 		if(Gdx.input.justTouched()){
 			Vector3 mousePos = new Vector3(Gdx.input.getX(), Gdx.input.getY(),0);
 			viewport.unproject(mousePos); // mousePos is now in world coordinates
-			System.out.println(mousePos);
+			log.info(String.valueOf(mousePos));
 			if(hitboxValue == 1){
 				newHitbox((int)mousePos.x,(int)mousePos.y);
 				hitboxValue = 0;
@@ -581,7 +578,7 @@ public class LevelCreator extends JFrame implements Screen{
 							textFileOutput.remove(i);
 							// NOTE : might need to .dispose() the gameEntity.
 						}
-						System.out.println(temp);
+						log.info(String.valueOf(temp));
 					}
 				}
 			}else if(moveTool.isSelected()){
@@ -592,7 +589,7 @@ public class LevelCreator extends JFrame implements Screen{
 						if(temp.contains((int)mousePos.x,(int)mousePos.y)){
 							selectedEntity = i;
 						}
-						System.out.println(temp);
+						log.info(String.valueOf(temp));
 						
 					}
 				}else{
@@ -620,7 +617,7 @@ public class LevelCreator extends JFrame implements Screen{
 					if (button.isSelected()) {
 						
 						//trees.add(new GameEntity((int)mousePos.x,(int)mousePos.y,10,10,new Sprite(new Texture("GameEntity/"+button.getText())),0));
-						ArrayList <String> entityValues = readDefaultValues(button.getText()+".txt",x,y);
+						ArrayList <String> entityValues = readDefaultValues("GameEntity/"+button.getText()+".txt",x,y);
 						addEntityToGameWindow(entityValues);
 						textFileOutput.add(entityValues);
 					}
@@ -661,8 +658,8 @@ public class LevelCreator extends JFrame implements Screen{
 	@Override
     public void pause() {
         // TODO Auto-generated method stub
-		System.out.println(trees);
-		System.out.println(textFileOutput);
+		log.info(String.valueOf(trees));
+		log.info(String.valueOf(textFileOutput));
         
     }
     
