@@ -41,12 +41,15 @@ public class Level implements Screen{
 	private OrthographicCamera camera;
 	private Player character;
 	private FitViewport viewport;
+
 	//TEMP DELETEME
 	private Slime slime;
 	private Sprite allertArea;
 	private EnviromentAnimated coinTest;
 	private EnviromentAnimated heartTest;
 	private EnviromentAnimated waterfallTest3;
+
+// UI sprites	
 	private Sprite hearts_8;
 	private Sprite hearts_7;
 	private Sprite hearts_6;
@@ -94,13 +97,18 @@ public class Level implements Screen{
 
 	private EnitiyAnimation attack = new EnitiyAnimation(new Sprite(new Texture(("punch.png"))), 4, 20, 0, 0);
 	private int attackCounter;
+	private int dropCounter = 0;
 
 
 	private boolean startAttack = false;
 
-
 	static int GAME_WORLD_WIDTH = 1778;
 	static int GAME_WORLD_HEIGHT = 1334;
+
+	/**
+	 * 
+	 * @param levelName name of the level
+	 */
 	public Level(String levelName) {
 		batch = new SpriteBatch();
 		UIElements = new SpriteBatch();
@@ -127,11 +135,12 @@ public class Level implements Screen{
 		mana_1 = new Sprite( new Texture("mana_sprites/mana-1.png"));
 		mana_0 = new Sprite( new Texture("mana_sprites/mana.png"));
 		
-
+		//The Factory
 		EnemyFactory slimeCamp = new SlimeFactory();
+		//The Animation
 		camp = new EnviromentAnimated(300, 300, 130, 43, new Sprite(new Texture("GameEntity/camp-fire.png")), 4, 7);
+		//The spawner
 		slimeSpawner = new EnemySpawner(300,300,130,43,camp.getSprite(),slimeCamp,10);
-
 
 		UiBorder = new Sprite(new Texture("GUI/border.png"));
 		UiBorder.setX(0);
@@ -151,20 +160,9 @@ public class Level implements Screen{
 		targets.add(character);
 
 		loadLevel(levelName);
-		// TODO : this needs to be fixed haha
-		//"testlevel" would actually be anything that is parsed into the level constructor.
-		//so if "level1" was given to Level.java, then it would attempt to find the txt file containing level details 
-		//for level 1.
-		//For a test, this is fine.
 
-
-		// character = new Player(this, (int)GAME_WORLD_WIDTH/2-80,(int)GAME_WORLD_HEIGHT/2-80,42,28,1000,img,5);//probably temp, just getting used to libgdx
 		character.setSpeed(2);
-		// targets.add(character);
 
-		//allertArea = new Sprite(new Texture(("Slime_Test_Area.png")));
-
-		//System.out.println("Speeddddd: "+character.getSpeed());
 	}
 
 	public void loadLevel(String levelName){
@@ -269,10 +267,11 @@ public class Level implements Screen{
 											new Sprite(new Texture(args.get(5))),
 											Float.parseFloat(args.get(6)), 50, 5, 25));
 					//TEMP DELETEME
-					//slime = (Slime) enemies.get(0);
-					//addEnemy(slime);
-					//EnemyFactory slimeCamp = new SlimeFactory();
-					//slimeCamp.getNewMonster(this, 50,50,100,100,50,slime.getSprite(),1);
+					enemies.add(new Slime(this,50,50,16,16,5,null,0,4,14,14));
+					slime = (Slime) enemies.get(enemies.size()-1);
+					addEnemy(slime);
+					EnemyFactory slimeCamp = new SlimeFactory();
+					slimeCamp.getNewMonster(this, 50,50,100,100,50,slime.getSprite(),1);
 
 				}else if(line.equals("BAT:")){
 					ArrayList<String> args = new ArrayList<String>();
@@ -376,9 +375,6 @@ public class Level implements Screen{
 		} catch(FileNotFoundException fileNotFoundException){
 			System.out.println("file "+Gdx.files.internal("Levels/"+levelName+"/level.txt")+ " not found!");
 		}
-
-
-		//slime.setHealth(100);
 	}
 	
 	@Override
@@ -505,18 +501,31 @@ public class Level implements Screen{
 		return false;
 	}
 
+
+	/**
+	 * add anemy to the targets arrayList
+	 * @param enemy
+	 */
 	public void addEnemy(Enemy enemy){
-		
-		if(enemy instanceof Bat)
-			System.out.println("enemy added");
 		targets.add(enemy);
 	}
 
-
+	/**
+	 * add projectile to the projectiles arrayList
+	 * @param range
+	 */
 	public void addProjectile(RangeAttack range){
 		projectiles.add(range);
 	}
 
+	/**
+	 * method used in the close directed attack where it searches throught all the targets except the one that is shooting 
+	 * and if the target is in the range of the attack baed on direction it is returned 
+	 * @param xRange
+	 * @param yRange
+	 * @param attacker
+	 * @return
+	 */
 	public Creature getEnemy(int xRange, int yRange, Creature attacker){
 		for(int i=0; i<targets.size(); i++){
 		Creature potential;
@@ -538,52 +547,42 @@ public class Level implements Screen{
 							if(potential.getX()+potential.getSize()/2 - attacker.getX() >= 0)
 								if(potential.getY()+potential.getSize()/2 - attacker.getY() <= yRange)
 									if(potential.getY()+potential.getSize()/2 - attacker.getY() >= 0){
-										
 										return potential;
 									}
-										
-							
 					}
 					if(attacker.getDirection() == "left"){
 						if(attacker.getX()+potential.getSize()/2 - potential.getX() <= xRange/2)
 							if(attacker.getX()+potential.getSize()/2 - potential.getX() >= 0)
 								if(attacker.getY()+potential.getSize()/2 - potential.getY() <= yRange)
-									if(attacker.getY()+potential.getSize()/2 - potential.getY() >= 0){
-										
+									if(attacker.getY()+potential.getSize()/2 - potential.getY() >= 0){	
 										return potential;
-									}
-										
-								
+									}			
 					}
 					if(attacker.getDirection() == "down"){
 						if(attacker.getY()+potential.getSize()/2 - potential.getY() <= xRange)
 							if(attacker.getY()+potential.getSize()/2 - potential.getY() >= 0)
 								if(attacker.getX()+potential.getSize()/2 - potential.getX() <= yRange/2)
 									if(attacker.getX()+potential.getSize()/2 - potential.getX() >= 0){
-									
 										return potential;
-									}
-										
+									}				
 					}
 					if(attacker.getDirection() == "up"){
 						if(potential.getY()+potential.getSize()/2 - attacker.getY() <= xRange)
 							if(potential.getY()+potential.getSize()/2 - attacker.getY() >= 0)
 								if(potential.getX()+potential.getSize()/2 - attacker.getX() <= yRange/2)
-									if(potential.getX()+potential.getSize()/2 - attacker.getX() >= 0){
-										
+									if(potential.getX()+potential.getSize()/2 - attacker.getX() >= 0){	
 										return potential;
-								}
-								
+								}			
 					}
 				}
-			
 		}
 		return null;
 	}
 
-	// Boss boss = new Boss(this, 600, 600, 27, 38, 200, null, 1);
 
-
+	/**
+	 *  class where all the sprites ad images are rendered and where all teh values o the game entities are updated
+	 */
 	@Override
 	public void render (float delta) {
 		if(Gdx.input.isKeyJustPressed(Keys.B)){
@@ -596,17 +595,19 @@ public class Level implements Screen{
 		batch.begin();
 		backgroundPicture.draw(batch);
 
-		// boss.update();
-		// boss.explore(character);
-
-
 		projectiles = character.getProjectiles();
 
+		/**
+		 * updates the location of the projectiles every run
+		 */
 		for(int i=0; i<projectiles.size(); i++){
 			projectiles.get(i).update();
 			batch.draw(projectiles.get(i).getTexture(), projectiles.get(i).getX(), projectiles.get(i).getY());
 		}
 
+		/**
+		 * set up the attack animation for 20 frames one the player attacks something close range
+		 */
 		attackCounter++;
 		if(startAttack){
 			if(attackCounter <= 20){
@@ -641,6 +642,9 @@ public class Level implements Screen{
 			batch.draw(trees.get(i).getSprite(),trees.get(i).getX(),trees.get(i).getY());
 		}
 
+		/**
+		 * iterate throught all the targets and draw them on the screen
+		 */
 		for(int i=0;i<targets.size();i++){
 			if(targets.get(i).alive()){
 				if(targets.get(i) == character){
@@ -659,11 +663,12 @@ public class Level implements Screen{
 					
 				}
 
+				/**
+				 * checks if a projectile has hit any of the targets
+				 */
 				Creature currentC = targets.get(i);
 				for(int j=0; j<projectiles.size(); j++){
 					RangeAttack currentR = projectiles.get(j);
-
-				
 					if(Math.abs(currentR.getSize()/2 + currentR.getY() - currentC.getY()) <= currentC.getSize()/2){
 						if(Math.abs(currentR.getSize()/2 + currentR.getX() - currentC.getX()) <= currentC.getSize()/2){
 							targets.get(i).setHealth(targets.get(i).getHealth() - 10);
@@ -680,9 +685,15 @@ public class Level implements Screen{
 			else{
 				if(targets.get(i) instanceof Enemy){
 					if(!((Enemy) targets.get(i)).isLooted()) {
-						System.out.println("DEAD ENEMY");
+					//	System.out.println("DEAD ENEMY");
 						Enemy deadEnemy = (Enemy) targets.get(i);
 						((Enemy) targets.get(i)).setLooted(true);
+						// draw animation after enemy 
+						batch.draw(attack.getCurrentFrame(), deadEnemy.getX(), deadEnemy.getY());
+						attack.setCurrentFrameNumber(dropCounter++);
+						if(dropCounter >=4){
+							dropCounter = 0;
+						}
 						int coins = ((Enemy) targets.get(i)).getCoinDrop();
 						int mana = ((Enemy) targets.get(i)).getManaDrop();
 						int health = ((Enemy) targets.get(i)).getHeartDrop();
@@ -709,7 +720,7 @@ public class Level implements Screen{
 			}
 			else{
 				if(pickable.getType().equals(DropType.HEART)){
-					System.out.println(character.health);
+					// System.out.println(character.health);
 				}
 				cycleDrops.remove();
 			}
@@ -732,7 +743,8 @@ public class Level implements Screen{
 		
 		
 		/**
-		 * have camera always follow the player.
+		 * have camera always follow the player if it s alive
+		 * if the viewport exceeds the x/y coordinates of the map the viewport locks on that axis
 		 */
 
 		 if(character.alive()){
@@ -774,25 +786,13 @@ public class Level implements Screen{
 
 
 		character.update();
-		//slimeSpawner.spawnNewMonster(this, enemies,(int)slimeSpawner.getX()+100,(int)slimeSpawner.getY()+100,20,18,50,slime.getSprite(),(float)0.4);
+		slimeSpawner.spawnNewMonster(this, enemies,(int)slimeSpawner.getX()+100,(int)slimeSpawner.getY()+100,20,18,50,null,(float)0.4);
+		slimeSpawner.update();
 
-
-		// if(healthProcentage>90){
-		// 	batch.draw(heart_8, 120, 83);
-		// }
-
-		//Would be changed into an array of all the coins
-		//Coins removed would not be checked this is for testing purposes
-//		if(!coin.isPickedUp()){
-//			character.pickUp(coin);
-//		}
 		//FOLLOW PLAYER CODE
 		for(Enemy e:enemies){
 			e.explore(character);
 		}
-		//slime.explore(character);
-		//If person enters slimes territory
-		//If the entire person has entered the slime territory
 
 		batch.end();
 
@@ -812,6 +812,9 @@ public class Level implements Screen{
 		int manaProcentage = character.getMana() * 100 / character.getHealthLimit();
 		int healthProcentage = character.getHealth() * 100 / character.getHealthLimit();
 
+		/**
+		 * sets the mana and health sprites based on the procentage of the mana/health compared to the max
+		 */
 		if(manaProcentage == 100){
 			mana = mana_10;			
 		}

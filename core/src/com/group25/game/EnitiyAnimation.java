@@ -29,6 +29,7 @@ public class EnitiyAnimation{
 
     private int startFrame, endFrame;
 
+    //Loads the entities animation and includes all the necessary infomation to perform the animation
     public EnitiyAnimation(TextureRegion animationSegment,int numberOfFrames,int frameTime, int startFrame, int endFrame){
         int frameWidth = animationSegment.getRegionWidth()/numberOfFrames;
         int frameHeight = animationSegment.getTexture().getHeight();
@@ -46,22 +47,26 @@ public class EnitiyAnimation{
         }
         currentFrame = startFrame;
     }
-
+    //Returns the current frame
     public int getCurrentFrameNumber(){
         return currentFrame;
     }
 
+    //Determine the number of fraems in the animation
     public void setCurrentFrameNumber(int x){
         this.currentFrame = x;
     }
     
-    
+    //Last frame
     public void end(){
         this.endFrame = this.startFrame;
     }
 
 
-
+    /**
+     * Updates the animations frame (swaps out each image every number of frames provided)
+     * @param dt
+     */
     public void update(double dt){
         currentFrameTime += dt;
         if(currentFrameTime>frameTime){

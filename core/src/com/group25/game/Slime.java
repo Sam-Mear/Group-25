@@ -17,8 +17,23 @@ public class Slime extends Enemy{
     private int attackSpeed;
     private EnitiyAnimation animation;
     private TextureRegion current;
+    private boolean attacked = false;
+    private int counter = 0;
 
-
+    /**
+     * child class of enemy
+     * @param level
+     * @param positionX
+     * @param positionY
+     * @param width
+     * @param height
+     * @param health
+     * @param img
+     * @param entitySpeed
+     * @param range
+     * @param damage
+     * @param attackSpeed
+     */
     public Slime(Level level, float positionX, float positionY,int width, int height,int health, Sprite img, float entitySpeed, int range, int damage,int  attackSpeed){
         super(positionX, positionY, width, height, health, img, entitySpeed,
                 new Rectangle((int)positionX,(int)positionY,width,height),  //Hitbox
@@ -36,10 +51,9 @@ public class Slime extends Enemy{
                 
     }
 
-    private boolean attacked = false;
-    int counter = 0;
-
-
+    /**
+     * updates the sprite of the slime
+     */
     public void update(){
         if(getMoving()){
             animation.update(1);
@@ -65,6 +79,10 @@ public class Slime extends Enemy{
         counter = 1;
     }
 
+    /**
+     * 
+     * @return current sprite
+     */
     public TextureRegion getTexture(){
         return current;
     }
@@ -73,20 +91,11 @@ public class Slime extends Enemy{
     public void explore(Player player) {
         this.getHitbox().setLocation((int) this.getX(), (int) this.getY());
         this.getAlertArea().setLocation((int) (this.getX() - (200 - this.getWidth()) / 2), (int) (this.getY() - (200 - this.getHeight()) / 2));
-       // System.out.printf("Slime alertArea left x: %d bottom y: %d\n", (int) (this.getX() - (200 - this.getWidth()) / 2), (int) (this.getY() - (200 - this.getHeight()) / 2));
-       // System.out.printf("Slime alertArea right x: %d top y: %d\n", (int) (this.getX() - (200 - this.getWidth()) / 2) + 200, (int) (this.getY() - (200 - this.getHeight()) / 2) + 200);
-       // System.out.printf("Slime alertArea: width: %d height: %d\n", 200, 200);
-       this.chasePlayer(player, 30, 5, 15, this, 30, 30);
-       if( this.getMoving()){
-            this.updateMovement();
+
+       if(!this.chasePlayer(player, 30, 5, 15, this, 30, 30)){
+           this.updateMovement();
+
        }
-       
-    }
 
-    public double changeAngle(double b,double x){
-        double top = 1;
-        double bottom = 1+Math.exp(-b*Math.tan(Math.PI*(x-0.5)));
-        return top/bottom;
     }
-
 }

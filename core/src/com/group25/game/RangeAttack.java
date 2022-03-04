@@ -22,8 +22,16 @@ public class RangeAttack{
     private float yStart;
     private int size;
     
+    /**
+     *  creates a projectile
+     * @param level
+     * @param direction
+     * @param range
+     * @param xStart
+     * @param yStart
+     * @param size
+     */
     public RangeAttack(Level level, String direction, int range, float xStart, float yStart, int size){
-
         attack = new Sprite(new Texture("projectile.png"));;
         this.range = range;
         this.x = xStart;
@@ -34,8 +42,10 @@ public class RangeAttack{
         this.alive = true;
     }
 
-    
-
+    /**
+     * updates the location of the projectile so that it moves in the direction it should and 
+     * so that it dies if the range in exceded or if it hit something
+     */
     public void update(){
         boolean found = true;
         if(distance >= range){
