@@ -25,10 +25,18 @@ public class Drop extends Item{
         this.type = type;
     }
 
+    /**
+     * How much does the value contain
+     * @return
+     */
     public int getAmount(){
         return amount;
     }
 
+    /**
+     * What is the corrosponding enum for this
+     * @return
+     */
     public DropType getType(){
         return type;
     }

@@ -10,7 +10,9 @@ import java.lang.Math;
 import java.lang.*;
 
 
-
+/**
+ * Creature class determines all moving entites and this is created to join associated functions variables between player and other creatures
+ */
 
 public abstract class Creature extends GameEntity{
 
@@ -51,7 +53,6 @@ public abstract class Creature extends GameEntity{
         return alive;
     }
 
-    //Attack Section
     public void playerAttack(Level level, int damage, int xRange, int yRange){
         Creature target = level.getEnemy(xRange, yRange, this);
         if(target instanceof Slime){

@@ -127,11 +127,12 @@ public class Level implements Screen{
 		mana_1 = new Sprite( new Texture("mana_sprites/mana-1.png"));
 		mana_0 = new Sprite( new Texture("mana_sprites/mana.png"));
 		
-
+		//The Factory
 		EnemyFactory slimeCamp = new SlimeFactory();
+		//The Animation
 		camp = new EnviromentAnimated(300, 300, 130, 43, new Sprite(new Texture("GameEntity/camp-fire.png")), 4, 7);
+		//The spawner
 		slimeSpawner = new EnemySpawner(300,300,130,43,camp.getSprite(),slimeCamp,10);
-
 
 		UiBorder = new Sprite(new Texture("GUI/border.png"));
 		UiBorder.setX(0);
@@ -151,20 +152,9 @@ public class Level implements Screen{
 		targets.add(character);
 
 		loadLevel(levelName);
-		// TODO : this needs to be fixed haha
-		//"testlevel" would actually be anything that is parsed into the level constructor.
-		//so if "level1" was given to Level.java, then it would attempt to find the txt file containing level details 
-		//for level 1.
-		//For a test, this is fine.
 
-
-		// character = new Player(this, (int)GAME_WORLD_WIDTH/2-80,(int)GAME_WORLD_HEIGHT/2-80,42,28,1000,img,5);//probably temp, just getting used to libgdx
 		character.setSpeed(2);
-		// targets.add(character);
 
-		//allertArea = new Sprite(new Texture(("Slime_Test_Area.png")));
-
-		//System.out.println("Speeddddd: "+character.getSpeed());
 	}
 
 	public void loadLevel(String levelName){
@@ -269,10 +259,11 @@ public class Level implements Screen{
 											new Sprite(new Texture(args.get(5))),
 											Float.parseFloat(args.get(6)), 50, 5, 25));
 					//TEMP DELETEME
-					//slime = (Slime) enemies.get(0);
-					//addEnemy(slime);
-					//EnemyFactory slimeCamp = new SlimeFactory();
-					//slimeCamp.getNewMonster(this, 50,50,100,100,50,slime.getSprite(),1);
+					enemies.add(new Slime(this,50,50,16,16,5,null,0,4,14,14));
+					slime = (Slime) enemies.get(enemies.size()-1);
+					addEnemy(slime);
+					EnemyFactory slimeCamp = new SlimeFactory();
+					slimeCamp.getNewMonster(this, 50,50,100,100,50,slime.getSprite(),1);
 
 				}else if(line.equals("BAT:")){
 					ArrayList<String> args = new ArrayList<String>();
@@ -344,9 +335,6 @@ public class Level implements Screen{
 		} catch(FileNotFoundException fileNotFoundException){
 			System.out.println("file "+Gdx.files.internal("Levels/"+levelName+"/level.txt")+ " not found!");
 		}
-
-
-		//slime.setHealth(100);
 	}
 	
 	@Override
@@ -745,25 +733,13 @@ public class Level implements Screen{
 
 
 		character.update();
-		//slimeSpawner.spawnNewMonster(this, enemies,(int)slimeSpawner.getX()+100,(int)slimeSpawner.getY()+100,20,18,50,slime.getSprite(),(float)0.4);
+		slimeSpawner.spawnNewMonster(this, enemies,(int)slimeSpawner.getX()+100,(int)slimeSpawner.getY()+100,20,18,50,null,(float)0.4);
+		slimeSpawner.update();
 
-
-		// if(healthProcentage>90){
-		// 	batch.draw(heart_8, 120, 83);
-		// }
-
-		//Would be changed into an array of all the coins
-		//Coins removed would not be checked this is for testing purposes
-//		if(!coin.isPickedUp()){
-//			character.pickUp(coin);
-//		}
 		//FOLLOW PLAYER CODE
 		for(Enemy e:enemies){
 			e.explore(character);
 		}
-		//slime.explore(character);
-		//If person enters slimes territory
-		//If the entire person has entered the slime territory
 
 		batch.end();
 
