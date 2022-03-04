@@ -47,11 +47,22 @@ public abstract class Creature extends GameEntity{
         return direction;
     }
 
+    /**
+     * 
+     * @return true if the creature is alive and false if it has died
+     */
     public boolean alive(){
         return alive;
     }
 
-    //Attack Section
+    /**
+     * close range directed attack
+     * searches throught the targets in level and decreases their health
+     * @param level
+     * @param damage
+     * @param xRange
+     * @param yRange
+     */
     public void playerAttack(Level level, int damage, int xRange, int yRange){
         Creature target = level.getEnemy(xRange, yRange, this);
         if(target instanceof Slime){
@@ -60,14 +71,10 @@ public abstract class Creature extends GameEntity{
         if(target == null){
             return;
         }else{
-            System.out.println(target.getHealth());
-
             target.setHealth(target.getHealth()-damage);
 
         }
     }
-
-    
 
     private static Object getposition() {
         return getposition();

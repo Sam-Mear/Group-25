@@ -17,8 +17,23 @@ public class Slime extends Enemy{
     private int attackSpeed;
     private EnitiyAnimation animation;
     private TextureRegion current;
+    private boolean attacked = false;
+    private int counter = 0;
 
-
+    /**
+     * child class of enemy
+     * @param level
+     * @param positionX
+     * @param positionY
+     * @param width
+     * @param height
+     * @param health
+     * @param img
+     * @param entitySpeed
+     * @param range
+     * @param damage
+     * @param attackSpeed
+     */
     public Slime(Level level, float positionX, float positionY,int width, int height,int health, Sprite img, float entitySpeed, int range, int damage,int  attackSpeed){
         super(positionX, positionY, width, height, health, img, entitySpeed,
                 new Rectangle((int)positionX,(int)positionY,width,height),  //Hitbox
@@ -36,10 +51,9 @@ public class Slime extends Enemy{
                 
     }
 
-    private boolean attacked = false;
-    int counter = 0;
-
-
+    /**
+     * updates the sprite of the slime
+     */
     public void update(){
         if(getMoving()){
             animation.update(1);
@@ -65,6 +79,10 @@ public class Slime extends Enemy{
         counter = 1;
     }
 
+    /**
+     * 
+     * @return current sprite
+     */
     public TextureRegion getTexture(){
         return current;
     }
@@ -80,7 +98,6 @@ public class Slime extends Enemy{
        if( this.getMoving()){
             this.updateMovement();
        }
-       
     }
 
     public double changeAngle(double b,double x){
