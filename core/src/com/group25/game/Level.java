@@ -152,20 +152,9 @@ public class Level implements Screen{
 		targets.add(character);
 
 		loadLevel(levelName);
-		// TODO : this needs to be fixed haha
-		//"testlevel" would actually be anything that is parsed into the level constructor.
-		//so if "level1" was given to Level.java, then it would attempt to find the txt file containing level details 
-		//for level 1.
-		//For a test, this is fine.
 
-
-		// character = new Player(this, (int)GAME_WORLD_WIDTH/2-80,(int)GAME_WORLD_HEIGHT/2-80,42,28,1000,img,5);//probably temp, just getting used to libgdx
 		character.setSpeed(2);
-		// targets.add(character);
 
-		//allertArea = new Sprite(new Texture(("Slime_Test_Area.png")));
-
-		//System.out.println("Speeddddd: "+character.getSpeed());
 	}
 
 	public void loadLevel(String levelName){
@@ -346,9 +335,6 @@ public class Level implements Screen{
 		} catch(FileNotFoundException fileNotFoundException){
 			System.out.println("file "+Gdx.files.internal("Levels/"+levelName+"/level.txt")+ " not found!");
 		}
-
-
-		//slime.setHealth(100);
 	}
 	
 	@Override
@@ -744,22 +730,10 @@ public class Level implements Screen{
 		slimeSpawner.spawnNewMonster(this, enemies,(int)slimeSpawner.getX()+100,(int)slimeSpawner.getY()+100,20,18,50,null,(float)0.4);
 		slimeSpawner.update();
 
-		// if(healthProcentage>90){
-		// 	batch.draw(heart_8, 120, 83);
-		// }
-
-		//Would be changed into an array of all the coins
-		//Coins removed would not be checked this is for testing purposes
-//		if(!coin.isPickedUp()){
-//			character.pickUp(coin);
-//		}
 		//FOLLOW PLAYER CODE
 		for(Enemy e:enemies){
 			e.explore(character);
 		}
-		//slime.explore(character);
-		//If person enters slimes territory
-		//If the entire person has entered the slime territory
 
 		batch.end();
 

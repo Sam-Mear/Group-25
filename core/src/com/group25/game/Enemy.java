@@ -45,6 +45,18 @@ public abstract class Enemy extends Creature{
 
     private int counter = 0;
 
+    /**
+     * It will check if the player is in the alert view and if so it will approach the player
+     * @param player
+     * @param range
+     * @param damage
+     * @param attackCounter
+     * @param attacker
+     * @param safetyX
+     * @param safetyY
+     * @return
+     */
+
     public boolean chasePlayer(Player player, int range, int damage, int  attackCounter, Creature attacker, int safetyX, int safetyY){
 
         if(attacker.alive()){
@@ -133,6 +145,13 @@ public abstract class Enemy extends Creature{
         this.looted = looted;
     }
 
+    /**
+     * Performs an attack around the enemy
+     * @param player
+     * @param range
+     * @param damage
+     */
+
     private void suroundAttack(Player player, int  range, int damage){
            
             if(Math.abs(player.getX() - this.getX()) <= range)
@@ -169,21 +188,21 @@ public abstract class Enemy extends Creature{
 
     /**
      * Update movement tick, will update the enemies x and y speed
-     *
+     *  based on the change in angle it will move around smoothly and well dsitributed
      */
     public void updateMovement(){
-        double xTemp = xSpeed;
-        double yTemp = ySpeed;
-        double deltaA = changeAngle(100,r.nextDouble()) * 2*Math.PI;
-        ySpeed = xTemp*Math.sin(deltaA)+yTemp*Math.cos(deltaA);
-        xSpeed = xTemp*Math.cos(deltaA)-yTemp*Math.sin(deltaA);
+        double xTemp = xSpeed;  //Current xSpeed
+        double yTemp = ySpeed;  //Current ySpeed
+        double deltaA = changeAngle(100,r.nextDouble()) * 2*Math.PI;    //Change in angle
+        ySpeed = xTemp*Math.sin(deltaA)+yTemp*Math.cos(deltaA); //Updated ySpeed
+        xSpeed = xTemp*Math.cos(deltaA)-yTemp*Math.sin(deltaA); //Update xSpeed
+
+        //Sends movement boundries
         if(this.x>this.width && this.x<Level.GAME_WORLD_WIDTH-this.width){
             this.x += xSpeed;
-
         }
         if(this.y>this.height && this.y<Level.GAME_WORLD_HEIGHT-this.height){
             this.y += ySpeed;
-            
         }
     }
 

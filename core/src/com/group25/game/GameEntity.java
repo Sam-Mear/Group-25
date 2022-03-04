@@ -15,6 +15,7 @@ public abstract class GameEntity {
     protected boolean collidable = false;
 	protected Rectangle hitbox;
 
+
     public GameEntity(float positionX, float positionY, int width, int height, Sprite img){
 		x = positionX;
 		y = positionY;
@@ -99,10 +100,17 @@ public abstract class GameEntity {
 
 	}
 
+	/**
+	 * Update the position of the hitbox so that game entities can interact with eachother
+	 */
 	public void updateHitbox() {
         this.getHitbox().setLocation((int)this.getX(),(int)this.getY());
     }
-  
+
+	/**
+	 * Returns entities hitbox
+	 * @return
+	 */
 	public Rectangle getHitbox() {
 		return hitbox;
 	}

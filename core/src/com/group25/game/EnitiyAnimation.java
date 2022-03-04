@@ -61,7 +61,10 @@ public class EnitiyAnimation{
     }
 
 
-
+    /**
+     * Updates the animations frame (swaps out each image every number of frames provided)
+     * @param dt
+     */
     public void update(double dt){
         currentFrameTime += dt;
         if(currentFrameTime>frameTime){
