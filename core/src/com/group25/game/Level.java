@@ -106,7 +106,8 @@ public class Level implements Screen{
 	static int GAME_WORLD_HEIGHT = 1334;
 
 	/**
-	 * 
+	 * Rather than using multiple classes for each of the levels, we load of txt file.
+	 * Less code needs to be written then as this class can load any txt file of a level.
 	 * @param levelName name of the level
 	 */
 	public Level(String levelName) {
@@ -165,6 +166,13 @@ public class Level implements Screen{
 
 	}
 
+	/**
+	 * loads the level from levelName
+	 * 
+	 * Unloads the level already loaded if needed, including disposing of sprites and textures. then loads all the things needed for the new level
+	 * 
+	 * @param levelName name of level
+	 */
 	public void loadLevel(String levelName){
 		//unload the previous level if needed...
 		for(int i = trees.size(); i>0;i--){
@@ -382,6 +390,11 @@ public class Level implements Screen{
 		viewport.update(width,height);
 	}
 
+	/**
+	 * Check the players position, to see if he has entered a teleport.
+	 * 
+	 * @return returns name of level to teleport to. "" if no teleport found.
+	 */
 	public String checkForTeleport(){
 		for(int i = 0;i<teleports.size();i++){
 			//bottom left
@@ -406,6 +419,12 @@ public class Level implements Screen{
 		return "";
 	}
 
+	/**
+	 * When a character moves, this is called to find out if the move is legal.
+	 * @param axis movement along what axis
+	 * @param coordinate the coordinate along axis
+	 * @return true for valid move, false for not valid.
+	 */
 	public boolean checkForCollision(char axis, float coordinate){
 		if(checkForTeleport() != ""){
 			loadLevel(checkForTeleport());
@@ -700,7 +719,7 @@ public class Level implements Screen{
 						Random r = new Random();
 						Drop coinDrop = new Drop(deadEnemy.getX(), deadEnemy.getY(), 16, 16, new Sprite(new Texture("GameEntity/coin_animated.png")), 5, 5,100,DropType.COIN);
 						Drop heartDrop = new Drop(deadEnemy.getX()+30, deadEnemy.getY()+30, 22, 24, new Sprite(new Texture("GameEntity/heart_animated.png")), 10, 3,100,DropType.HEART);
-						Drop manaDrop = new Drop(deadEnemy.getX()-30, deadEnemy.getY()-30, 16, 16, new Sprite(new Texture("GameEntity/coin_animated.png")), 5, 5,100,DropType.MANA);
+						Drop manaDrop = new Drop(deadEnemy.getX()-30, deadEnemy.getY()-30, 16, 16, new Sprite(new Texture("Mana.png")), 1, 5,100,DropType.MANA);
 						allDrops.add(heartDrop);
 						allDrops.add(coinDrop);
 						allDrops.add(manaDrop);

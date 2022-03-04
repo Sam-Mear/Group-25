@@ -1,0 +1,204 @@
+MAP SIZE:
+    width: 1778
+    height: 1334
+BACKGROUND: Map-1.png
+
+MUMMY:
+    x: 733
+    y: 893
+    width: 100
+    height: 50
+    health: 10
+    sprite: GameEntity/Enemy/mummy.png
+    speed: 1
+
+MUMMY:
+    x: 426
+    y: 836
+    width: 100
+    height: 50
+    health: 10
+    sprite: GameEntity/Enemy/mummy.png
+    speed: 1
+
+MUMMY:
+    x: 114
+    y: 1210
+    width: 100
+    height: 50
+    health: 10
+    sprite: GameEntity/Enemy/mummy.png
+    speed: 1
+
+MUMMY:
+    x: 866
+    y: 1264
+    width: 100
+    height: 50
+    health: 10
+    sprite: GameEntity/Enemy/mummy.png
+    speed: 1
+
+MUMMY:
+    x: 135
+    y: 643
+    width: 100
+    height: 50
+    health: 10
+    sprite: GameEntity/Enemy/mummy.png
+    speed: 1
+
+MUMMY:
+    x: 1623
+    y: 490
+    width: 100
+    height: 50
+    health: 10
+    sprite: GameEntity/Enemy/mummy.png
+    speed: 1
+
+MUMMY:
+    x: 1440
+    y: 645
+    width: 100
+    height: 50
+    health: 10
+    sprite: GameEntity/Enemy/mummy.png
+    speed: 1
+
+MUMMY:
+    x: 1161
+    y: 347
+    width: 100
+    height: 50
+    health: 10
+    sprite: GameEntity/Enemy/mummy.png
+    speed: 1
+
+MUMMY:
+    x: 1132
+    y: 726
+    width: 100
+    height: 50
+    health: 10
+    sprite: GameEntity/Enemy/mummy.png
+    speed: 1
+
+SLIME:
+    x: 890
+    y: 1238
+    width: 32
+    height: 32
+    health: 25
+    sprite: GameEntity/Green_Slime.png
+    speed: 0.5
+
+SLIME:
+    x: 561
+    y: 776
+    width: 32
+    height: 32
+    health: 25
+    sprite: GameEntity/Green_Slime.png
+    speed: 0.5
+
+SLIME:
+    x: 214
+    y: 576
+    width: 32
+    height: 32
+    health: 25
+    sprite: GameEntity/Green_Slime.png
+    speed: 0.5
+
+SLIME:
+    x: 99
+    y: 659
+    width: 32
+    height: 32
+    health: 25
+    sprite: GameEntity/Green_Slime.png
+    speed: 0.5
+
+SLIME:
+    x: 183
+    y: 238
+    width: 32
+    height: 32
+    health: 25
+    sprite: GameEntity/Green_Slime.png
+    speed: 0.5
+
+SLIME:
+    x: 133
+    y: 1217
+    width: 32
+    height: 32
+    health: 25
+    sprite: GameEntity/Green_Slime.png
+    speed: 0.5
+
+SLIME:
+    x: 1354
+    y: 362
+    width: 32
+    height: 32
+    health: 25
+    sprite: GameEntity/Green_Slime.png
+    speed: 0.5
+
+BAT:
+    x: 1654
+    y: 428
+    width: 30
+    height: 20
+    health: 50
+    speed: 1
+    range: 10
+    damage: 5
+    attackSpeed: 20
+
+BAT:
+    x: 647
+    y: 848
+    width: 30
+    height: 20
+    health: 50
+    speed: 1
+    range: 10
+    damage: 5
+    attackSpeed: 20
+
+BAT:
+    x: 430
+    y: 843
+    width: 30
+    height: 20
+    health: 50
+    speed: 1
+    range: 10
+    damage: 5
+    attackSpeed: 20
+
+BAT:
+    x: 495
+    y: 590
+    width: 30
+    height: 20
+    health: 50
+    speed: 1
+    range: 10
+    damage: 5
+    attackSpeed: 20
+
+BAT:
+    x: 742
+    y: 1283
+    width: 30
+    height: 20
+    health: 50
+    speed: 1
+    range: 10
+    damage: 5
+    attackSpeed: 20
+
