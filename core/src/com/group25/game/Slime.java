@@ -79,6 +79,10 @@ public class Slime extends Enemy{
         counter = 1;
     }
 
+    /**
+     * 
+     * @return current sprite
+     */
     public TextureRegion getTexture(){
         return current;
     }

@@ -212,9 +212,7 @@ public abstract class Enemy extends Creature{
         return heartDrop;
     }
 
-    /**
-     *  sets the direction of the enemy so that it moves naturally with probability
-     */
+   
     public void updateMovement(){
         double xTemp = xSpeed;
         double yTemp = ySpeed;
@@ -231,19 +229,11 @@ public abstract class Enemy extends Creature{
         }
     }
 
-    /**
-     * changes the direction of the movement
-     * @param b
-     * @param x
-     * @return
-     */
     public double changeAngle(double b,double x){
         double top = 1;
         double bottom = 1+Math.exp(-b*Math.tan(Math.PI*(x-0.5)));
         return top/bottom;
     }
-
-
 
     public double getySpeed() {
         return ySpeed;

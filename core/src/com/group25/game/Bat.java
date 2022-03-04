@@ -16,7 +16,7 @@ public class Bat extends Enemy{
     private TextureRegion current;
 
     /**
-     *  child class of enemy
+     *  child class of enemy 
      * @param level
      * @param positionX
      * @param positionY
@@ -52,6 +52,10 @@ public class Bat extends Enemy{
         current = animation.getCurrentFrame();
     }
 
+    /**
+     * return the current sprite
+     * @return
+     */
     public TextureRegion getTexture(){
         return current;
     }

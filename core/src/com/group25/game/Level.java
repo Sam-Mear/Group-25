@@ -529,8 +529,6 @@ public class Level implements Screen{
 									if(potential.getY()+potential.getSize()/2 - attacker.getY() >= 0){
 										return potential;
 									}
-										
-							
 					}
 					if(attacker.getDirection() == "left"){
 						if(attacker.getX()+potential.getSize()/2 - potential.getX() <= xRange/2)
@@ -538,9 +536,7 @@ public class Level implements Screen{
 								if(attacker.getY()+potential.getSize()/2 - potential.getY() <= yRange)
 									if(attacker.getY()+potential.getSize()/2 - potential.getY() >= 0){	
 										return potential;
-									}
-										
-								
+									}			
 					}
 					if(attacker.getDirection() == "down"){
 						if(attacker.getY()+potential.getSize()/2 - potential.getY() <= xRange)
@@ -548,8 +544,7 @@ public class Level implements Screen{
 								if(attacker.getX()+potential.getSize()/2 - potential.getX() <= yRange/2)
 									if(attacker.getX()+potential.getSize()/2 - potential.getX() >= 0){
 										return potential;
-									}
-										
+									}				
 					}
 					if(attacker.getDirection() == "up"){
 						if(potential.getY()+potential.getSize()/2 - attacker.getY() <= xRange)
@@ -560,7 +555,6 @@ public class Level implements Screen{
 								}			
 					}
 				}
-			
 		}
 		return null;
 	}
@@ -584,11 +578,17 @@ public class Level implements Screen{
 
 		projectiles = character.getProjectiles();
 
+		/**
+		 * updates the location of the projectiles every run
+		 */
 		for(int i=0; i<projectiles.size(); i++){
 			projectiles.get(i).update();
 			batch.draw(projectiles.get(i).getTexture(), projectiles.get(i).getX(), projectiles.get(i).getY());
 		}
 
+		/**
+		 * set up the attack animation for 20 frames one the player attacks something close range
+		 */
 		attackCounter++;
 		if(startAttack){
 			if(attackCounter <= 20){
@@ -622,6 +622,9 @@ public class Level implements Screen{
 			batch.draw(trees.get(i).getSprite(),trees.get(i).getX(),trees.get(i).getY());
 		}
 
+		/**
+		 * iterate throught all the targets and draw them on the screen
+		 */
 		for(int i=0;i<targets.size();i++){
 			if(targets.get(i).alive()){
 				if(targets.get(i) == character){
@@ -640,11 +643,12 @@ public class Level implements Screen{
 					
 				}
 
+				/**
+				 * checks if a projectile has hit any of the targets
+				 */
 				Creature currentC = targets.get(i);
 				for(int j=0; j<projectiles.size(); j++){
 					RangeAttack currentR = projectiles.get(j);
-
-				
 					if(Math.abs(currentR.getSize()/2 + currentR.getY() - currentC.getY()) <= currentC.getSize()/2){
 						if(Math.abs(currentR.getSize()/2 + currentR.getX() - currentC.getX()) <= currentC.getSize()/2){
 							targets.get(i).setHealth(targets.get(i).getHealth() - 10);
@@ -719,7 +723,8 @@ public class Level implements Screen{
 		
 		
 		/**
-		 * have camera always follow the player.
+		 * have camera always follow the player if it s alive
+		 * if the viewport exceeds the x/y coordinates of the map the viewport locks on that axis
 		 */
 
 		 if(character.alive()){
@@ -793,6 +798,9 @@ public class Level implements Screen{
 		int manaProcentage = character.getMana() * 100 / character.getHealthLimit();
 		int healthProcentage = character.getHealth() * 100 / character.getHealthLimit();
 
+		/**
+		 * sets the mana and health sprites based on the procentage of the mana/health compared to the max
+		 */
 		if(manaProcentage == 100){
 			mana = mana_10;			
 		}
@@ -826,11 +834,6 @@ public class Level implements Screen{
 			mana = mana_0;
 		}	
 		
-		UIElements.draw(mana, 20, 30);
-		
-
-
-		
 		if(healthProcentage > 90){
 			heart = hearts_8;
 		}	
@@ -861,6 +864,7 @@ public class Level implements Screen{
 
 		if(heart!=null){
 			UIElements.draw(heart, 110, 50);
+			UIElements.draw(mana, 20, 30);
 		}
 
 		if(!character.alive()){

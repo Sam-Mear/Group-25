@@ -76,6 +76,10 @@ public class Mummy extends Enemy{
         current = animation.getCurrentFrame();
     }
 
+    /**
+     * 
+     * @return current sprite
+     */
     public TextureRegion getTexture(){
         return animation.getCurrentFrame();
     }

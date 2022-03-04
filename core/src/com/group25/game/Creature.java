@@ -47,6 +47,10 @@ public abstract class Creature extends GameEntity{
         return direction;
     }
 
+    /**
+     * 
+     * @return true if the creature is alive and false if it has died
+     */
     public boolean alive(){
         return alive;
     }
