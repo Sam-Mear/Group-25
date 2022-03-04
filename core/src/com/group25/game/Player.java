@@ -15,53 +15,61 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ *  child class of Creature
+ */
 public class Player extends Creature implements ApplicationListener{
 
     Level currentLevel;         
 
+    /**
+     * in game 
+     */
     private int coins;
     private int currentMana = 100;
     private int manaLimit = 100;
     private int healthLimit = 100;
     private int counter = 0;
-    private EnitiyAnimation animation;
-    private TextureRegion currentTexture;
-
+    private int attackCounter = 0;
     private final int xAttackRange = 20;
     private final int yAttackRange = 10;
+    private int startFrame, endFrame = 0;
+
+    private EnitiyAnimation animation;
+    private TextureRegion currentTexture;
    
     private boolean leftMouseClicked = false;
     private boolean rightMouseClicked = false;
-
     private boolean moveUpAnimation;
     private boolean moveDownAnimation;
     private boolean moveRightAnimation;
     private boolean moveLeftAnimation;
-
-    private boolean attackSprite = false;
-    private int attackCounter = 0;
-
-    boolean downStarted, upStarted, leftStarted, rightStarted = false;
-
-
     private boolean shootingRange = false;
-  
-    ArrayList<RangeAttack> projectiles = new ArrayList();
+    private boolean attackSprite = false;
+    private boolean downStarted, upStarted, leftStarted, rightStarted = false;
 
-    private int startFrame, endFrame = 0;
+    ArrayList<RangeAttack> projectiles = new ArrayList();
 
     private Sprite img;
 
+
+/**
+ * 
+ * @param currentLevel  the level where the player is on
+ * @param positionX     x position
+ * @param positionY     y position
+ * @param width         width of the char in pixels
+ * @param height        height of the char in pixels
+ * @param health        health of the char in gmae
+ * @param img           the sprite of the char
+ * @param entitySpeed       the speed with which the char moves on the screen
+ */ 
     public Player(Level currentLevel, float positionX, float positionY,int width, int height,int health, Sprite img, int entitySpeed){
         super(positionX, positionY, width, height, health, img, entitySpeed,
                 new Rectangle((int)positionX,(int)positionY,width,height));
 
         this.img = img;
         this.currentLevel = currentLevel;
-
-        animation = new EnitiyAnimation(new Sprite(new Texture(("mummy.png"))), 4, 15, startFrame, endFrame);
-
-       
 
         animatePlayer(startFrame, endFrame);
     }
@@ -79,11 +87,19 @@ public class Player extends Creature implements ApplicationListener{
         rightMousePressed();
     }
 
+    /**
+     * 
+     * @param startFrame    start frame in the sprite sheet
+     * @param endFrame      end frame in the sprite sheet 
+     */
     private void setStartAndEndFrame(int startFrame, int endFrame){
         this.startFrame = startFrame;
         this.endFrame = endFrame;
     }
 
+    /**
+     * in W in pressed the player will move up and the variables with be set so that the sprite rotate throught the correct ones for this dretion
+     */
     private void WPressed(){
         if(Gdx.input.isKeyPressed(Keys.W)){
             if(currentLevel.checkForCollision('y',getY() + getSpeed())){
@@ -100,7 +116,9 @@ public class Player extends Creature implements ApplicationListener{
         }
     }
 
-    
+    /**
+     * in S in pressed the player will move down and the variables with be set so that the sprite rotate throught the correct ones for this dretion
+     */
     private void SPressed(){
         if(Gdx.input.isKeyPressed(Keys.S)){
             if(currentLevel.checkForCollision('y',getY() - getSpeed())){
@@ -117,6 +135,9 @@ public class Player extends Creature implements ApplicationListener{
         }
     }
 
+    /**
+     * in A in pressed the player will left up and the variables with be set so that the sprite rotate throught the correct ones for this dretion
+     */
     private void APressed(){
         if(Gdx.input.isKeyPressed(Keys.A)){
             if(currentLevel.checkForCollision('x',getX() - getSpeed())){
@@ -134,6 +155,9 @@ public class Player extends Creature implements ApplicationListener{
         
     }
    
+    /**
+     * in D in pressed the player will move rigth and the variables with be set so that the sprite rotate throught the correct ones for this dretion
+     */
     private void DPressed(){
         if(Gdx.input.isKeyPressed(Keys.D)){
             if(currentLevel.checkForCollision('x',getX() + getSpeed())){
@@ -151,6 +175,9 @@ public class Player extends Creature implements ApplicationListener{
     }
 
 
+    /**
+     * if the left mouse is clicked the left mouse variable is set true
+     */
     public void leftMousePressed(){
         if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
             leftMouseClicked = true;
@@ -160,7 +187,9 @@ public class Player extends Creature implements ApplicationListener{
         }
     }
 
-
+    /**
+     * if the right mouse is clicked the right mouse variable is set true
+     */
     public void rightMousePressed(){
         if(Gdx.input.isButtonPressed(Input.Buttons.RIGHT)){
             rightMouseClicked = true;
@@ -171,7 +200,10 @@ public class Player extends Creature implements ApplicationListener{
     }
     
 
-
+    /**
+     * all projectilescreated and still alive that the player made are put into an arrayList
+     * @return  the arrayList with the projectiles of the player
+     */
     public ArrayList<RangeAttack> getProjectiles(){
         for(int i=0; i<projectiles.size(); i++){
             if(!projectiles.get(i).getAlive()){
@@ -182,6 +214,10 @@ public class Player extends Creature implements ApplicationListener{
     }
 
 
+    /**
+     * 
+     * @return  the current level the player is on
+     */
     public Level getLevel(){
         return this.currentLevel;
     }
@@ -201,6 +237,10 @@ public class Player extends Creature implements ApplicationListener{
         currentTexture = animation.getCurrentFrame();
     }
 
+    /**
+     * called every second to update the stats of the player 
+     * like the currntFrame based on movement, the hitbox and the attacks, both long and short range
+     */
     public void update() {
 
         counter++;
@@ -259,6 +299,9 @@ public class Player extends Creature implements ApplicationListener{
             }
         }
 
+        /**
+         * checks if player has enught mana and if it does it shoots a projectile in the direction of the movemet
+         */
         if(rightMouseClicked){
             if(counter%5==0 && currentMana >= 10){
                 spendMana(10);
@@ -282,6 +325,9 @@ public class Player extends Creature implements ApplicationListener{
             }
         }
 
+        /**
+         * attacks in front of the player any enemy there is
+         */
         if(leftMouseClicked){
             if(counter%5==0){
                 playerAttack(currentLevel, 10, 150, 75);
@@ -324,6 +370,11 @@ public class Player extends Creature implements ApplicationListener{
             }
         }
     }
+
+    /**
+     * 
+     * @return the crrent texture region of the player
+     */
     public TextureRegion getTexture(){
         return currentTexture;
     }
@@ -380,8 +431,6 @@ public class Player extends Creature implements ApplicationListener{
     public int getHealth(){
         return this.health;
     }
-
-    
 
 
     @Override

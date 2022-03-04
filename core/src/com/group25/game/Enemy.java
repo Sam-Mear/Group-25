@@ -21,6 +21,18 @@ public abstract class Enemy extends Creature{
     private boolean isMoving = false;
     private boolean looted = false;
 
+    /**
+     * 
+     * @param positionX     positon X of the enemy
+     * @param positionY     positon Y of the enemy
+     * @param width         width of the enemy
+     * @param height        height of the enemy
+     * @param health        helth of the enemy
+     * @param img           sprite of the enemy(if the enemy uses only 1 sprite)
+     * @param entitySpeed       speed o the enemy
+     * @param hitbox            rectange hitbox of the enemy
+     * @param alertArea         rectangle alert area where enemies will start following he player if it is in there
+     */
     public Enemy(float positionX, float positionY, int width, int height, int health, Sprite img, float entitySpeed,Rectangle hitbox, Rectangle alertArea) {
         super(positionX, positionY, width, height, health, img, entitySpeed,hitbox);
         this.alertArea = alertArea;
@@ -46,17 +58,15 @@ public abstract class Enemy extends Creature{
     private int counter = 0;
 
     /**
-     * It will check if the player is in the alert view and if so it will approach the player
+     *  the enemy will start chasing the plyar if it is in the alert area
      * @param player
      * @param range
      * @param damage
-     * @param attackCounter
-     * @param attacker
-     * @param safetyX
-     * @param safetyY
-     * @return
+     * @param attackCounter     freqeuncy of the attacks
+     * @param attacker          the enemy that attacks
+     * @param safetyX              how far in X coord will the range attack spawn so it doesn't damage itslef
+     * @param safetyY           how far in X coord will the range attack spawn so it doesn't damage itslef
      */
-
     public boolean chasePlayer(Player player, int range, int damage, int  attackCounter, Creature attacker, int safetyX, int safetyY){
 
         if(attacker.alive()){
@@ -65,6 +75,10 @@ public abstract class Enemy extends Creature{
                suroundAttack(player, range, damage);
             }
             
+            /**
+             * based on where the player is related to the enemy choose where the enemy should go and where to attack
+             * based on the type of enemy choose what attacks are available for that type
+             */
             if (this.getAlertArea().contains(player.getHitbox())) {
                 isMoving = true;
                 if (this.getY() < player.getY()) {
@@ -127,14 +141,44 @@ public abstract class Enemy extends Creature{
         return direction;
     }
 
+    /**
+     *  creates a projectile that shoots in the directions the enemy is moving
+     * @param player
+     * @param range
+     * @param damage
+     * @param direction
+     * @param xStart
+     * @param yStart
+     */
     private void rangeAttack(Player player, float range, int damage, String direction, float xStart, float yStart){
         RangeAttack rangeAttack = new RangeAttack(player.getLevel(), direction, 200, xStart, yStart, 3);
         player.getLevel().addProjectile(rangeAttack);
     }
 
-
+    /**
+     *  calls the playerAttack class in Creature that attacks short range just in front of the enemy
+     * @param player
+     * @param range
+     * @param damage
+     * @param direction
+     * @param xStart
+     * @param yStart
+     */
     private void directedShortAttack(Player player, float range, int damage, String direction, float xStart, float yStart){
         playerAttack(player.getLevel(), (int)damage, (int)range, (int)range*2);
+    }
+
+    /**
+     * attacks in a radius around the enemy
+     * @param player
+     * @param range
+     * @param damage
+     */
+    private void suroundAttack(Player player, int  range, int damage){
+        if(Math.abs(player.getX() - this.getX()) <= range)
+        if(Math.abs(player.getY() - this.getY()) <= range){
+            player.setHealth(player.getHealth()-damage);
+         }
     }
 
     public boolean isLooted() {
@@ -145,25 +189,8 @@ public abstract class Enemy extends Creature{
         this.looted = looted;
     }
 
-    /**
-     * Performs an attack around the enemy
-     * @param player
-     * @param range
-     * @param damage
-     */
 
-    private void suroundAttack(Player player, int  range, int damage){
-           
-            if(Math.abs(player.getX() - this.getX()) <= range)
-            if(Math.abs(player.getY() - this.getY()) <= range){
-                player.setHealth(player.getHealth()-damage);
-             }
-    }
-
-    /**Removes health of the enemy
-     *
-     * @param damage - damage received
-     */
+    
     public void takeDamage(int damage){
         //If the damage accumulated is more than the enemy health they will die
         if(getHealth()-damage<0){
@@ -218,8 +245,6 @@ public abstract class Enemy extends Creature{
         double bottom = 1+Math.exp(-b*Math.tan(Math.PI*(x-0.5)));
         return top/bottom;
     }
-
-
 
     public double getySpeed() {
         return ySpeed;
