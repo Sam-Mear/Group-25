@@ -1,0 +1,10 @@
+DEFAULT
+BOSS:
+    x: 
+    y: 
+    width: 27
+    height: 38
+    health: 200
+    sprite: GameEntity/Enemy/boss.png
+    speed: 1
+

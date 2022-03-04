@@ -11,7 +11,7 @@ HITBOX SPECIAL:
     y: 27
     width: 25
     height: 7
-    level name: int2
+    level name: int3
 HITBOX:
     x: 34
     y: 11
