@@ -507,11 +507,12 @@ public class Level implements Screen{
 						int mana = ((Enemy) targets.get(i)).getManaDrop();
 						int health = ((Enemy) targets.get(i)).getHeartDrop();
 						Random r = new Random();
-						Drop coinDrop = new Drop(deadEnemy.getX(), deadEnemy.getY(), 16, 16, new Sprite(new Texture("GameEntity/coin_animated.png")), 5, 5,1,DropType.COIN);
-						Drop heartDrop = new Drop(deadEnemy.getX()+30, deadEnemy.getY()+30, 22, 24, new Sprite(new Texture("GameEntity/heart_animated.png")), 10, 3,1,DropType.HEART);
-						//Drop manaDrop = new Drop(deadEnemy.getX(), deadEnemy.getY(), 16, 16, new Sprite(new Texture("GameEntity/coin_animated.png")), 5, 5,1,DropType.MANA);
+						Drop coinDrop = new Drop(deadEnemy.getX(), deadEnemy.getY(), 16, 16, new Sprite(new Texture("GameEntity/coin_animated.png")), 5, 5,100,DropType.COIN);
+						Drop heartDrop = new Drop(deadEnemy.getX()+30, deadEnemy.getY()+30, 22, 24, new Sprite(new Texture("GameEntity/heart_animated.png")), 10, 3,100,DropType.HEART);
+						Drop manaDrop = new Drop(deadEnemy.getX()-30, deadEnemy.getY()-30, 16, 16, new Sprite(new Texture("GameEntity/coin_animated.png")), 5, 5,100,DropType.MANA);
 						allDrops.add(heartDrop);
 						allDrops.add(coinDrop);
+						allDrops.add(manaDrop);
 					}
 				}
 			}
