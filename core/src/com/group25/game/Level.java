@@ -384,7 +384,7 @@ public class Level implements Screen{
 
 			if(GAME_WORLD_HEIGHT < 563 || GAME_WORLD_WIDTH < 840){
 				win.setSize(HUD_ELEMENT_WIDTH/2,HUD_ELEMENT_HEIGHT/2);
-				win.setX(420);
+				win.setX(320);
 				win.setY(218);
 				viewport.setWorldHeight(281);
 				viewport.setWorldWidth(420);
