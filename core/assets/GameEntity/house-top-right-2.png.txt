@@ -2,8 +2,8 @@ DEFAULT
 GAME ENTITY:
     x: 
     y: 
-    width: 128
-    height: 198
+    width: 123
+    height: 126
     sprite: GameEntity/house-top-right-2.png
     speed: 0
 

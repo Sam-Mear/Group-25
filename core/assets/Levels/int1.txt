@@ -1,0 +1,135 @@
+MAP SIZE:
+    width: 172
+    height: 149
+BACKGROUND: room-2.png
+
+DEFAULT PLAYER POSITIONS
+    x: 27
+    y: 71
+HITBOX SPECIAL:
+    x: 5
+    y: 27
+    width: 25
+    height: 7
+    level name: int2
+HITBOX:
+    x: 34
+    y: 11
+    width: 3
+    height: 59
+HITBOX:
+    x: 21
+    y: 12
+    width: 13
+    height: 12
+HITBOX:
+    x: 151
+    y: 0
+    width: 20
+    height: 25
+HITBOX:
+    x: 165
+    y: 24
+    width: 6
+    height: 110
+HITBOX:
+    x: 150
+    y: 128
+    width: 21
+    height: 20
+HITBOX:
+    x: 0
+    y: 106
+    width: 150
+    height: 42
+HITBOX:
+    x: 0
+    y: 88
+    width: 20
+    height: 17
+HITBOX:
+    x: 0
+    y: 0
+    width: 21
+    height: 26
+HITBOX:
+    x: 0
+    y: 25
+    width: 5
+    height: 63
+HITBOX:
+    x: 21
+    y: 0
+    width: 130
+    height: 11
+GAME ENTITY:
+    x: 122
+    y: 64
+    width: 30
+    height: 42
+    sprite: GameEntity/Interior/Bed.png
+    speed: 0
+
+GAME ENTITY:
+    x: 68
+    y: 80
+    width: 35
+    height: 25
+    sprite: GameEntity/Interior/Countertop_wiith_Drawers.png
+    speed: 0
+
+BAT:
+    x: 70
+    y: 46
+    width: 30
+    height: 20
+    health: 50
+    speed: 1
+    range: 10
+    damage: 5
+    attackSpeed: 20
+
+BAT:
+    x: 70
+    y: 56
+    width: 30
+    height: 20
+    health: 50
+    speed: 1
+    range: 10
+    damage: 5
+    attackSpeed: 20
+
+
+GAME ENTITY:
+    x: 150
+    y: 79
+    width: 16
+    height: 24
+    sprite: GameEntity/Interior/Chest_of_Drawers.png
+    speed: 0
+
+GAME ENTITY:
+    x: 153
+    y: 96
+    width: 10
+    height: 13
+    sprite: GameEntity/Interior/Clock.png
+    speed: 0
+
+GAME ENTITY:
+    x: 121
+    y: 28
+    width: 14
+    height: 29
+    sprite: GameEntity/Interior/Padded_Chair.png
+    speed: 0
+
+GAME ENTITY:
+    x: 113
+    y: 11
+    width: 30
+    height: 31
+    sprite: GameEntity/Interior/Table_1.png
+    speed: 0
+

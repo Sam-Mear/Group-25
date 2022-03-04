@@ -171,17 +171,21 @@ public class LevelCreator extends JFrame implements Screen{
 	}
 
 	public ArrayList<JRadioButton> listFilesForFolder(final File folder,int folderflag) {
+		System.out.println(folder);
 		ArrayList<JRadioButton> buttons = new ArrayList<JRadioButton>();
 		for (final File fileEntry : folder.listFiles()) {
 			if (fileEntry.isDirectory()) {
-				listFilesForFolder(fileEntry,folderflag);
+				ArrayList<JRadioButton> temp = listFilesForFolder(fileEntry,folderflag);
+				for(JRadioButton item : temp){
+					buttons.add(item);
+				}
 			} else {
 				String temp = fileEntry.getName();
 				if(!temp.contains(".txt")){
 					if(folderflag == 1){
 						buttons.add(new JRadioButton(temp,new ImageIcon(new ImageIcon(Gdx.files.internal("Backgrounds/"+temp) + "").getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT))));
 					}else{
-						buttons.add(new JRadioButton(temp,new ImageIcon(new ImageIcon(Gdx.files.internal("GameEntity/"+temp) + "").getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT))));
+						buttons.add(new JRadioButton(folder+"/"+temp,new ImageIcon(new ImageIcon(Gdx.files.internal(folder+"/"+temp) + "").getImage().getScaledInstance(45, 45, Image.SCALE_DEFAULT))));
 					}
 				}
 			}
@@ -616,7 +620,7 @@ public class LevelCreator extends JFrame implements Screen{
 					if (button.isSelected()) {
 						
 						//trees.add(new GameEntity((int)mousePos.x,(int)mousePos.y,10,10,new Sprite(new Texture("GameEntity/"+button.getText())),0));
-						ArrayList <String> entityValues = readDefaultValues("GameEntity/"+button.getText()+".txt",x,y);
+						ArrayList <String> entityValues = readDefaultValues(button.getText()+".txt",x,y);
 						addEntityToGameWindow(entityValues);
 						textFileOutput.add(entityValues);
 					}

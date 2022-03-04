@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -57,8 +58,13 @@ public class StoreScreen implements Screen{
      */
     final int GAME_WORLD_WIDTH = 960;
 	final int GAME_WORLD_HEIGHT = 720;
+
+    Screen previousScreen;
+
     
-    public StoreScreen(){
+    public StoreScreen(Screen previousScreen){
+
+        this.previousScreen = previousScreen;
 
         backgroundImage = new Sprite(new Texture("Backgrounds/store-frame.png"));
         backgroundImage.setX(0);
@@ -80,7 +86,7 @@ public class StoreScreen implements Screen{
         purchase100Coins = new Texture("GUI/Store/100-coins.png");
         purchase100CoinsHighlight = new Texture("GUI/Store/100-coins-highlight.png");
 
-        purchasedButton = new Texture("GUI/Purchased.png");
+        purchasedButton = new Texture("GUI/purchased.png");
 
         playButton = new Texture("GUI/Play-game.png");
         playButtonHighlight = new Texture("GUI/Play-game-highlight.png");
@@ -113,26 +119,28 @@ public class StoreScreen implements Screen{
         /**
          * button drawing, hover detection and click detection...
          * TODO : very artistic.
+         * 
          */
-        int centerX = 407;//centerX is the x value to place
-        //buttons at center of map
+
+         int centerX = 10;//deleteme, just putting this here cause fuck messing with the other buttons.
 
 
-
+        Vector3 mousePos = new Vector3(Gdx.input.getX(),Gdx.input.getY(),0);
+        viewport.unproject(mousePos);
 
         //Play button
-        if ((Gdx.input.getX() > 177 && Gdx.input.getX() < 177 + BUTTON_WIDTH) && (Gdx.input.getY() < 106 && Gdx.input.getY() > 106 + BUTTON_HEIGHT)){
+        if ((mousePos.x > 177 && mousePos.x < (177 + BUTTON_WIDTH))&&((mousePos.y > 130) && (mousePos.y < (130 + BUTTON_HEIGHT)))){
             System.out.println("test");
-            batch.draw(playButtonHighlight,177,106);
+            batch.draw(playButtonHighlight,177,130);
             if(Gdx.input.isTouched()){
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new Level("NewLevel"));
+                ((Game)Gdx.app.getApplicationListener()).setScreen(previousScreen);
             }
         }else{
             batch.draw(playButton,177,130);
         }
 
 
-        // Exit toggle
+        /*// Exit toggle
         if ((Gdx.input.getX() < 43 + BUTTON_WIDTH && Gdx.input.getX()>centerX) && (GAME_WORLD_HEIGHT - Gdx.input.getY()< 149 + BUTTON_HEIGHT && GAME_WORLD_HEIGHT - Gdx.input.getY()>149)){
             System.out.println("test");
             batch.draw(exitButtonHighlight,336,106);
@@ -141,7 +149,7 @@ public class StoreScreen implements Screen{
             }
         }else{
             batch.draw(exitButton,336,106);
-        }
+        }*/
 
         // Item 1
         if (item1Purcahsed == false){

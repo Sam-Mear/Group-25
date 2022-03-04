@@ -1,0 +1,8 @@
+DEFAULT
+GAME ENTITY:
+    x: 
+    y: 
+    width: 16
+    height: 27
+    sprite: GameEntity/Interior/Table_2.png
+    speed: 0

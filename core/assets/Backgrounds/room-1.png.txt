@@ -1,0 +1,5 @@
+MAP SIZE:
+    width: 236
+    height: 181
+BACKGROUND: room-1.png
+

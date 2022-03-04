@@ -1,9 +1,0 @@
-DEFAULT
-GAME ENTITY:
-    x: 
-    y: 
-    width: 1778
-    height: 1334
-    sprite: GameEntity/Map-2.png
-    speed: 0
-

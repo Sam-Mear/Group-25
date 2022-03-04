@@ -5,6 +5,7 @@ package com.group25.game;
  */
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -70,6 +71,13 @@ public class Level implements Screen{
 	
 
 	private Drop coin;
+
+	/**
+	 * HUD Elements
+	 */
+	final private int HUD_ELEMENT_HEIGHT = 198;
+	final private int HUD_ELEMENT_WIDTH = 658;
+	private Sprite gameOver = new Sprite(new Texture("HUD/game-over.png"));
 
 	//To be deleated? 
 	private EnviromentAnimated camp;
@@ -138,7 +146,7 @@ public class Level implements Screen{
 		viewport.apply();
 		camera.position.set(GAME_WORLD_WIDTH/2,GAME_WORLD_HEIGHT/2,0);
 
-		character = new Player(this, (int)GAME_WORLD_WIDTH/2-80,(int)GAME_WORLD_HEIGHT/2-80,42,42,100,img,5);//probably temp, just getting used to libgdx
+		character = new Player(this, (int)GAME_WORLD_WIDTH/2-80,(int)GAME_WORLD_HEIGHT/2-80,27,42,100,img,5);//probably temp, just getting used to libgdx
 		character.setSpeed(1);
 		targets.add(character);
 
@@ -154,7 +162,7 @@ public class Level implements Screen{
 		character.setSpeed(2);
 		// targets.add(character);
 
-		allertArea = new Sprite(new Texture(("Slime_Test_Area.png")));
+		//allertArea = new Sprite(new Texture(("Slime_Test_Area.png")));
 
 		//System.out.println("Speeddddd: "+character.getSpeed());
 	}
@@ -179,6 +187,10 @@ public class Level implements Screen{
 		for(int i = teleports.size(); i>0;i--){
 			teleports.remove(i-1);
 		}
+		for(int i = targets.size(); i>0;i--){
+			targets.remove(i-1);
+		}
+		targets.add(character);
 		try{
 			//load file into levelInfo
 			Scanner levelInfo = new Scanner(new File(Gdx.files.internal("Levels/"+levelName+".txt")+""));
@@ -257,10 +269,29 @@ public class Level implements Screen{
 											new Sprite(new Texture(args.get(5))),
 											Float.parseFloat(args.get(6)), 50, 5, 25));
 					//TEMP DELETEME
-					slime = (Slime) enemies.get(0);
-					addEnemy(slime);
-					EnemyFactory slimeCamp = new SlimeFactory();
-					slimeCamp.getNewMonster(this, 50,50,100,100,50,slime.getSprite(),1);
+					//slime = (Slime) enemies.get(0);
+					//addEnemy(slime);
+					//EnemyFactory slimeCamp = new SlimeFactory();
+					//slimeCamp.getNewMonster(this, 50,50,100,100,50,slime.getSprite(),1);
+
+				}else if(line.equals("BAT:")){
+					ArrayList<String> args = new ArrayList<String>();
+					for(int i=0;i<9;i++){
+						//populate the arguments arraylist.
+						String s = levelInfo.nextLine();
+						args.add(s.substring(s.indexOf(":")+2));
+					}
+					enemies.add(new Bat(	this, 
+											Float.parseFloat(args.get(0)),
+											Float.parseFloat(args.get(1)),
+											Integer.parseInt(args.get(2)),
+											Integer.parseInt(args.get(3)),
+											Integer.parseInt(args.get(4)),
+											null,
+											Float.parseFloat(args.get(5)),
+											Integer.parseInt(args.get(6)),
+											Integer.parseInt(args.get(7)),
+											Integer.parseInt(args.get(8))));
 
 				}else if(line.equals("GAME ENTITY ANIMATED:")){
 					//list of arguments needed to make the GameEntity
@@ -295,12 +326,27 @@ public class Level implements Screen{
 				}
 				
 			}
+			if(GAME_WORLD_HEIGHT < 563 || GAME_WORLD_WIDTH < 840){
+				gameOver.setSize(HUD_ELEMENT_WIDTH/2,HUD_ELEMENT_HEIGHT/2);
+				gameOver.setX(420);
+				gameOver.setY(218);
+				viewport.setWorldHeight(281);
+				viewport.setWorldWidth(420);
+				viewport.apply();
+			}else{
+				gameOver.setSize(HUD_ELEMENT_WIDTH,HUD_ELEMENT_HEIGHT);
+				gameOver.setX(420-(HUD_ELEMENT_WIDTH/2));
+				gameOver.setY(218);
+				viewport.setWorldHeight(563);
+				viewport.setWorldWidth(840);
+				viewport.apply();
+			}
 		} catch(FileNotFoundException fileNotFoundException){
 			System.out.println("file "+Gdx.files.internal("Levels/"+levelName+"/level.txt")+ " not found!");
 		}
 
 
-		slime.setHealth(100);
+		//slime.setHealth(100);
 	}
 	
 	@Override
@@ -503,11 +549,13 @@ public class Level implements Screen{
 		return null;
 	}
 
-	Mummy boss = new Mummy(this, 500, 500, 100, 50, 100, null, 1);
-	Bat bat =new Bat(this, 600, 600, 30, 20, 50, null, 1, 10, 5, 20);
+	Mummy boss = new Mummy(this, 500, 500, 100, 50, 10, null, 1);
 
 	@Override
 	public void render (float delta) {
+		if(Gdx.input.isKeyJustPressed(Keys.B)){
+			((Game)Gdx.app.getApplicationListener()).setScreen(new StoreScreen(this));
+		}
 		ScreenUtils.clear(0, 0, 0, 1);//red background
 
 		camera.update();
@@ -540,18 +588,13 @@ public class Level implements Screen{
 			}
 			
 		}
-
+		for (Enemy enemy : enemies){
+			enemy.update();
+		}
 		boss.update();
 		boss.explore(character);
 
-		bat.update();
-		bat.explore(character);
-		
-
-		int aWidth = 200;
-		int aHeight = 200;		
-	
-		batch.draw(allertArea,slime.getX()-(aWidth-slime.getWidth())/2,slime.getY()-(aHeight-slime.getHeight())/2);
+		//batch.draw(allertArea,slime.getX()-(aWidth-slime.getWidth())/2,slime.getY()-(aHeight-slime.getHeight())/2);
 		//batch.draw(slimeSpawner.getSprite(),slimeSpawner.getX(),slimeSpawner.getY());
 
 //		if(!coin.isPickedUp()){
@@ -583,16 +626,18 @@ public class Level implements Screen{
 				for(int j=0; j<projectiles.size(); j++){
 					RangeAttack currentR = projectiles.get(j);
 
-						if(Math.abs(currentR.getSize()/2 + currentR.getY() - currentC.getY()) <= currentC.getSize()/2)
-							if(Math.abs(currentR.getSize()/2 + currentR.getX() - currentC.getX()) <= currentC.getSize()/2){
-								targets.get(i).setHealth(targets.get(i).getHealth() - 10);
-								if(currentC instanceof Slime){
-									((Slime)currentC).setAttacked();
-								}
-								projectiles.get(j).setAlive(false);
-							}		
-					}
+				
+					if(Math.abs(currentR.getSize()/2 + currentR.getY() - currentC.getY()) <= currentC.getSize()/2){
+						if(Math.abs(currentR.getSize()/2 + currentR.getX() - currentC.getX()) <= currentC.getSize()/2){
+							targets.get(i).setHealth(targets.get(i).getHealth() - 10);
+							if(currentC instanceof Slime){
+								((Slime)currentC).setAttacked();
+							}
+							projectiles.get(j).setAlive(false);
+						}	
+					}	
 				}
+			}
 				
 			//If they are dead and its an enemy
 			else{
@@ -654,18 +699,31 @@ public class Level implements Screen{
 		 */
 
 		 if(character.alive()){
-			if(character.getX() + 430 < GAME_WORLD_WIDTH && character.getX() - 410 > 0){
+			if(GAME_WORLD_HEIGHT < 563 || GAME_WORLD_WIDTH < 840){
 				if(camera.position.x-(character.getWidth()/2) > character.getX()){
-					camera.translate(-((camera.position.x-(character.getWidth()/2) - character.getX())/25),0);
+					camera.translate(-((camera.position.x-(character.getWidth()/2) - character.getX())/20),0);
 				}else if(camera.position.x-(character.getWidth()/2) < character.getX()){
-					camera.translate(-((camera.position.x-(character.getWidth()/2) - character.getX())/25),0);
+					camera.translate(-((camera.position.x-(character.getWidth()/2) - character.getX())/20),0);
 				}
-			}
-			if(character.getY() + 256 < GAME_WORLD_HEIGHT && character.getY() -256 > 0){
 				if(camera.position.y-(character.getHeight()/2) > character.getY()){
-					camera.translate(0,-((camera.position.y-(character.getHeight()/2) - character.getY())/25));
+					camera.translate(0,-((camera.position.y-(character.getHeight()/2) - character.getY())/20));
 				}else if(camera.position.y-(character.getHeight()/2) < character.getY()){
-					camera.translate(0,-((camera.position.y-(character.getHeight()/2) - character.getY())/25));
+					camera.translate(0,-((camera.position.y-(character.getHeight()/2) - character.getY())/20));
+				}
+			}else{
+				if(character.getX() + 430 < GAME_WORLD_WIDTH && character.getX() - 410 > 0){
+					if(camera.position.x-(character.getWidth()/2) > character.getX()){
+						camera.translate(-((camera.position.x-(character.getWidth()/2) - character.getX())/25),0);
+					}else if(camera.position.x-(character.getWidth()/2) < character.getX()){
+						camera.translate(-((camera.position.x-(character.getWidth()/2) - character.getX())/25),0);
+					}
+				}
+				if(character.getY() + 256 < GAME_WORLD_HEIGHT && character.getY() -256 > 0){
+					if(camera.position.y-(character.getHeight()/2) > character.getY()){
+						camera.translate(0,-((camera.position.y-(character.getHeight()/2) - character.getY())/25));
+					}else if(camera.position.y-(character.getHeight()/2) < character.getY()){
+						camera.translate(0,-((camera.position.y-(character.getHeight()/2) - character.getY())/25));
+					}
 				}
 			}
 		 }
@@ -673,7 +731,7 @@ public class Level implements Screen{
 
 
 		character.update();
-		slimeSpawner.spawnNewMonster(this, enemies,(int)slimeSpawner.getX()+100,(int)slimeSpawner.getY()+100,20,18,50,slime.getSprite(),(float)0.4);
+		//slimeSpawner.spawnNewMonster(this, enemies,(int)slimeSpawner.getX()+100,(int)slimeSpawner.getY()+100,20,18,50,slime.getSprite(),(float)0.4);
 
 
 		// if(healthProcentage>90){
@@ -777,8 +835,13 @@ public class Level implements Screen{
 			heart = null;
 		}
 
-		if(heart!=null)
+		if(heart!=null){
 			UIElements.draw(heart, 110, 50);
+		}
+
+		if(!character.alive()){
+			gameOver.draw(UIElements);
+		}
 
 		UIElements.end();
 	}

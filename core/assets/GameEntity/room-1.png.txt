@@ -1,8 +1,0 @@
-DEFAULT
-GAME ENTITY:
-    x: 
-    y: 
-    width: 236
-    height: 181
-    sprite: GameEntity/room-1.png
-

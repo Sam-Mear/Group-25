@@ -1,0 +1,9 @@
+DEFAULT
+GAME ENTITY:
+    x: 
+    y: 
+    width: 10
+    height: 15
+    sprite: GameEntity/Interior/Pot.png
+    speed: 0
+
