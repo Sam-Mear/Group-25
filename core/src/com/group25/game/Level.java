@@ -720,10 +720,6 @@ public class Level implements Screen{
 			//If they are dead and its an enemy
 			//FILIP
 			else{
-				if(targets.get(i) instanceof Boss){
-					win.draw(UIElements);
-				}
-
 				if(targets.get(i) instanceof Enemy){
 					if(!((Enemy) targets.get(i)).isLooted()) {
 					//	System.out.println("DEAD ENEMY");
@@ -842,6 +838,16 @@ public class Level implements Screen{
 		 */
 
 		UIElements.begin();
+
+		for(Creature c: targets){
+			if(!c.alive()){
+				if(c instanceof Boss){
+					if(c instanceof Boss){
+						win.draw(UIElements);
+					}
+				}
+			}
+		}
 
 		UiBorder.draw(UIElements);
 
