@@ -45,7 +45,7 @@ public abstract class Enemy extends Creature{
 
     private int counter = 0;
 
-    public void chasePlayer(Player player, int range, int damage, int  attackCounter, Creature attacker, int safetyX, int safetyY){
+    public boolean chasePlayer(Player player, int range, int damage, int  attackCounter, Creature attacker, int safetyX, int safetyY){
 
         if(attacker.alive()){
             counter++;
@@ -98,10 +98,12 @@ public abstract class Enemy extends Creature{
                             directedShortAttack(player, range, damage/5, direction, getX(), getY());
                     }
                 }
+                return true;
             }else{
                 isMoving = false;
             }
         }
+        return false;
     }
 
 
@@ -139,10 +141,13 @@ public abstract class Enemy extends Creature{
              }
     }
 
+    /**Removes health of the enemy
+     *
+     * @param damage - damage received
+     */
     public void takeDamage(int damage){
+        //If the damage accumulated is more than the enemy health they will die
         if(getHealth()-damage<0){
-            //Then we want to drop all of the things
-            //If this happens then we would like to render all of the coins and shit
             alive = false;
         }
         else{
@@ -162,6 +167,10 @@ public abstract class Enemy extends Creature{
         return heartDrop;
     }
 
+    /**
+     * Update movement tick, will update the enemies x and y speed
+     *
+     */
     public void updateMovement(){
         double xTemp = xSpeed;
         double yTemp = ySpeed;
@@ -178,6 +187,13 @@ public abstract class Enemy extends Creature{
         }
     }
 
+    /**
+     * Change Angle - determines the probabilty of an angle change in the enemies movement
+     * The probability is distributed so that more likely to be on either ends of 0-1 and less liekly in the middle
+     * @param b //Number of trials it will run
+     * @param x //A random float which will calculate the odds of getting it
+     * @return
+     */
     public double changeAngle(double b,double x){
         double top = 1;
         double bottom = 1+Math.exp(-b*Math.tan(Math.PI*(x-0.5)));
