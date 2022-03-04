@@ -152,7 +152,7 @@ public class MenuScreen implements Screen{
             //System.out.println("test");
             batch.draw(playGameButtonHighlighted,177,106);
             if(Gdx.input.isTouched()){
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new Level("NewLevel"));
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new Level("mainLevel"));
             }
         }else{
             batch.draw(playGameButton,177,106);

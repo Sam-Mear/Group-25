@@ -1,0 +1,9 @@
+DEFAULT
+GAME ENTITY:
+    x: 
+    y: 
+    width: 16
+    height: 24
+    sprite: GameEntity/Interior/Chest_of_Drawers.png
+    speed: 0
+

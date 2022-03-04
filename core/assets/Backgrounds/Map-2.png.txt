@@ -1,0 +1,4 @@
+MAP SIZE:
+    width: 1778
+    height: 1334
+BACKGROUND: Map-2.png

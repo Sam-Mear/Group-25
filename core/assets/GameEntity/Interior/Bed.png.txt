@@ -1,0 +1,9 @@
+DEFAULT
+GAME ENTITY:
+    x: 
+    y: 
+    width: 30
+    height: 42
+    sprite: GameEntity/Interior/Bed.png
+    speed: 0
+

@@ -1,0 +1,9 @@
+DEFAULT
+GAME ENTITY:
+    x: 
+    y: 
+    width: 10
+    height: 13
+    sprite: GameEntity/Interior/Clock.png
+    speed: 0
+
