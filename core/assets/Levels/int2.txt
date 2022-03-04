@@ -1,0 +1,168 @@
+MAP SIZE:
+    width: 236
+    height: 181
+BACKGROUND: room-1.png
+
+DEFAULT PLAYER POSITIONS
+    x: 102
+    y: 56
+HITBOX:
+    x: 70
+    y: 2
+    width: 30
+    height: 41
+HITBOX:
+    x: 133
+    y: 2
+    width: 32
+    height: 40
+HITBOX:
+    x: 161
+    y: 2
+    width: 73
+    height: 8
+HITBOX:
+    x: 230
+    y: 10
+    width: 4
+    height: 138
+HITBOX:
+    x: 198
+    y: 106
+    width: 32
+    height: 37
+HITBOX:
+    x: 32
+    y: 137
+    width: 166
+    height: 42
+HITBOX:
+    x: 0
+    y: 105
+    width: 37
+    height: 43
+HITBOX:
+    x: 0
+    y: 1
+    width: 6
+    height: 104
+HITBOX:
+    x: 6
+    y: 1
+    width: 69
+    height: 8
+HITBOX SPECIAL:
+    x: 101
+    y: 25
+    width: 32
+    height: 5
+    level name: mainLevel
+GAME ENTITY:
+    x: 6
+    y: 58
+    width: 15
+    height: 46
+    sprite: GameEntity/Interior/Sofa.png
+    speed: 0
+
+BAT:
+    x: 44
+    y: 96
+    width: 30
+    height: 20
+    health: 50
+    speed: 1
+    range: 10
+    damage: 5
+    attackSpeed: 20
+
+BAT:
+    x: 121
+    y: 48
+    width: 30
+    height: 20
+    health: 50
+    speed: 1
+    range: 10
+    damage: 5
+    attackSpeed: 20
+
+GAME ENTITY:
+    x: 181
+    y: 109
+    width: 16
+    height: 27
+    sprite: GameEntity/Interior/Table_2.png
+    speed: 0
+GAME ENTITY:
+    x: 182
+    y: 124
+    width: 15
+    height: 29
+    sprite: GameEntity/Interior/Plant_1.png
+    speed: 0
+
+GAME ENTITY:
+    x: 149
+    y: 112
+    width: 28
+    height: 32
+    sprite: GameEntity/Interior/Bookcase.png
+    speed: 0
+
+GAME ENTITY:
+    x: 41
+    y: 112
+    width: 28
+    height: 32
+    sprite: GameEntity/Interior/Bookcase.png
+    speed: 0
+
+GAME ENTITY:
+    x: 6
+    y: 11
+    width: 15
+    height: 46
+    sprite: GameEntity/Interior/Sofa.png
+    speed: 0
+
+GAME ENTITY:
+    x: 199
+    y: 73
+    width: 32
+    height: 26
+    sprite: GameEntity/Interior/Stove.png
+    speed: 0
+
+GAME ENTITY:
+    x: 204
+    y: 89
+    width: 10
+    height: 15
+    sprite: GameEntity/Interior/Pot.png
+    speed: 0
+
+GAME ENTITY:
+    x: 214
+    y: 25
+    width: 14
+    height: 27
+    sprite: GameEntity/Interior/Padded_Chair_2.png
+    speed: 0
+
+GAME ENTITY:
+    x: 194
+    y: 45
+    width: 14
+    height: 29
+    sprite: GameEntity/Interior/Padded_Chair.png
+    speed: 0
+
+GAME ENTITY:
+    x: 188
+    y: 22
+    width: 30
+    height: 31
+    sprite: GameEntity/Interior/Table_1.png
+    speed: 0
+

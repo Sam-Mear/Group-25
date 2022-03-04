@@ -6,9 +6,6 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import java.awt.*;
-import java.util.Random;
-
-import javax.swing.text.html.parser.Entity;
 
 public class Bat extends Enemy{
 
@@ -21,26 +18,25 @@ public class Bat extends Enemy{
 
     public Bat(Level level, float positionX, float positionY,int width, int height,int health, Sprite img, float entitySpeed, int range, int damage,int  attackSpeed){
         super(positionX, positionY, width, height, health, img, entitySpeed,
-                new Rectangle((int)positionX,(int)positionY,width,height),  //Hitbox
-                new Rectangle((int)positionX,(int)positionY,500,500)); //AlertArea
+        new Rectangle((int)positionX,(int)positionY,width,height),  //Hitbox
+        new Rectangle((int)positionX,(int)positionY,500,500)); //AlertArea
 
-                this.health = health;
-                this.damage = damage;
-                this.range = range;
-                this.attackSpeed = attackSpeed;
-                level.addEnemy(this);
+        this.health = health;
+        this.damage = damage;
+        this.range = range;
+        this.attackSpeed = attackSpeed;
+        Sprite bats = new Sprite(new Texture(("bats.png")));
+        level.addEnemy(this);
 
-                Sprite bats = new Sprite(new Texture(("bats.png")));
+        
 
-                animation = new EnitiyAnimation(bats, 4, 20, 0, 3);
+        animation = new EnitiyAnimation(bats, 4, 20, 0, 3);
                 
     }
 
     public void update(){
       
         animation.update(1);
-        current = animation.getCurrentFrame();
-    
         current = animation.getCurrentFrame();
     }
 

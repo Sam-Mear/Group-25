@@ -1,0 +1,9 @@
+DEFAULT
+GAME ENTITY:
+    x: 
+    y: 
+    width: 32
+    height: 26
+    sprite: GameEntity/Interior/Stove.png
+    speed: 0
+
