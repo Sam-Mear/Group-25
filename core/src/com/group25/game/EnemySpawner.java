@@ -19,6 +19,8 @@ public class EnemySpawner extends GameEntity {
     private final EnemyFactory factory;   //Factory design pattern to spawn enemies
     private Sprite img;             //Image of what the spawner looks like
 
+    private boolean spawning = true;
+
     private ArrayList<Enemy> associatedEnemies;
 
     /**
@@ -62,14 +64,16 @@ public class EnemySpawner extends GameEntity {
      * @param speed     - how quickly the monster travels
      */
     public void spawnNewMonster(Level level, ArrayList<Enemy> enemies, int positionX, int positionY, int width,int height,int health, Sprite img,float speed){
-        if(associatedEnemies.size()<spawnLimit){
-            if(repeatedFrames == spawnTime){
-                repeatedFrames = 0;
-                enemies.add(factory.getNewMonster(level, positionX,positionY,width,height,health,img,speed));
-                associatedEnemies.add(factory.getNewMonster(level, positionX,positionY,width,height,health,img,speed));
-            }
-            repeatedFrames++;
-        }
+       if(spawning) {
+           if (enemies.size() < spawnLimit) {
+               if (repeatedFrames == spawnTime) {
+                   repeatedFrames = 0;
+                   enemies.add(factory.getNewMonster(level, positionX, positionY, width, height, health, img, speed));
+                   associatedEnemies.add(factory.getNewMonster(level, positionX, positionY, width, height, health, img, speed));
+               }
+               repeatedFrames++;
+           }
+       }
     }
 
     public void update(){
@@ -83,9 +87,14 @@ public class EnemySpawner extends GameEntity {
             //If its dead then we want to remove it and add a new one
             if(!tempEnemy.alive()){
                 cycleDead.remove();
+                System.out.println("SPAWNING MORE UNITS");
                 spawnLimit++;
             }
         }
+    }
+
+    public void setSpawnable(boolean a){
+        spawning = a;
     }
 
 }
