@@ -59,7 +59,7 @@ public abstract class Enemy extends Creature{
                     this.direction = "up";
                     this.setY(this.getY() + this.getSpeed());
                     if(counter% (attackCounter*10) ==0){
-                        if(this instanceof Boss || this instanceof Bat)
+                        if(this instanceof Mummy || this instanceof Bat)
                             rangeAttack(player, range, damage, "up", getX() ,getY()+safetyY);
                         if(!(this instanceof Slime))
                             directedShortAttack(player, range, damage/5, direction, getX(), getY());
@@ -70,7 +70,7 @@ public abstract class Enemy extends Creature{
                     this.direction = "down";
                     this.setY(this.getY() - this.getSpeed());
                     if(counter% (attackCounter*10)==0){
-                        if(this instanceof Boss || this instanceof Bat)
+                        if(this instanceof Mummy || this instanceof Bat)
                             rangeAttack(player, range, damage, "down", getX() ,getY()-safetyY);
                         if(!(this instanceof Slime))
                             directedShortAttack(player, range, damage/5, direction, getX(), getY());
@@ -81,7 +81,7 @@ public abstract class Enemy extends Creature{
                     this.direction = "right";
                     this.setX(this.getX() + this.getSpeed());
                     if(counter% (attackCounter*10)==0){
-                        if(this instanceof Boss || this instanceof Bat)
+                        if(this instanceof Mummy || this instanceof Bat)
                             rangeAttack(player, range, damage, "right", getX()+safetyX ,getY());
                         if(!(this instanceof Slime))
                             directedShortAttack(player, range, damage/5, direction, getX(), getY());
@@ -92,7 +92,7 @@ public abstract class Enemy extends Creature{
                     this.direction = "left";
                     this.setX(this.getX() - this.getSpeed());
                     if(counter% (attackCounter*10)==0){
-                        if(this instanceof Boss)
+                        if(this instanceof Mummy)
                             rangeAttack(player, range, damage, "left", getX()-safetyX ,getY());
                         if(!(this instanceof Slime))
                             directedShortAttack(player, range, damage/5, direction, getX(), getY());
@@ -171,9 +171,11 @@ public abstract class Enemy extends Creature{
         xSpeed = xTemp*Math.cos(deltaA)-yTemp*Math.sin(deltaA);
         if(this.x>this.width && this.x<Level.GAME_WORLD_WIDTH-this.width){
             this.x += xSpeed;
+
         }
         if(this.y>this.height && this.y<Level.GAME_WORLD_HEIGHT-this.height){
             this.y += ySpeed;
+            
         }
     }
 

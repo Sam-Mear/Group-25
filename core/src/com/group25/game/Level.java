@@ -485,7 +485,7 @@ public class Level implements Screen{
 		return null;
 	}
 
-	Boss boss = new Boss(this, 500, 500, 100, 50, 10, null, 1);
+	Mummy boss = new Mummy(this, 500, 500, 100, 50, 10, null, 1);
 	Bat bat =new Bat(this, 600, 600, 30, 20, 50, null, 1, 10, 5, 20);
 
 	@Override
@@ -532,8 +532,8 @@ public class Level implements Screen{
 					if(targets.get(i) instanceof Slime){
 						targets.get(i).update();
 						batch.draw(((Slime)targets.get(i)).getTexture(), targets.get(i).getX(), targets.get(i).getY());
-					}else if(targets.get(i) instanceof Boss){
-						batch.draw(((Boss)targets.get(i)).getTexture(),targets.get(i).getX(),targets.get(i).getY());
+					}else if(targets.get(i) instanceof Mummy){
+						batch.draw(((Mummy)targets.get(i)).getTexture(),targets.get(i).getX(),targets.get(i).getY());
 					}else if(targets.get(i) instanceof Bat){
 						batch.draw(((Bat)targets.get(i)).getTexture(), targets.get(i).getX(), targets.get(i).getY());
 					}
@@ -544,7 +544,7 @@ public class Level implements Screen{
 				for(int j=0; j<projectiles.size(); j++){
 					RangeAttack currentR = projectiles.get(j);
 
-					if(!(currentC instanceof Boss))
+					if(!(currentC instanceof Mummy))
 						if(Math.abs(currentR.getSize()/2 + currentR.getY() - currentC.getY()) <= currentC.getSize()/2)
 							if(Math.abs(currentR.getSize()/2 + currentR.getX() - currentC.getX()) <= currentC.getSize()/2){
 								targets.get(i).setHealth(targets.get(i).getHealth() - 10);
