@@ -48,7 +48,7 @@ public class Bat extends Enemy{
     public void explore(Player player) {
         this.getHitbox().setLocation((int) this.getX(), (int) this.getY());
         this.getAlertArea().setLocation((int) (this.getX() - (200 - this.getWidth()) / 2), (int) (this.getY() - (200 - this.getHeight()) / 2));
-        this.chasePlayer(player, 30, 5, 15, this, 30, 30);
+        this.chasePlayer(player, 30, 5, 30, this, 30, 30);
         if( this.getMoving()){
                 this.updateMovement();
         }

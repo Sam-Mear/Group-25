@@ -86,7 +86,7 @@ BAT:
     health: 50
     speed: 1
     range: 10
-    damage: 5
+    damage: 3
     attackSpeed: 20
 
 BAT:
@@ -97,7 +97,7 @@ BAT:
     health: 50
     speed: 1
     range: 10
-    damage: 5
+    damage: 3
     attackSpeed: 20
 
 

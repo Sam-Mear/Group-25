@@ -29,7 +29,7 @@ public class Boss extends Enemy{
 
         level.addEnemy(this);
 
-        animation = new EnitiyAnimation(new Sprite(new Texture(("mummy.png"))), 4, 20, 1, 1);
+        animation = new EnitiyAnimation(new Sprite(new Texture(("Main_character_sprite_zombie.png"))), 20, 15, 0, 0);
     }
 
     private boolean attacked = false;
@@ -44,26 +44,26 @@ public class Boss extends Enemy{
         if(this.getMoving()){
 
             if(direction == "up"){
-                endFrame = 0;
-                startFrame = 0;
+                endFrame = 5;
+                startFrame = 5;
                 // startFrame = (counter++) % endFrame;
             }else if(direction == "down"){
-                endFrame = 1;
-                startFrame = 1;
+                endFrame = 0;
+                startFrame = 0;
                 // startFrame =( 3+ counter++) % endFrame;
             }
             else if(direction == "right"){
-                endFrame = 2;
-                startFrame = 2;
+                endFrame = 10;
+                startFrame = 10;
                 // startFrame = (6+ counter++) % endFrame;
             }
             else if(direction == "left"){
-                endFrame = 3;
-                startFrame = 3;
+                endFrame = 15;
+                startFrame = 15;
                
 
             }
-            animation = new EnitiyAnimation(new Sprite(new Texture(("mummy.png"))), 4, 15, startFrame, endFrame);
+            animation = new EnitiyAnimation(new Sprite(new Texture(("Main_character_sprite_zombie.png"))), 20, 15, startFrame, endFrame);
 
         }
        
@@ -87,7 +87,6 @@ public class Boss extends Enemy{
         this.getHitbox().setLocation((int) this.getX(), (int) this.getY());
         this.getAlertArea().setLocation((int) (this.getX() - (200 - this.getWidth()) / 2), (int) (this.getY() - (200 - this.getHeight()) / 2));
         this.chasePlayer(player, 30, 5, 15, this, 50, 50);
-       
     }
 
     public double changeAngle(double b,double x){

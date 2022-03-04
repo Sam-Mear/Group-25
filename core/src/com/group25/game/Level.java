@@ -549,7 +549,9 @@ public class Level implements Screen{
 		return null;
 	}
 
-	Mummy boss = new Mummy(this, 500, 500, 100, 50, 10, null, 1);
+	// Mummy mummy = new Mummy(this, 500, 500, 100, 50, 10, null, 1);
+	// Boss boss = new Boss(this, 600, 600, 27, 38, 200, null, 1);
+
 
 	@Override
 	public void render (float delta) {
@@ -562,6 +564,13 @@ public class Level implements Screen{
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		backgroundPicture.draw(batch);
+
+
+		// mummy.update();
+		// mummy.explore(character);
+		// boss.update();
+		// boss.explore(character);
+
 
 		projectiles = character.getProjectiles();
 
@@ -591,8 +600,7 @@ public class Level implements Screen{
 		for (Enemy enemy : enemies){
 			enemy.update();
 		}
-		boss.update();
-		boss.explore(character);
+		;
 
 		//batch.draw(allertArea,slime.getX()-(aWidth-slime.getWidth())/2,slime.getY()-(aHeight-slime.getHeight())/2);
 		//batch.draw(slimeSpawner.getSprite(),slimeSpawner.getX(),slimeSpawner.getY());
