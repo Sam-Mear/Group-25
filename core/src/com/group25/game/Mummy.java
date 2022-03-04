@@ -86,4 +86,10 @@ public class Mummy extends Enemy{
         this.getAlertArea().setLocation((int) (this.getX() - (200 - this.getWidth()) / 2), (int) (this.getY() - (200 - this.getHeight()) / 2));
         this.chasePlayer(player, 30, 5, 15, this, 50, 50);
     } 
+
+    public double changeAngle(double b,double x){
+        double top = 1;
+        double bottom = 1+Math.exp(-b*Math.tan(Math.PI*(x-0.5)));
+        return top/bottom;
+    }
 }

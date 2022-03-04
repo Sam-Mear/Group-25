@@ -15,7 +15,17 @@ public class Boss extends Enemy{
     private EnitiyAnimation animation;
     private TextureRegion current;
 
-    
+    /**
+     *  chld class of enemy
+     * @param level
+     * @param positionX
+     * @param positionY
+     * @param width
+     * @param height
+     * @param health
+     * @param img
+     * @param entitySpeed
+     */
     public Boss(Level level, float positionX, float positionY, int width, int height, int health, Sprite img, float entitySpeed) {
                 super(positionX, positionY, width, height, health, img, entitySpeed,
                 new Rectangle((int)positionX,(int)positionY,width,height),  //Hitbox
@@ -43,6 +53,9 @@ public class Boss extends Enemy{
         String direction = getDirection();
         if(this.getMoving()){
 
+            /**
+             * change frames based on the direction of the movement
+             */
             if(direction == "up"){
                 endFrame = 1;
                 startFrame = 1;
@@ -57,24 +70,14 @@ public class Boss extends Enemy{
             else if(direction == "left"){
                 endFrame = 3;
                 startFrame = 3;
-            
             }
             animation = new EnitiyAnimation(new Sprite(new Texture(("Main_character_sprite_zombie.png"))), 4, 15, startFrame, endFrame);
-
         }
-       
         current = animation.getCurrentFrame();
     }
 
 
-
-    public void setAttacked(){
-        attacked = true;
-        counter = 1;
-    }
-
     public TextureRegion getTexture(){
-
         return animation.getCurrentFrame();
     }
 

@@ -15,7 +15,20 @@ public class Bat extends Enemy{
     private EnitiyAnimation animation;
     private TextureRegion current;
 
-
+    /**
+     *  child class of enemy
+     * @param level
+     * @param positionX
+     * @param positionY
+     * @param width
+     * @param height
+     * @param health
+     * @param img
+     * @param entitySpeed
+     * @param range
+     * @param damage
+     * @param attackSpeed
+     */
     public Bat(Level level, float positionX, float positionY,int width, int height,int health, Sprite img, float entitySpeed, int range, int damage,int  attackSpeed){
         super(positionX, positionY, width, height, health, img, entitySpeed,
         new Rectangle((int)positionX,(int)positionY,width,height),  //Hitbox
@@ -28,14 +41,13 @@ public class Bat extends Enemy{
         Sprite bats = new Sprite(new Texture(("bats.png")));
         level.addEnemy(this);
 
-        
-
-        animation = new EnitiyAnimation(bats, 4, 20, 0, 3);
-                
+        animation = new EnitiyAnimation(bats, 4, 20, 0, 3);    
     }
 
+    /**
+     * constanly rotate throught the frames
+     */
     public void update(){
-      
         animation.update(1);
         current = animation.getCurrentFrame();
     }
