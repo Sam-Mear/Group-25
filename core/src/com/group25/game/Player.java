@@ -22,7 +22,7 @@ public class Player extends Creature implements ApplicationListener{
     private int coins;
     private int currentMana = 100;
     private int manaLimit = 100;
-    private int healthLimit = 100;
+    private int healthLimit = 1000;
     private int counter = 0;
     private EnitiyAnimation animation;
     private TextureRegion currentTexture;
