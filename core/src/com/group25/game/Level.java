@@ -719,17 +719,23 @@ public class Level implements Screen{
 					camera.translate(0,-((camera.position.y-(character.getHeight()/2) - character.getY())/20));
 				}
 			}else{
-				if(character.getX() + 430 < GAME_WORLD_WIDTH && character.getX() - 410 > 0){
-					if(camera.position.x-(character.getWidth()/2) > character.getX()){
+				float temp = camera.position.x-(character.getWidth()/2);
+				if(temp > character.getX()){
+					if(temp > 420 ){
 						camera.translate(-((camera.position.x-(character.getWidth()/2) - character.getX())/25),0);
-					}else if(camera.position.x-(character.getWidth()/2) < character.getX()){
+					}
+				}else if(temp < character.getX()){
+					if(temp < GAME_WORLD_WIDTH-420){
 						camera.translate(-((camera.position.x-(character.getWidth()/2) - character.getX())/25),0);
 					}
 				}
-				if(character.getY() + 256 < GAME_WORLD_HEIGHT && character.getY() -256 > 0){
-					if(camera.position.y-(character.getHeight()/2) > character.getY()){
+				temp = camera.position.y-(character.getHeight()/2);
+				if(temp > character.getY()){
+					if(temp > 281){
 						camera.translate(0,-((camera.position.y-(character.getHeight()/2) - character.getY())/25));
-					}else if(camera.position.y-(character.getHeight()/2) < character.getY()){
+					}
+				}else if(temp < character.getY()){
+					if(temp < GAME_WORLD_HEIGHT-281){
 						camera.translate(0,-((camera.position.y-(character.getHeight()/2) - character.getY())/25));
 					}
 				}
