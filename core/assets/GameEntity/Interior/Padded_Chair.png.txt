@@ -1,0 +1,9 @@
+DEFAULT
+GAME ENTITY:
+    x: 
+    y: 
+    width: 14
+    height: 29
+    sprite: GameEntity/Interior/Padded_Chair.png
+    speed: 0
+
