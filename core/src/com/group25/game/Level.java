@@ -810,11 +810,6 @@ public class Level implements Screen{
 			mana = mana_0;
 		}	
 		
-		UIElements.draw(mana, 20, 30);
-		
-
-
-		
 		if(healthProcentage > 90){
 			heart = hearts_8;
 		}	
@@ -845,6 +840,7 @@ public class Level implements Screen{
 
 		if(heart!=null){
 			UIElements.draw(heart, 110, 50);
+			UIElements.draw(mana, 20, 30);
 		}
 
 		if(!character.alive()){
